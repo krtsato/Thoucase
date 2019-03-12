@@ -18,3 +18,4 @@
 console.log('Hello World from Webpacker')
 import 'stylesheets/layouts/application.scss'
 import 'bootstrap'
+import '@fortawesome/fontawesome-free/js/all'
