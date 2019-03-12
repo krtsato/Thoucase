@@ -1,0 +1,19 @@
+current directory: /Users/Satoshi/RailsProjects/Thoucase/vendor/bundle/ruby/2.6.0/gems/byebug-11.0.0/ext/byebug
+/Users/Satoshi/.rbenv/versions/2.6.0/bin/ruby -I /Users/Satoshi/.rbenv/versions/2.6.0/lib/ruby/2.6.0 -r ./siteconf20190312-60122-10ddzpl.rb extconf.rb
+creating Makefile
+
+current directory: /Users/Satoshi/RailsProjects/Thoucase/vendor/bundle/ruby/2.6.0/gems/byebug-11.0.0/ext/byebug
+make "DESTDIR=" clean
+
+current directory: /Users/Satoshi/RailsProjects/Thoucase/vendor/bundle/ruby/2.6.0/gems/byebug-11.0.0/ext/byebug
+make "DESTDIR="
+compiling breakpoint.c
+compiling byebug.c
+compiling context.c
+compiling locker.c
+compiling threads.c
+linking shared-object byebug/byebug.bundle
+
+current directory: /Users/Satoshi/RailsProjects/Thoucase/vendor/bundle/ruby/2.6.0/gems/byebug-11.0.0/ext/byebug
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 byebug.bundle ./.gem.20190312-60122-1ain5tl/byebug

@@ -1,0 +1,15 @@
+current directory: /Users/Satoshi/RailsProjects/Thoucase/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.1/ext/bootsnap
+/Users/Satoshi/.rbenv/versions/2.6.0/bin/ruby -I /Users/Satoshi/.rbenv/versions/2.6.0/lib/ruby/2.6.0 -r ./siteconf20190312-60122-17ipz23.rb extconf.rb
+creating Makefile
+
+current directory: /Users/Satoshi/RailsProjects/Thoucase/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.1/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /Users/Satoshi/RailsProjects/Thoucase/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.1/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/Satoshi/RailsProjects/Thoucase/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.1/ext/bootsnap
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20190312-60122-euvudo/bootsnap
