@@ -40,6 +40,7 @@ group :development do
   gem 'foreman'
   gem 'ruby-debug-ide'
   gem 'debase'
+  gem 'rubocop', require: false
 end
 
 
