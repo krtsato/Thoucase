@@ -16,6 +16,22 @@
     "three-orbitcontrols": "^2.102.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.5.0",
+    "prettier": "^1.16.4",
+    "stylelint": "^9.10.1",
+    "stylelint-config-prettier": "^5.0.0",
+    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-order": "^2.1.0",
+    "stylelint-prettier": "^1.0.6",
+    "stylelint-scss": "^3.5.4",
     "webpack-dev-server": "^3.2.1"
   }
 }
