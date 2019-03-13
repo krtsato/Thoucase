@@ -1,0 +1,2 @@
+class Showcase < ApplicationRecord
+end

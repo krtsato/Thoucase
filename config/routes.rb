@@ -1,3 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # showcases / crystals
+  resources :showcases do
+    resources :crystals, shallow: true
+  end
+  
+  # crystals / fragments
+  resources :crystals do
+    resources :fragments, shallow: true
+  end
 end
