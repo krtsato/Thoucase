@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ShowcasesController < ApplicationController
   before_action :set_showcase, only: [:show, :update, :destroy]
 
@@ -39,6 +41,7 @@ class ShowcasesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_showcase
       @showcase = Showcase.find(params[:id])

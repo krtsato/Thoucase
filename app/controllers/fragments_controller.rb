@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FragmentsController < ApplicationController
   before_action :set_fragment, only: [:show, :update, :destroy]
 
@@ -39,6 +41,7 @@ class FragmentsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_fragment
       @fragment = Fragment.find(params[:id])
