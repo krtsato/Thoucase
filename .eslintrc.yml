@@ -1,0 +1,35 @@
+env:
+  browser: true
+  es6: true
+
+extends:
+  - airbnb
+  - plugin:import/errors
+  - plugin:import/warnings
+  - plugin:jsx-a11y/recommended
+  - plugin:react/recommended
+  - plugin:prettier/recommended
+  - prettier
+  - prettier/react
+
+parser: babel-eslint
+
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 2018
+  sourceType: module
+  babelOptions:
+    configFile: "babel.config.js"
+
+plugins:
+  - react
+  - react-hooks
+
+rules:
+  # Overwrite airbnb rules
+  react/jsx-boolean-value: always
+
+  # Add react-hooks rules
+  react-hooks/rules-of-hooks: error
+  react-hooks/exhaustive-deps: warn
