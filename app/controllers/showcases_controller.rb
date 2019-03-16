@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ShowcasesController < ApplicationController
-  before_action :set_showcase, only: [:show, :update, :destroy]
+  before_action :set_showcase, only: [:show, :edit, :update, :destroy]
 
   # GET /showcases
   def index
@@ -17,7 +17,7 @@ class ShowcasesController < ApplicationController
   
   # GET /fragments
   def new
-
+    @showcase= Showcase.new
   end
 
   # POST /showcases

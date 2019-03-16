@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
   # concern
   concern :plus_new_edit do
-    get :new, on: :collection
-    get :edit, on: :member
+    get 'new', on: :collection
+    get 'edit', on: :member
   end
 
   shallow do

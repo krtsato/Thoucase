@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FragmentsController < ApplicationController
-  before_action :set_fragment, only: [:show, :update, :destroy]
+  before_action :set_fragment, only: [:show, :edit, :update, :destroy]
 
   # GET /fragments
   def index
@@ -17,7 +17,7 @@ class FragmentsController < ApplicationController
 
   # GET /fragments
   def new
-
+    @fragment = Fragment.new
   end
 
   # POST /fragments
