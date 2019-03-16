@@ -20,7 +20,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Header} from 'components/layouts/header'
 
-Rail
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<Header />, document.getElementById('headerLayout'))
 })
