@@ -15,6 +15,11 @@ class FragmentsController < ApplicationController
     render json: @fragment
   end
 
+  # GET /fragments
+  def new
+
+  end
+
   # POST /fragments
   def create
     @fragment = Fragment.new(fragment_params)
@@ -24,6 +29,11 @@ class FragmentsController < ApplicationController
     else
       render json: @fragment.errors, status: :unprocessable_entity
     end
+  end
+
+  # GET /fragments/1
+  def edit
+
   end
 
   # PATCH/PUT /fragments/1

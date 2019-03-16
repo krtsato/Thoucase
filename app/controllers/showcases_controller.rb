@@ -14,6 +14,11 @@ class ShowcasesController < ApplicationController
   def show
     render json: @showcase
   end
+  
+  # GET /fragments
+  def new
+
+  end
 
   # POST /showcases
   def create
@@ -24,6 +29,11 @@ class ShowcasesController < ApplicationController
     else
       render json: @showcase.errors, status: :unprocessable_entity
     end
+  end
+
+  # GET /fragments/1
+  def edit
+
   end
 
   # PATCH/PUT /showcases/1
