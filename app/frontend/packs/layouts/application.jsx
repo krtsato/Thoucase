@@ -16,7 +16,6 @@ console.log('packs / layouts / application.jsx')
 import 'stylesheets/layouts/application.scss'
 import '@fortawesome/fontawesome-free/js/all'
 import 'bootstrap'
-import '@babel/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Header} from 'components/layouts/header'
