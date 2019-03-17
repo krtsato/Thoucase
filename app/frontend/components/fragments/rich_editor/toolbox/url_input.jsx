@@ -1,9 +1,11 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useContext, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
+import {editorContext} from 'components/fragments/contexts/rich_editor_context'
 
 export const UrlInput = (props) => {
   let urlInput = null
   const {showUrlInput, urlVal, onAddMediaUrl, onMediaChange} = props
+  const {editorBlur} = useContext(editorContext)
 
   /* フォーカス */
   const urlInputRef = useRef(null)
@@ -13,6 +15,7 @@ export const UrlInput = (props) => {
   /* ライフサイクル */
   useEffect(() => {
     if (showUrlInput) {
+      editorBlur
       urlInputFocus
     }
     return () => urlInputBlur
@@ -61,5 +64,5 @@ UrlInput.propTypes = {
   showUrlInput: PropTypes.bool,
   urlVal: PropTypes.string,
   onAddMediaUrl: PropTypes.func,
-  onMediaChange: PropTypes.func
+  onMediaChange: PropTypes.func,
 }
