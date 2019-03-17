@@ -12,6 +12,7 @@
 // const imagePath = (name) => images(name, true)
 
 console.log('packs / layouts / application.jsx')
+import '@babel/polyfill'
 import 'stylesheets/layouts/application.scss'
 import '@fortawesome/fontawesome-free/js/all'
 import 'bootstrap'
