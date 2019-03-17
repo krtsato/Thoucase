@@ -5,13 +5,13 @@ export const AtomicButton = (props) => {
   const {mediaType, onAddMediaUrlInput} = props
 
   // メディアURL 更新
-  this.onMouseDown = (e) => {
+  const onMouseDown = (e) => {
     e.preventDefault()
     onAddMediaUrlInput(mediaType)
   }
 
   return (
-    <button type='button' onMouseDown={this.onMouseDown}>
+    <button type='button' onMouseDown={onMouseDown}>
       {mediaType}
     </button>
   )

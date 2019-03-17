@@ -7,32 +7,32 @@ export const UrlInput = (props) => {
 
   /* フォーカス */
   const urlInputRef = useRef(null)
-  this.urlInputFocus = () => urlInputRef.current.focus()
-  this.urlInputBlur = () => urlInputRef.current.blur()
+  const urlInputFocus = () => urlInputRef.current.focus()
+  const urlInputBlur = () => urlInputRef.current.blur()
 
   /* ライフサイクル */
   useEffect(() => {
     if (showUrlInput) {
-      this.urlInputFocus
+      urlInputFocus
     }
-    return () => this.urlInputBlur
+    return () => urlInputBlur
   }, [showUrlInput])
 
   /* メディアURL 更新*/
-  this.onUrlChange = (e) => {
+  const onUrlChange = (e) => {
     e.preventDefault()
     onAddMediaUrl(e.target.value)
   }
 
   /* メディア キー入力更新 */
-  this.onKeyDown = (e) => {
+  const onKeyDown = (e) => {
     if (e.which === 13) {
       onMediaChange(e)
     }
   }
 
   /* メディア キー入力更新 */
-  this.onMouseDown = (e) => {
+  const onMouseDown = (e) => {
     e.preventDefault()
     onMediaChange()
   }
@@ -45,10 +45,10 @@ export const UrlInput = (props) => {
           type='text'
           value={urlVal}
           ref={urlInputRef}
-          onChange={this.onUrlChange}
-          onKeyDown={this.onKeyDown}
+          onChange={onUrlChange}
+          onKeyDown={onKeyDown}
         />
-        <button onMouseDown={this.onMouseDown}>Add Media</button>
+        <button onMouseDown={onMouseDown}>Add Media</button>
       </div>
     )
   }

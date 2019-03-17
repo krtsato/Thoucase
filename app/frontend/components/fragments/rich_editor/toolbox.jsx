@@ -15,12 +15,12 @@ export const Toolbox = (props) => {
   })
 
   /* メディアURL 更新準備 */
-  this.onAddMediaUrlInput = (mediaType) => {
+  const onAddMediaUrlInput = (mediaType) => {
     setMediaUrlState({showUrlInput: true, urlType: mediaType, urlVal: ''})
   }
 
   /* メディアURL 更新 */
-  this.onAddMediaUrl = (mediaUrl) => {
+  const onAddMediaUrl = (mediaUrl) => {
     setMediaUrlState((mediaUrlParams) => ({
       ...mediaUrlParams,
       urlVal: mediaUrl
@@ -28,7 +28,7 @@ export const Toolbox = (props) => {
   }
 
   /* メディア更新 */
-  this.onMediaChange = () => {
+  const onMediaChange = () => {
     const {urlType, urlVal} = mediaUrlParams
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
@@ -69,21 +69,21 @@ export const Toolbox = (props) => {
       <BlockStyleButton styleType={'code-block'} {...props} />
       <AtomicButton
         mediaType={'image'}
-        onAddMediaUrlInput={this.onAddMediaUrlInput}
+        onAddMediaUrlInput={onAddMediaUrlInput}
       />
       <AtomicButton
         mediaType={'audio'}
-        onAddMediaUrlInput={this.onAddMediaUrlInput}
+        onAddMediaUrlInput={onAddMediaUrlInput}
       />
       <AtomicButton
         mediaType={'video'}
-        onAddMediaUrlInput={this.onAddMediaUrlInput}
+        onAddMediaUrlInput={onAddMediaUrlInput}
       />
       <UrlInput
         showUrlInput={mediaUrlParams.showUrlInput}
         urlVal={mediaUrlParams.urlVal}
-        onAddMediaUrl={this.onAddMediaUrl}
-        onMediaChange={this.onMediaChange}
+        onAddMediaUrl={onAddMediaUrl}
+        onMediaChange={onMediaChange}
       />
     </div>
   )

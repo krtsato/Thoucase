@@ -6,14 +6,14 @@ export const BlockStyleButton = (props) => {
   const {styleType, editorState, onEditorChange} = props
 
   // スタイル 反映
-  this.onMouseDown = (e) => {
+  const onMouseDown = (e) => {
     e.preventDefault()
     onEditorChange(RichUtils.toggleBlockType(editorState, styleType))
   }
 
   // 描画
   return (
-    <button type='button' onMouseDown={this.onMouseDown}>
+    <button type='button' onMouseDown={onMouseDown}>
       {styleType}
     </button>
   )

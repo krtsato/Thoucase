@@ -22,22 +22,23 @@ export const RichEditor = () => {
 
   /* フォーカス */
   const editorRef = useRef(null)
-  this.editorFocus = () => {
+  const editorFocus = () => {
     editorRef.current.focus()
   }
 
   /* ライフサイクル*/
   useEffect(() => {
-    this.editorFocus
+    editorFocus
   }, [editorState])
 
   /* エディタステイト 更新 */
-  this.onEditorChange = (editorState) => {
+  
+  const onEditorChange = (editorState) => {
     setEditorState(editorState)
   }
 
   /* メディア 呼出 */
-  this.blockRendererFn = (contentBlock) => {
+  const blockRendererFn = (contentBlock) => {
     const entityType = contentBlock.getType()
     let block = null
     switch (entityType) {
@@ -54,7 +55,7 @@ export const RichEditor = () => {
   }
 
   /* スタイル クラス名付加 */
-  this.blockStyleFn = (contentBlock) => {
+  const blockStyleFn = (contentBlock) => {
     const type = contentBlock.getType()
     let className
     switch (type) {
@@ -104,17 +105,17 @@ export const RichEditor = () => {
   const blockRenderMap = DefaultDraftBlockRenderMap.merge(newMap)
 
   /* スタイル キーコマンド */
-  this.handleKeyCommand = (command) => {
+  const handleKeyCommand = (command) => {
     const newState = RichUtils.handleKeyCommand(editorState, command)
     if (newState) {
-      this.onEditorChange(newState)
+      onEditorChange(newState)
       return true
     }
     return false
   }
 
   /* 保存 */
-  this.save = () => {
+  const save = () => {
     // JSONB 型で rawState を保存する
     const rawState = convertToRaw(editorState.getCurrentContent())
     console.log(JSON.stringify(rawState, undefined, 1))
@@ -126,18 +127,18 @@ export const RichEditor = () => {
       <h1>Draft.js example</h1>
       {/* エラーメッセージ */}
       {/* タイトル入力欄 */}
-      <Toolbox editorState={editorState} onEditorChange={this.onEditorChange} />
+      <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
         editorState={editorState}
         ref={editorRef}
-        onChange={this.onEditorChange}
-        blockRendererFn={this.blockRendererFn}
-        blockStyleFn={this.blockStyleFn}
+        onChange={onEditorChange}
+        blockRendererFn={blockRendererFn}
+        blockStyleFn={blockStyleFn}
         blockRenderMap={blockRenderMap}
-        handleKeyCommand={this.handleKeyCommand}
+        handleKeyCommand={handleKeyCommand}
       />
       {/* 保存ボタン */}
-      <button type='button' onClick={this.save}>
+      <button type='button' onClick={save}>
         LOG
       </button>
     </div>
