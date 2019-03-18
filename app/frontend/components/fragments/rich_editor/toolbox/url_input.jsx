@@ -1,18 +1,27 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useContext, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
+import {editorContext} from 'components/fragments/contexts/editor_context'
 
 export const UrlInput = (props) => {
   let urlInput = null
   const {showUrlInput, urlVal, onAddMediaUrl, onMediaChange} = props
+  const editorBlur = useContext(editorContext)
 
   /* フォーカス */
   const urlInputRef = useRef(null)
-  const urlInputFocus = () => urlInputRef.current.focus()
-  const urlInputBlur = () => urlInputRef.current.blur()
+  const urlInputFocus = () => {
+    console.log('url / focus')
+    urlInputRef.current.focus()
+  }
+  const urlInputBlur = () => {
+    console.log('url / blur')
+    urlInputRef.current.blur()
+  }
 
   /* ライフサイクル */
   useEffect(() => {
     if (showUrlInput) {
+      editorBlur
       urlInputFocus()
     }
     return () => urlInputBlur

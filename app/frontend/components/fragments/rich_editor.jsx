@@ -4,6 +4,16 @@
  *   ・エラーメッセージ
  *   ・タイトル入力欄
  *   ・保存ボタン
+ *  
+ * ・フォーカス修正
+ *  ・状況
+ *    ・rich_editor : focus, blur
+ *    ・url_inputfocus : focus(), blur
+ *    ・強引にurl_inputにフォーカスしている
+ *  ・原因
+ *    ・rich_editorのuseEffectのeditorStateが, editorとurl両方に作用している
+ *  ・対策
+ *    ・rich_editor内でfocus監視用パラメータを作り, useEffectの第2引数として管理する
  */
 import React, {useState, useEffect, useRef} from 'react'
 import {
@@ -16,18 +26,25 @@ import {
 import Immutable from 'immutable'
 import {Media} from 'components/fragments/rich_editor/media'
 import {Toolbox} from 'components/fragments/rich_editor/toolbox'
+import {editorContext} from 'components/fragments/contexts/editor_context'
 
 export const RichEditor = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
   /* フォーカス */
   const editorRef = useRef(null)
-  const editorFocus = () => editorRef.current.focus()
-  const editorBlur = () => editorRef.current.blur()
+  const editorFocus = () => {
+    console.log('editor / focus')
+    editorRef.current.focus()
+  }
+  const editorBlur = () => {
+    console.log('editor / blur')
+    editorRef.current.blur()
+  }
 
   /* ライフサイクル */
   useEffect(() => {
-    editorFocus()
+    editorFocus
     return () => editorBlur
   }, [editorState])
 
@@ -126,7 +143,9 @@ export const RichEditor = () => {
       <h1>Draft.js example</h1>
       {/* エラーメッセージ */}
       {/* タイトル入力欄 */}
-      <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
+      <editorContext.Provider value={() => editorBlur}>
+        <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
+      </editorContext.Provider>
       <Editor
         editorState={editorState}
         ref={editorRef}

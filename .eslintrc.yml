@@ -41,6 +41,7 @@ rules:
   
   # Overwrite default and airbnb rules
   no-console: off
+  no-unused-expressions: off
 
   # Add  import rules
   import/no-unresolved: off
