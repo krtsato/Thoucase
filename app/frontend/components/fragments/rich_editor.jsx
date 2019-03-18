@@ -16,7 +16,6 @@ import {
 import Immutable from 'immutable'
 import {Media} from 'components/fragments/rich_editor/media'
 import {Toolbox} from 'components/fragments/rich_editor/toolbox'
-import {editorContext} from 'components/fragments/contexts/rich_editor_context'
 
 export const RichEditor = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
@@ -26,14 +25,15 @@ export const RichEditor = () => {
   const editorFocus = () => editorRef.current.focus()
   const editorBlur = () => editorRef.current.blur()
 
-  /* ライフサイクル*/
+  /* ライフサイクル */
   useEffect(() => {
-    editorFocus
+    editorFocus()
+    return () => editorBlur
   }, [editorState])
 
   /* エディタステイト 更新 */
-  const onEditorChange = (editorState) => {
-    setEditorState(editorState)
+  const onEditorChange = (nextState) => {
+    setEditorState(nextState)
   }
 
   /* メディア 呼出 */
@@ -126,9 +126,7 @@ export const RichEditor = () => {
       <h1>Draft.js example</h1>
       {/* エラーメッセージ */}
       {/* タイトル入力欄 */}
-      <editorContext.Provider editorBlur={editorBlur}>
-        <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
-      </editorContext.Provider>
+      <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
         editorState={editorState}
         ref={editorRef}

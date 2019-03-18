@@ -11,7 +11,6 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('packs / layouts / application.jsx')
 import '@babel/polyfill'
 import 'stylesheets/layouts/application.scss'
 import '@fortawesome/fontawesome-free/js/all'
@@ -19,6 +18,8 @@ import 'bootstrap'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Header} from 'components/layouts/header'
+
+console.log('packs / layouts / application.jsx')
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<Header />, document.getElementById('headerLayout'))

@@ -1,11 +1,9 @@
-import React, {useContext, useEffect, useRef} from 'react'
+import React, {useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
-import {editorContext} from 'components/fragments/contexts/rich_editor_context'
 
 export const UrlInput = (props) => {
   let urlInput = null
   const {showUrlInput, urlVal, onAddMediaUrl, onMediaChange} = props
-  const {editorBlur} = useContext(editorContext)
 
   /* フォーカス */
   const urlInputRef = useRef(null)
@@ -15,13 +13,12 @@ export const UrlInput = (props) => {
   /* ライフサイクル */
   useEffect(() => {
     if (showUrlInput) {
-      editorBlur
-      urlInputFocus
+      urlInputFocus()
     }
     return () => urlInputBlur
   }, [showUrlInput])
 
-  /* メディアURL 更新*/
+  /* メディアURL 更新 */
   const onUrlChange = (e) => {
     e.preventDefault()
     onAddMediaUrl(e.target.value)
@@ -51,7 +48,7 @@ export const UrlInput = (props) => {
           onChange={onUrlChange}
           onKeyDown={onKeyDown}
         />
-        <button onMouseDown={onMouseDown}>Add Media</button>
+        <button type='button' onMouseDown={onMouseDown}>Add Media</button>
       </div>
     )
   }
@@ -65,4 +62,5 @@ UrlInput.propTypes = {
   urlVal: PropTypes.string,
   onAddMediaUrl: PropTypes.func,
   onMediaChange: PropTypes.func,
+  editorBlur: PropTypes.func
 }

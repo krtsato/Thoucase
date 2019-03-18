@@ -21,8 +21,8 @@ export const Toolbox = (props) => {
 
   /* メディアURL 更新 */
   const onAddMediaUrl = (mediaUrl) => {
-    setMediaUrlState((mediaUrlParams) => ({
-      ...mediaUrlParams,
+    setMediaUrlState((nextState) => ({
+      ...nextState,
       urlVal: mediaUrl
     }))
   }
@@ -34,7 +34,7 @@ export const Toolbox = (props) => {
     const contentStateWithEntity = contentState.createEntity(
       urlType,
       'IMMUTABLE',
-      {urlVal: urlVal}
+      {urlVal}
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
     const newEditorState = EditorState.set(editorState, {
@@ -42,8 +42,8 @@ export const Toolbox = (props) => {
     })
 
     // 引数なしでできるか検証
-    setMediaUrlState((mediaUrlParams) => ({
-      ...mediaUrlParams,
+    setMediaUrlState((nextState) => ({
+      ...nextState,
       showUrlInput: false,
       urlVal: ''
     }))
@@ -56,27 +56,27 @@ export const Toolbox = (props) => {
 
   return (
     <div>
-      <InlineStyleButton styleType={'BOLD'} {...props} />
-      <InlineStyleButton styleType={'ITALIC'} {...props} />
-      <BlockStyleButton styleType={'paragraph'} {...props} />
-      <BlockStyleButton styleType={'inSection'} {...props} />
-      <BlockStyleButton styleType={'header-one'} {...props} />
-      <BlockStyleButton styleType={'header-two'} {...props} />
-      <BlockStyleButton styleType={'header-three'} {...props} />
-      <BlockStyleButton styleType={'ordered-list-item'} {...props} />
-      <BlockStyleButton styleType={'unordered-list-item'} {...props} />
-      <BlockStyleButton styleType={'blockquote'} {...props} />
-      <BlockStyleButton styleType={'code-block'} {...props} />
+      <InlineStyleButton styleType='BOLD' {...props} />
+      <InlineStyleButton styleType='ITALIC' {...props} />
+      <BlockStyleButton styleType='paragraph' {...props} />
+      <BlockStyleButton styleType='inSection' {...props} />
+      <BlockStyleButton styleType='header-one' {...props} />
+      <BlockStyleButton styleType='header-two' {...props} />
+      <BlockStyleButton styleType='header-three' {...props} />
+      <BlockStyleButton styleType='ordered-list-item' {...props} />
+      <BlockStyleButton styleType='unordered-list-item' {...props} />
+      <BlockStyleButton styleType='blockquote' {...props} />
+      <BlockStyleButton styleType='code-block' {...props} />
       <AtomicButton
-        mediaType={'image'}
+        mediaType='image'
         onAddMediaUrlInput={onAddMediaUrlInput}
       />
       <AtomicButton
-        mediaType={'audio'}
+        mediaType='audio'
         onAddMediaUrlInput={onAddMediaUrlInput}
       />
       <AtomicButton
-        mediaType={'video'}
+        mediaType='video'
         onAddMediaUrlInput={onAddMediaUrlInput}
       />
       <UrlInput
