@@ -42,13 +42,15 @@ rules:
   # Overwrite default and airbnb rules
   no-console: off
   no-unused-expressions: off
+  jsx-a11y/no-autofocus: off
 
-  # Add  import rules
+  # Add import rules
   import/no-unresolved: off
   import/prefer-default-export: off
 
   # Add react rules
   react/forbid-prop-types: off
+  react/jsx-boolean-value: off
   react/require-default-props: off
 
   # Add react-hooks rules
