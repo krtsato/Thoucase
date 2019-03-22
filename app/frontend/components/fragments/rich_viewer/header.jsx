@@ -7,5 +7,7 @@ export const Header = () => {
   }, [])
 
   /* レンダリング */
-  return
+  return(
+    <div>Header</div>
+  )
 }

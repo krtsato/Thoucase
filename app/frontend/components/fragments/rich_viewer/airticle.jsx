@@ -7,5 +7,7 @@ export const Airticle = () => {
   }, [])
   
   /* レンダリング */
-  return
+  return(
+    <div>Airticle</div>
+  )
 }
