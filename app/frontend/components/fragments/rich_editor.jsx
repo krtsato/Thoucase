@@ -1,11 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {
-  Editor,
-  EditorState,
-  RichUtils,
-  DefaultDraftBlockRenderMap,
-  convertToRaw
-} from 'draft-js'
+import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, convertToRaw} from 'draft-js'
 import Immutable from 'immutable'
 import {Media} from 'components/fragments/rich_editor/media'
 import {Toolbox} from 'components/fragments/rich_editor/toolbox'
@@ -114,7 +108,7 @@ export const RichEditor = () => {
   }
 
   /* レンダリング */
-  return(
+  return (
     <div>
       {/* エラーメッセージ */}
       <Namebox editorFocus={editorFocus} />

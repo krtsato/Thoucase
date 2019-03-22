@@ -9,7 +9,7 @@ extends:
   - plugin:import/warnings
   - plugin:jsx-a11y/recommended
   - plugin:react/recommended
-  - prettier
+  - plugin:prettier/recommended
   - prettier/react
 
 globals:
@@ -32,7 +32,6 @@ plugins:
   - react-hooks
 
 rules:
-  # Add Prettier rules
   # Remove rules from default eslint configuration.
   # e.g. indent, semi, quotes.
   linebreak-style:
