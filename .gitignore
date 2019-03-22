@@ -67,6 +67,7 @@ yarn-debug.log*
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.browserslistrc
 .eslintrc.yml
 .prittierrc.yml
 .rubocop_todo.yml

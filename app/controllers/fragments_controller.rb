@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FragmentsController < ApplicationController
-  before_action :set_fragment, only: [:show, :update, :destroy]
+  before_action :set_fragment, only: [:show, :edit, :update, :destroy]
 
   # GET /fragments
   def index
@@ -15,6 +15,11 @@ class FragmentsController < ApplicationController
     render json: @fragment
   end
 
+  # GET /fragments
+  def new
+    @fragment = Fragment.new
+  end
+
   # POST /fragments
   def create
     @fragment = Fragment.new(fragment_params)
@@ -24,6 +29,11 @@ class FragmentsController < ApplicationController
     else
       render json: @fragment.errors, status: :unprocessable_entity
     end
+  end
+
+  # GET /fragments/1
+  def edit
+
   end
 
   # PATCH/PUT /fragments/1

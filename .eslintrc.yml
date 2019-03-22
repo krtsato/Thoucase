@@ -3,14 +3,18 @@ env:
   es6: true
 
 extends:
+  - eslint:recommended
   - airbnb
   - plugin:import/errors
   - plugin:import/warnings
   - plugin:jsx-a11y/recommended
   - plugin:react/recommended
-  - plugin:prettier/recommended
   - prettier
   - prettier/react
+
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
 
 parser: babel-eslint
 
@@ -23,13 +27,32 @@ parserOptions:
     configFile: "babel.config.js"
 
 plugins:
+  - import
   - react
   - react-hooks
 
 rules:
-  # Overwrite airbnb rules
-  react/jsx-boolean-value: always
+  # Add Prettier rules
+  # Remove rules from default eslint configuration.
+  # e.g. indent, semi, quotes.
+  linebreak-style:
+    - error
+    - unix
+  
+  # Overwrite default and airbnb rules
+  no-console: off
+  no-unused-expressions: off
+  jsx-a11y/no-autofocus: off
+
+  # Add import rules
+  import/no-unresolved: off
+  import/prefer-default-export: off
+
+  # Add react rules
+  react/forbid-prop-types: off
+  react/jsx-boolean-value: off
+  react/require-default-props: off
 
   # Add react-hooks rules
   react-hooks/rules-of-hooks: error
-  react-hooks/exhaustive-deps: warn
+  react-hooks/exhaustive-deps: off

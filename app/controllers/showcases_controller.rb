@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ShowcasesController < ApplicationController
-  before_action :set_showcase, only: [:show, :update, :destroy]
+  before_action :set_showcase, only: [:show, :edit, :update, :destroy]
 
   # GET /showcases
   def index
@@ -14,6 +14,11 @@ class ShowcasesController < ApplicationController
   def show
     render json: @showcase
   end
+  
+  # GET /fragments
+  def new
+    @showcase= Showcase.new
+  end
 
   # POST /showcases
   def create
@@ -24,6 +29,11 @@ class ShowcasesController < ApplicationController
     else
       render json: @showcase.errors, status: :unprocessable_entity
     end
+  end
+
+  # GET /fragments/1
+  def edit
+
   end
 
   # PATCH/PUT /showcases/1

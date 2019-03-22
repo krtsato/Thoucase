@@ -1,4 +1,3 @@
-/* eslint no-console:0 */
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
@@ -12,8 +11,16 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('packs / layouts / application.jsx')
+import '@babel/polyfill'
 import 'stylesheets/layouts/application.scss'
 import '@fortawesome/fontawesome-free/js/all'
 import 'bootstrap'
-import 'babel-polyfill'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Header} from 'components/layouts/header'
+
+console.log('packs / layouts / application.jsx')
+
+document.addEventListener('DOMContentLoaded', () => {
+  ReactDOM.render(<Header />, document.getElementById('headerLayout'))
+})
