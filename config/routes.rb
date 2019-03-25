@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :users
   # concern
   concern :plus_new_edit do
     get 'new', on: :collection
