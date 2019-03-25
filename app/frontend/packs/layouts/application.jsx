@@ -19,8 +19,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Header} from 'components/layouts/header'
 
-console.log('packs / layouts / application.jsx')
-
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<Header />, document.getElementById('headerLayout'))
 })
