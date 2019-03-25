@@ -13,6 +13,11 @@ class UsersController < ApplicationController
     render json: @user
   end
 
+  # GET /fragments
+  def new
+    @user = User.new
+  end
+
   # POST /users
   def create
     @user = User.new(user_params)
@@ -23,6 +28,11 @@ class UsersController < ApplicationController
       render json: @user.errors, status: :unprocessable_entity
     end
   end
+
+    # GET /fragments/1
+    def edit
+
+    end
 
   # PATCH/PUT /users/1
   def update
