@@ -14,10 +14,10 @@ class ShowcasesController < ApplicationController
   def show
     render json: @showcase
   end
-  
+
   # GET /fragments
   def new
-    @showcase= Showcase.new
+    @showcase = Showcase.new
   end
 
   # POST /showcases
@@ -32,9 +32,7 @@ class ShowcasesController < ApplicationController
   end
 
   # GET /fragments/1
-  def edit
-
-  end
+  def edit; end
 
   # PATCH/PUT /showcases/1
   def update

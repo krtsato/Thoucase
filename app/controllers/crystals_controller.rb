@@ -32,9 +32,7 @@ class CrystalsController < ApplicationController
   end
 
   # GET /fragments/1
-  def edit
-
-  end
+  def edit; end
 
   # PATCH/PUT /crystals/1
   def update
