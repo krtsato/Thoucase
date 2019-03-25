@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     get 'edit', on: :member
   end
 
+  # user
+  resources :users, concerns: :plus_new_edit
+
   shallow do
     # showcases / crystals
     resources :showcases, concerns: :plus_new_edit do

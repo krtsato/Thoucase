@@ -32,9 +32,7 @@ class FragmentsController < ApplicationController
   end
 
   # GET /fragments/1
-  def edit
-
-  end
+  def edit; end
 
   # PATCH/PUT /fragments/1
   def update

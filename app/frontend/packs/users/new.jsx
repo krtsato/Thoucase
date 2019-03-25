@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Fuga} from 'components/crystals/fuga'
+import {Hoge} from 'components/users/hoge'
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Fuga />, document.getElementById('fuga'))
+  ReactDOM.render(<Hoge />, document.getElementById('hoge'))
 })
