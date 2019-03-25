@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :users
   # concern
   concern :plus_new_edit do
     get 'new', on: :collection
     get 'edit', on: :member
   end
+
+  # user
+  resources :users, concerns: :plus_new_edit
 
   shallow do
     # showcases / crystals
