@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   end
 
   # home
-  get 'home/top'
-  get 'home/about'
+  get '/' => 'home#top'
+  get 'about' => 'home#about'
 
   # user
   resources :users, concerns: :plus_new_edit
