@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-
   # concern
   concern :plus_new_edit do
     get 'new', on: :collection
     get 'edit', on: :member
   end
+
+  # home
+  get 'home/top'
+  get 'home/about'
 
   # user
   resources :users, concerns: :plus_new_edit
