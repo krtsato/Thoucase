@@ -9,8 +9,12 @@ Rails.application.routes.draw do
   get '/' => 'home#top'
   get 'about' => 'home#about'
 
-  # user
+  # users
   resources :users, concerns: :plus_new_edit
+
+  # likes
+  post 'likes/:fragment_id' => 'likes#create'
+  delete 'likes/:fragment_id' => 'likes#destroy'
 
   shallow do
     # showcases / crystals
