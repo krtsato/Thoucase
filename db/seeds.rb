@@ -13,6 +13,12 @@ User.create!(
   password: "krtsato"
 )
 
+# Like
+Like.create!(
+  user_id: 1,
+  fragment_id: 1
+)
+
 # Showcase
 Showcase.create!(
   name: "アニメ作品",
