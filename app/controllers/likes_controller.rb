@@ -6,15 +6,21 @@ class LikesController < ApplicationController
   # POST /likes/1(:fragment_id)
   def create
     # @like = Like.new(user_id: @current_user.id, fragment_id: @fragment.id)
-    # @like.save
-    redirect_to("/crystals/#{@crystal.id}/fragmets/#{@fragment.id}")
+    # redirect_to("/crystals/#{@crystal.id}/fragmets/#{@fragment.id}")
+    # if @like.save
+    # render json: @like, status: :created, location: @like
+    # else
+    # render json: @like.errors, status: :unprocessable_entity
+    # end
+    redirect_to("/")
   end
 
   # DELETE /likes/1(:fragment_id)
   def destroy
     # @like = Like.find_by(user_id: @current_user.id, fragment_id: @fragment.id)
     # @like.destroy
-    redirect_to("/crystals/#{@crystals.id}/fragments/#{@fragment.id}")
+    # redirect_to("/crystals/#{@crystal.id}/fragments/#{@fragment.id}")
+    redirect_to("/")
   end
 
   private
@@ -22,10 +28,6 @@ class LikesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_fragment
       @fragment = Fragment.find(params[:fragment_id])
-    end
-
-    def set_crystal
-      @crystal = Crystal.find(@fragment.crystal_id)
     end
 
     # Only allow a trusted parameter "white list" through.
