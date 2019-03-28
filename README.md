@@ -6,19 +6,25 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+2.6.0
 
 * System dependencies
+comming soon...
 
 * Configuration
+comming soon...
 
 * Database creation
+comming soon...
 
 * Database initialization
+comming soon...
 
 * How to run the test suite
+comming soon...
 
 * Services (job queues, cache servers, search engines, etc.)
+comming soon...
 
 * Deployment instructions
-
-* ...
+comming soon...
