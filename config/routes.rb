@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get 'about' => 'home#about'
 
   # users
-  resources :users, concerns: :plus_new_edit
+  resources :users, concerns: :plus_new_edit do
+    get :login, on: :collection
+  end 
 
   # likes
   post 'likes/:fragment_id' => 'likes#create'

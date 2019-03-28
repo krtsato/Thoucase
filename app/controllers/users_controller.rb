@@ -3,6 +3,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
+  #GET /users/login
+  def login_form
+
+  end
+
   # GET /users
   def index
     @users = User.all
