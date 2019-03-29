@@ -8,19 +8,19 @@ class UsersController < ApplicationController
 
   # POST /login
   def login
-    @user = User.find_by(email: params[:data][:email])
-    if @user && @user.authenticate(params[:data][:password])
-      # APIモードで使用可にしたい
-      session[:user_id] = @user.id
-      flash[:notice] = "ログインしました"
+    email = params[:data][:email]
+    password = params[:data][:password]
+    login_user = User.find_by(email: email)
+    if login_user && login_user.authenticate(password)
+      # flash_msgを使用可能にしたい
+      @flash = "ログインしました"
       redirect_to("/")
     else
-      @error_msg = "メールアドレスまたはパスワードが間違っています"
-      @email = params[:data][:email]
-      @password = params[:data][:password]
-      data = {error: @error_msg,
-              email: @email,
-              password: @password
+      error_msg = "メールアドレスまたはパスワードが間違っています"
+      data = {
+        error: error_msg,
+        email: email,
+        password: password
       }
       render json: data
     end
