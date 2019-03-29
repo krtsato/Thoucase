@@ -49,7 +49,9 @@ export const UrlInput = (props) => {
           onChange={onUrlChange}
           onKeyDown={onKeyDown}
         />
-        <button type='button' onMouseDown={onMouseDown}>Add Media</button>
+        <button type='button' onMouseDown={onMouseDown}>
+          Add Media
+        </button>
       </div>
     )
   }
@@ -62,5 +64,5 @@ UrlInput.propTypes = {
   showUrlInput: PropTypes.bool,
   urlVal: PropTypes.string,
   onAddMediaUrl: PropTypes.func,
-  onMediaChange: PropTypes.func,
+  onMediaChange: PropTypes.func
 }

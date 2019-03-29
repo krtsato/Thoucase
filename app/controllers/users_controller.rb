@@ -3,9 +3,27 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
-  #GET /users/login
-  def login_form
+  # GET /login
+  def login_form; end
 
+  # POST /login
+  def login
+    @user = User.find_by(email: params[:data][:email])
+    if @user && @user.authenticate(params[:data][:password])
+      # APIモードで使用可にしたい
+      session[:user_id] = @user.id
+      flash[:notice] = "ログインしました"
+      redirect_to("/")
+    else
+      @error_msg = "メールアドレスまたはパスワードが間違っています"
+      @email = params[:data][:email]
+      @password = params[:data][:password]
+      data = {error: @error_msg,
+              email: @email,
+              password: @password
+      }
+      render json: data
+    end
   end
 
   # GET /users

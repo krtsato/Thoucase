@@ -31,11 +31,7 @@ export const Toolbox = (props) => {
   const onMediaChange = () => {
     const {urlType, urlVal} = mediaUrlParams
     const contentState = editorState.getCurrentContent()
-    const contentStateWithEntity = contentState.createEntity(
-      urlType,
-      'IMMUTABLE',
-      {urlVal}
-    )
+    const contentStateWithEntity = contentState.createEntity(urlType, 'IMMUTABLE', {urlVal})
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
     const newEditorState = EditorState.set(editorState, {
       currentContent: contentStateWithEntity
@@ -49,9 +45,7 @@ export const Toolbox = (props) => {
     }))
 
     // エディタステイト 更新
-    onEditorChange(
-      AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
-    )
+    onEditorChange(AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' '))
   }
 
   return (
@@ -67,18 +61,9 @@ export const Toolbox = (props) => {
       <BlockStyleButton styleType='unordered-list-item' {...props} />
       <BlockStyleButton styleType='blockquote' {...props} />
       <BlockStyleButton styleType='code-block' {...props} />
-      <AtomicButton
-        mediaType='image'
-        onAddMediaUrlInput={onAddMediaUrlInput}
-      />
-      <AtomicButton
-        mediaType='audio'
-        onAddMediaUrlInput={onAddMediaUrlInput}
-      />
-      <AtomicButton
-        mediaType='video'
-        onAddMediaUrlInput={onAddMediaUrlInput}
-      />
+      <AtomicButton mediaType='image' onAddMediaUrlInput={onAddMediaUrlInput} />
+      <AtomicButton mediaType='audio' onAddMediaUrlInput={onAddMediaUrlInput} />
+      <AtomicButton mediaType='video' onAddMediaUrlInput={onAddMediaUrlInput} />
       <UrlInput
         showUrlInput={mediaUrlParams.showUrlInput}
         urlVal={mediaUrlParams.urlVal}
