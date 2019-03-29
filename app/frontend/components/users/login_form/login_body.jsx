@@ -1,5 +1,5 @@
 import React from 'react'
-import {axiosRailsCrud} from 'packs/layouts/axios'
+import {axiosCrud} from 'components/axios/instances'
 
 export const LoginBody = () => {
   const email = ''
@@ -7,7 +7,7 @@ export const LoginBody = () => {
   let formError = null
 
   const onClick = () => {
-    axiosRailsCrud({
+    axiosCrud({
       method: 'post',
       url: '/login',
       data: {email, password}
