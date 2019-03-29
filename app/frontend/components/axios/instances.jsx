@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 
-export const axiosRailsCrud = axios.create({
+export const axiosCrud = axios.create({
   baseURL: 'http://localhost:3000',
   headers: {'content-type': 'application/json'},
   paramsSerializer: (params) => {

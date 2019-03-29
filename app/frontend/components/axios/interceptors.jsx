@@ -1,4 +1,4 @@
-export const reqAuth = (instance) => {
+export const setReqAuth = (instance) => {
   instance.interceptors.request.use(
     (config) => {
       return config
@@ -9,8 +9,8 @@ export const reqAuth = (instance) => {
   )
 }
 
-export const resAuth = (instance) => {
-  instance.interceptors.request.use(
+export const setResAuth = (instance) => {
+  instance.interceptors.response.use(
     (config) => {
       return config
     },
