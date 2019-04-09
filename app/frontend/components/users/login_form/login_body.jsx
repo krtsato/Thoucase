@@ -22,7 +22,7 @@ export const LoginBody = () => {
       <label htmlFor='email'>
         E-mail : <input id='email' name='email' value={email} />
       </label>
-      <label htmlFor='email'>
+      <label htmlFor='password'>
         Password : <input id='password' name='password' value={password} />
       </label>
       <button type='button' onClick={onClick}>
