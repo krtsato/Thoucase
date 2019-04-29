@@ -8,7 +8,7 @@
 
 # User
 User.create!(
-  name: "サトラクチャ",
+  name: "satoructure",
   email: "krt@sato.com",
   password: "krtsato"
 )

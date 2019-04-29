@@ -13,9 +13,7 @@ export const UrlInput = (props) => {
 
   /* ライフサイクル */
   useEffect(() => {
-    if (showUrlInput) {
-      urlInputFocus()
-    }
+    if (showUrlInput) urlInputFocus()
   }, [showUrlInput])
 
   /* メディアURL 更新 */

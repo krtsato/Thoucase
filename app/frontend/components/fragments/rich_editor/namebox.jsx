@@ -18,9 +18,7 @@ export const Namebox = (props) => {
     }
   }
 
-  return(
-    <input type='text' ref={nameRef} onKeyDown={onKeyDown} autoFocus />
-  ) 
+  return <input type='text' ref={nameRef} onKeyDown={onKeyDown} autoFocus />
 }
 
 Namebox.propTypes = {

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :authenticate_user, only: [:edit, :update, :destroy]
+  before_action :forbid_login_user, only: [:new, :create, :login_form, :login]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /login
@@ -8,22 +11,32 @@ class UsersController < ApplicationController
 
   # POST /login
   def login
-    email = params[:data][:email]
-    password = params[:data][:password]
+    email = params[:email]
+    password = params[:password]
     login_user = User.find_by(email: email)
     if login_user && login_user.authenticate(password)
-      # flash_msgを使用可能にしたい
-      @flash = "ログインしました"
-      redirect_to("/")
+      @token = login_user.token
+      @flash_msg = 'ログインしました'
+      data = {
+        token: @token,
+        flash: flash_msg
+      }
+      render json: data, layout: 'login_form' # template: 'fragments/index'
     else
-      error_msg = "メールアドレスまたはパスワードが間違っています"
+      error_msg = 'メールアドレスまたはパスワードが間違っています'
       data = {
         error: error_msg,
         email: email,
         password: password
       }
-      render json: data
+      render json: data, layout: 'login_form'
     end
+  end
+
+  def logout
+    @token = nil
+    @flash_msg = 'ログアウトしました'
+    render json: @flash_msg, layout: 'login_form'
   end
 
   # GET /users
@@ -39,9 +52,7 @@ class UsersController < ApplicationController
   end
 
   # GET /fragments
-  def new
-    @user = User.new
-  end
+  def new; end
 
   # POST /users
   def create
