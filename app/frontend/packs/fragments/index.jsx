@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Hoge} from 'components/fragments/hoge'
+import {FragmentsList} from 'components/fragments/fragments_list'
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Hoge />, document.getElementById('hoge'))
+  ReactDOM.render(<FragmentsList />, document.getElementById('fragmentsIndex'))
 })

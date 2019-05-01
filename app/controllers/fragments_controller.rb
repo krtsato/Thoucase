@@ -10,7 +10,7 @@ class FragmentsController < ApplicationController
       format.json {
         @fragments = Fragment.all
         puts("JSON ｷﾏｼﾀﾜ~")
-        render json: @fragments
+        render 'fragments/index.json.jbuilder'
       }
     end
   end

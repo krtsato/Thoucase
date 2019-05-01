@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {axiosRails} from 'components/axios/instances'
 
-export const Hoge = () => {
+export const FragmentsList = () => {
   let fragmentsList = null
   const [fragments, setFragments] = useState([])
 
@@ -20,46 +20,26 @@ export const Hoge = () => {
       })
   }, [])
 
-  const onClick = () => {
-    axiosRails({
-      method: 'get',
-      url: '/fragments/index.json',
-      responseType: 'json'
-    })
-      .then((response) => {
-        console.log(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
-  /* メディアURLインプット 生成 */
+  /* fragments 一覧 生成 */
   if (fragments) {
     fragmentsList = (
-      <button type='button' onClick={onClick}>
-        Please JSON
-      </button>
-      /*
       <ul>
         {fragments.map((fragment) => (
           <li key={fragment.id}>
             <p>id : {fragment.id}</p>
+            <p>crystal_id : {fragment.crystal_id}</p>
+            <p>user_id : {fragment.user_id}</p>
+            <p>created_at : {fragment.created_at}</p>
+            <p>updated_at : {fragment.updated_at}</p>
             <p>name : {fragment.name}</p>
-            <p>content :</p>
-            <pre>{fragment.content}</pre>
+            content : Display viewer here.
+            {/* fragment.content */}
           </li>
         ))}
       </ul>
-      */
     )
   }
 
   /* レンダリング */
-  return (
-    <>
-      <h1>Hoge</h1>
-      {fragmentsList}
-    </>
-  )
+  return fragmentsList
 }
