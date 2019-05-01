@@ -49,7 +49,7 @@ export const Toolbox = (props) => {
   }
 
   return (
-    <div>
+    <>
       <InlineStyleButton styleType='BOLD' {...props} />
       <InlineStyleButton styleType='ITALIC' {...props} />
       <BlockStyleButton styleType='paragraph' {...props} />
@@ -70,7 +70,7 @@ export const Toolbox = (props) => {
         onAddMediaUrl={onAddMediaUrl}
         onMediaChange={onMediaChange}
       />
-    </div>
+    </>
   )
 }
 

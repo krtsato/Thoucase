@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::API
   include ActionController::ImplicitRender
+  include ActionController::MimeResponds
   include ActionView::Layouts
 
   before_action :set_current_user

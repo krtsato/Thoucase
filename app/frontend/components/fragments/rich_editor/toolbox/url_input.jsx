@@ -39,18 +39,12 @@ export const UrlInput = (props) => {
   /* メディアURLインプット 生成 */
   if (showUrlInput) {
     urlInput = (
-      <div>
-        <input
-          type='text'
-          value={urlVal}
-          ref={urlInputRef}
-          onChange={onUrlChange}
-          onKeyDown={onKeyDown}
-        />
+      <>
+        <input type='text' value={urlVal} ref={urlInputRef} onChange={onUrlChange} onKeyDown={onKeyDown} />
         <button type='button' onMouseDown={onMouseDown}>
           Add Media
         </button>
-      </div>
+      </>
     )
   }
 

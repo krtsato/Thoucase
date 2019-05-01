@@ -7,7 +7,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /login
-  def login_form; end
+  def login_form
+    render status: :ok
+  end
 
   # POST /login
   def login
@@ -17,32 +19,29 @@ class UsersController < ApplicationController
     if login_user && login_user.authenticate(password)
       @token = login_user.token
       @flash_msg = 'ログインしました'
-      data = {
+      @login_data = {
         token: @token,
-        flash: flash_msg
+        flash: @flash_msg
       }
-      render json: data, layout: 'login_form' # template: 'fragments/index'
     else
-      error_msg = 'メールアドレスまたはパスワードが間違っています'
-      data = {
-        error: error_msg,
+      @login_data = {
+        error: 'メールアドレスまたはパスワードが間違っています',
         email: email,
         password: password
       }
-      render json: data, layout: 'login_form'
     end
+    redirect_to('/fragments/index')
   end
 
   def logout
     @token = nil
     @flash_msg = 'ログアウトしました'
-    render json: @flash_msg, layout: 'login_form'
+    render json: @flash_msg
   end
 
   # GET /users
   def index
     @users = User.all
-
     render json: @users
   end
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {axiosCrud} from 'components/axios/instances'
+import {axiosRails} from 'components/axios/instances'
 
 export const LoginBody = () => {
   let formError = null
@@ -15,13 +15,17 @@ export const LoginBody = () => {
   }
 
   const onClick = () => {
-    axiosCrud({
+    axiosRails({
       method: 'post',
       url: '/login',
       data: formValue
-    }).catch((error) => {
-      formError = <div className='formError'>`${error}`</div>
     })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        formError = <div className='formError'>`${error}`</div>
+      })
   }
 
   return (
