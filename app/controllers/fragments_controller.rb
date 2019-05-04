@@ -5,14 +5,9 @@ class FragmentsController < ApplicationController
 
   # GET /fragments
   def index
-    respond_to do |format|
-      format.html
-      format.json {
-        @fragments = Fragment.all
-        puts("JSON ｷﾏｼﾀﾜ~")
-        render 'fragments/index.json.jbuilder'
-      }
-    end
+    fragments = Fragment.all
+
+    render json: fragments
   end
 
   # GET /fragments/1

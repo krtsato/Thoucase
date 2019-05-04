@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {axiosRails} from 'components/axios/instances'
 
 export const LoginBody = () => {
-  let formError = null
+  const [errorElem, setErrorElem] = useState(null)
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''
@@ -17,20 +17,25 @@ export const LoginBody = () => {
   const onClick = () => {
     axiosRails({
       method: 'post',
-      url: '/login',
+      url: '/login.json',
       data: formValue
     })
       .then((response) => {
-        console.log(response)
+        console.log(`Res / Data: ${response.data}`)
       })
       .catch((error) => {
-        formError = <div className='formError'>`${error}`</div>
+        console.log(`Err / Status : ${error.response.status}`)
+        console.log(`Err / SttsTxt: ${error.response.statusText}`)
+        console.log(`Err / Headers : ${JSON.stringify(error.response.headers)}`)
+        console.log(`Err / Data : ${JSON.stringify(error.response.data, undefined, 2)}`)
+        setFormValue({email: error.response.data.email, password: error.response.data.password})
+        setErrorElem(<div className='formError'>{error.message}</div>)
       })
   }
 
   return (
     <div className='formBody'>
-      {formError}
+      {errorElem}
       <label htmlFor='email'>
         E-mail
         <input id='email' name='email' type='text' value={formValue.email} onChange={onChange} />
