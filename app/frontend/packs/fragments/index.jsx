@@ -1,7 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {FragmentsList} from 'components/fragments/fragments_list'
+import {FrgList} from 'components/fragments/index/frg_list'
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<FragmentsList />, document.getElementById('fragmentsIndex'))
-})
+export const FrgIndex = () => {
+  return (
+    <>
+      <h2>fragments#index</h2>
+      <FrgList />
+    </>
+  )
+}

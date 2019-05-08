@@ -6,28 +6,25 @@ class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
 
-  # GET /login
-  def login_form; end
-
-  # POST /login
-  def login
+  # POST /signin
+  def signin
     email = params[:email]
     password = params[:password]
     login_user = User.find_by(email: email)
     if login_user && login_user.authenticate(password)
-      response.headers['Authorization'] = login_user.token
-      response.headers['Flash'] = 'ok-login'
-      render json: {nextUrl: '/fragments/index'}
+      response.status = 200
+      response.headers['authorization'] = login_user.token
+      response.headers['flash'] = 'ok-signin'
+      render status: 200
     else
-      response.headers['Flash'] = 'er-login'
+      response.headers['flash'] = 'er-signin'
       render json: {email: email, password: password}, status: 401
     end
   end
 
-  def logout
-    @token = nil
-    @flash_msg = 'ログアウトしました'
-    render json: @flash_msg
+  def signout
+    response.headers['authorization'] = ''
+    response.headers['flash'] = 'ok-signout'
   end
 
   # GET /users
@@ -41,9 +38,6 @@ class UsersController < ApplicationController
     render json: @user
   end
 
-  # GET /fragments
-  def new; end
-
   # POST /users
   def create
     @user = User.new(user_params)
@@ -54,9 +48,6 @@ class UsersController < ApplicationController
       render json: @user.errors, status: :unprocessable_entity
     end
   end
-
-  # GET /fragments/1
-  def edit; end
 
   # PATCH/PUT /users/1
   def update
