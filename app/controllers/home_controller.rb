@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  def top; end
+  include ActionView::Layouts
 
-  def about; end
+  def root
+    render template: 'index'
+  end
 end

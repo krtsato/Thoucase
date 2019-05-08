@@ -1,7 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {RichEditor} from 'components/fragments/rich_editor'
+import {FrgForm} from 'components/fragments/new/frg_form'
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<RichEditor />, document.getElementById('richEditor'))
-})
+export const FrgNew = () => {
+  return (
+    <>
+      <h2>fragments#new</h2>
+      <FrgForm />
+    </>
+  )
+}

@@ -15,11 +15,6 @@ class CrystalsController < ApplicationController
     render json: @crystal
   end
 
-  # GET /fragments
-  def new
-    @crystal = Crystal.new
-  end
-
   # POST /crystals
   def create
     @crystal = Crystal.new(crystal_params)
@@ -30,9 +25,6 @@ class CrystalsController < ApplicationController
       render json: @crystal.errors, status: :unprocessable_entity
     end
   end
-
-  # GET /fragments/1
-  def edit; end
 
   # PATCH/PUT /crystals/1
   def update

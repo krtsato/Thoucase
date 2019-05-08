@@ -1,23 +1,41 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :authenticate_user, only: [:edit, :update, :destroy]
+  before_action :forbid_login_user, only: [:new, :create, :login_form, :login]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
+
+  # POST /signin
+  def signin
+    email = params[:email]
+    password = params[:password]
+    login_user = User.find_by(email: email)
+    if login_user && login_user.authenticate(password)
+      response.status = 200
+      response.headers['authorization'] = login_user.token
+      response.headers['flash'] = 'ok-signin'
+      render status: 200
+    else
+      response.headers['flash'] = 'er-signin'
+      render json: {email: email, password: password}, status: 401
+    end
+  end
+
+  def signout
+    response.headers['authorization'] = ''
+    response.headers['flash'] = 'ok-signout'
+  end
 
   # GET /users
   def index
     @users = User.all
-
     render json: @users
   end
 
   # GET /users/1
   def show
     render json: @user
-  end
-
-  # GET /fragments
-  def new
-    @user = User.new
   end
 
   # POST /users
@@ -30,9 +48,6 @@ class UsersController < ApplicationController
       render json: @user.errors, status: :unprocessable_entity
     end
   end
-
-  # GET /fragments/1
-  def edit; end
 
   # PATCH/PUT /users/1
   def update

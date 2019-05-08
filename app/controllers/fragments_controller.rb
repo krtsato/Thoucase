@@ -5,19 +5,14 @@ class FragmentsController < ApplicationController
 
   # GET /fragments
   def index
-    @fragments = Fragment.all
+    fragments = Fragment.all
 
-    render json: @fragments
+    render json: fragments
   end
 
   # GET /fragments/1
   def show
     render json: @fragment
-  end
-
-  # GET /fragments
-  def new
-    @fragment = Fragment.new
   end
 
   # POST /fragments
@@ -30,9 +25,6 @@ class FragmentsController < ApplicationController
       render json: @fragment.errors, status: :unprocessable_entity
     end
   end
-
-  # GET /fragments/1
-  def edit; end
 
   # PATCH/PUT /fragments/1
   def update

@@ -8,9 +8,9 @@
 
 # User
 User.create!(
-  name: "サトラクチャ",
-  email: "krt@sato.com",
-  password: "krtsato"
+  name: "テストユーザ",
+  email: "user@test.com",
+  password: "test"
 )
 
 # Like
