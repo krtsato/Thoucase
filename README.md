@@ -2,8 +2,8 @@
 
 ## ブログサイト Thoucase を開発中。
 
-人間の思考力・創造性は宝石のように輝きます。
-記事を fragment と呼び crystal を形作ります。
+人間の思考力・創造性は宝石のように輝きます。  
+記事を fragment と呼び crystal を形作ります。  
 crystal は showcase に展示されます。
 
 ## 機能(開発中)
