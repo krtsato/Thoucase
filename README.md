@@ -7,7 +7,7 @@
 crystal は showcase に展示されます。
 
 ## 機能(開発中)
-トークン認証・認可
+トークン認証・認可  
 fragment, crystal, showcase userのCRUD  
 draft.js によるエディタ  
 Three.js による crystal の立体表示  
