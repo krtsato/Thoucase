@@ -1,21 +1,25 @@
 import React, {useState, useEffect} from 'react'
-import {axiosRails} from 'components/layouts/axios/instances'
+import PropTypes from 'prop-types'
+import {axiosRails, canceller} from 'components/layouts/axios/instances'
+import {setErrObj} from 'components/layouts/axios/then_catch_funcs'
 
-export const UsrList = () => {
-  let usrList = null
+export const UsrList = ({onGenChange}) => {
+  let usrList = null // return
   const [users, setUsers] = useState([])
 
-  /* ライフサイクル */
+  /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
       .get('/users')
       .then((response) => {
-        console.log(response.data)
         setUsers(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        onGenChange(setErrObj(error))
       })
+    return () => {
+      canceller.cancel
+    }
   }, [])
 
   /* users 一覧 生成 */
@@ -24,7 +28,6 @@ export const UsrList = () => {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            <p>id : {user.id}</p>
             <p>name : {user.name}</p>
             <p>created_at : {user.created_at}</p>
             <p>updated_at : {user.updated_at}</p>
@@ -35,4 +38,8 @@ export const UsrList = () => {
   }
 
   return usrList
+}
+
+UsrList.propTypes = {
+  onGenChange: PropTypes.func
 }

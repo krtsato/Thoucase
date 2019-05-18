@@ -1,57 +1,60 @@
-import React, {useEffect} from 'react'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import {axiosRails} from 'components/layouts/axios/instances'
+import React, {useState} from 'react'
+import {BrowserRouter} from 'react-router-dom'
 import {Header} from 'components/layouts/app/header'
+import {Message} from 'components/layouts/app/message'
+import {Routes} from 'components/layouts/app/routes'
 import {Footer} from 'components/layouts/app/footer'
-import {Top} from 'packs/home/top'
-import {About} from 'packs/home/about'
-import {ShwIndex} from 'packs/showcases/index'
-import {CrsIndex} from 'packs/crystals/index'
-import {FrgIndex} from 'packs/fragments/index'
-import {UsrIndex} from 'packs/users/index'
-import {FrgNew} from 'packs/fragments/new'
-import {Signin} from 'packs/users/signin'
 
 export const App = () => {
-  /* componentsDidMount */
-  useEffect(() => {
-    axiosRails.get('/').catch((error) => {
-      console.log(error)
-    })
-  }, [])
-
   return (
     <BrowserRouter>
-      <Header />
-      <Switch>
-        {/* Home */}
-        <Route exact path={['/', '/top']} component={Top} />
-        <Route path='/about' component={About} />
-        {/* Users */}
-        <Route exact path='/users' component={UsrIndex} />
-        <Route path='/users/signin' component={Signin} />
-        {/* Showcases */}
-        <Route exact path='/showcases' component={ShwIndex} />
-        {/* Crystals */}
-        <Route exact path='/crystals' component={CrsIndex} />
-        {/* Fragments */}
-        <Route exact path='/fragments' component={FrgIndex} />
-        <Route path='/fragments/new' component={FrgNew} />
-        {/* 追記予定
-        <Route path='/users/new' component={UsrNew} />
-        <Route path='/users/:id/edit' component={UsrEdit} />
-        <Route exact path='/users/:id' component={UsrShow} />
-        <Route path='/showcases/new' component={ShwNew} />
-        <Route path='/showcases/:id/edit' component={ShwEdit} />
-        <Route exact path='/showcases/:id' component={ShwShow} />
-        <Route path='/crystals/new' component={CrsNew} />
-        <Route path='/crystals/:id/edit' component={CrsEdit} />
-        <Route exact path='/crystals/:id' component={CrsShow} />
-        <Route path='/fragments/:id/edit' component={FrgEdit} />
-        <Route exact path='/fragments/:id' component={FrgShow} />
-        */}
-      </Switch>
-      <Footer />
+      <General>
+        <Message />
+        <Header />
+        <Routes />
+        <Footer />
+      </General>
     </BrowserRouter>
   )
+}
+
+/* 共通状態管理 */
+const General = ({children}) => {
+  const [isSignin, setIsSignin] = useState(!!localStorage.getItem('authToken'))
+  const [errMsgs, setErrMsgs] = useState({cclMsg: null, errMsg: null})
+  const [flashMsg, setFlashMsg] = useState(null)
+
+  const onGenChange = (genTaskObj) => {
+    const key = Object.keys(genTaskObj)[0]
+    const val = Object.values(genTaskObj)[0]
+    switch (key) {
+      case 'sninBool': // {sninBool: bool}
+        setIsSignin(val)
+        break
+      case 'errObj': // {errObj: {cclMsg: str, errMsg: str}}
+        setErrMsgs(val)
+        break
+      case 'flashStr': // {flashStr: str}
+        setFlashMsg(val)
+        break
+      default:
+        break
+    }
+  }
+
+  // props 分類付加
+  const childrenWithProps = React.Children.map(children, (child) => {
+    switch (child.type) {
+      case Header:
+        return React.cloneElement(child, {isSignin, onGenChange})
+      case Message:
+        return React.cloneElement(child, {errMsgs, flashMsg})
+      case Routes:
+        return React.cloneElement(child, {isSignin, onGenChange})
+      default:
+        return child
+    }
+  })
+
+  return childrenWithProps
 }

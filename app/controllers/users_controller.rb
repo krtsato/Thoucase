@@ -12,19 +12,19 @@ class UsersController < ApplicationController
     password = params[:password]
     login_user = User.find_by(email: email)
     if login_user && login_user.authenticate(password)
-      response.status = 200
       response.headers['authorization'] = login_user.token
-      response.headers['flash'] = 'ok-signin'
-      render status: 200
+      response.headers['flash'] = 'ok-snin'
+      render status: 204
     else
-      response.headers['flash'] = 'er-signin'
+      response.headers['flash'] = 'er-snin'
       render json: {email: email, password: password}, status: 401
     end
   end
 
   def signout
-    response.headers['authorization'] = ''
-    response.headers['flash'] = 'ok-signout'
+    response.headers['authorization'] = nil
+    response.headers['flash'] = 'ok-snout'
+    render status: 204
   end
 
   # GET /users

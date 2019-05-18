@@ -1,30 +1,33 @@
 import React, {useState, useEffect} from 'react'
-import {axiosRails} from 'components/layouts/axios/instances'
+import PropTypes from 'prop-types'
+import {axiosRails, canceller} from 'components/layouts/axios/instances'
+import {setErrObj} from 'components/layouts/axios/then_catch_funcs'
 
-export const CrsList = () => {
-  let crsList = null
+export const CrsList = ({onGenChange}) => {
+  let crsList = null // return
   const [crystals, setCrystals] = useState([])
 
-  /* ライフサイクル */
+  /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
       .get('/crystals')
       .then((response) => {
-        console.log(response.data)
         setCrystals(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        onGenChange(setErrObj(error))
       })
+    return () => {
+      canceller.cancel
+    }
   }, [])
 
-  /* crystals 一覧 生成 */
+  /* crystals 一覧 */
   if (crystals) {
     crsList = (
       <ul>
         {crystals.map((crystal) => (
           <li key={crystal.id}>
-            <p>id : {crystal.id}</p>
             <p>showcase_id : {crystal.showcase_id}</p>
             <p>user_id : {crystal.user_id}</p>
             <p>created_at : {crystal.created_at}</p>
@@ -37,4 +40,8 @@ export const CrsList = () => {
   }
 
   return crsList
+}
+
+CrsList.propTypes = {
+  onGenChange: PropTypes.func
 }

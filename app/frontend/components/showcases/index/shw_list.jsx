@@ -1,30 +1,33 @@
 import React, {useState, useEffect} from 'react'
-import {axiosRails} from 'components/layouts/axios/instances'
+import PropTypes from 'prop-types'
+import {axiosRails, canceller} from 'components/layouts/axios/instances'
+import {setErrObj} from 'components/layouts/axios/then_catch_funcs'
 
-export const ShwList = () => {
-  let shwList = null
+export const ShwList = ({onGenChange}) => {
+  let shwList = null // return
   const [showcases, setShowcases] = useState([])
 
-  /* ライフサイクル */
+  /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
       .get('/showcases')
       .then((response) => {
-        console.log(response.data)
         setShowcases(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        onGenChange(setErrObj(error))
       })
+    return () => {
+      canceller.cancel
+    }
   }, [])
 
-  /* showcases 一覧 生成 */
+  /* showcases 一覧 */
   if (showcases) {
     shwList = (
       <ul>
         {showcases.map((showcase) => (
           <li key={showcase.id}>
-            <p>id : {showcase.id}</p>
             <p>user_id : {showcase.user_id}</p>
             <p>created_at : {showcase.created_at}</p>
             <p>updated_at : {showcase.updated_at}</p>
@@ -36,4 +39,8 @@ export const ShwList = () => {
   }
 
   return shwList
+}
+
+ShwList.propTypes = {
+  onGenChange: PropTypes.func
 }

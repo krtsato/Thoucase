@@ -17,6 +17,7 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "^5.0.0",
+    "recompose": "^0.30.0",
     "three": "^0.102.1",
     "three-orbitcontrols": "^2.102.1"
   },
