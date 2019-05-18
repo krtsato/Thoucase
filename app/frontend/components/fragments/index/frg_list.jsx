@@ -1,24 +1,28 @@
 import React, {useState, useEffect} from 'react'
-import {axiosRails} from 'components/layouts/axios/instances'
+import PropTypes from 'prop-types'
+import {axiosRails, canceller} from 'components/layouts/axios/instances'
+import {setErrObj} from 'components/layouts/axios/then_catch_funcs'
 
-export const FrgList = () => {
-  let frgList = null
+export const FrgList = ({onGenChange}) => {
+  let frgList = null // return
   const [fragments, setFragments] = useState([])
 
-  /* ライフサイクル */
+  /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
       .get('/fragments')
       .then((response) => {
-        console.log(response.data)
         setFragments(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        onGenChange(setErrObj(error))
       })
+    return () => {
+      canceller.cancel
+    }
   }, [])
 
-  /* fragments 一覧 生成 */
+  /* fragments 一覧 */
   if (fragments) {
     frgList = (
       <ul>
@@ -30,8 +34,6 @@ export const FrgList = () => {
             <p>created_at : {fragment.created_at}</p>
             <p>updated_at : {fragment.updated_at}</p>
             <p>name : {fragment.name}</p>
-            content : Display viewer here.
-            {/* fragment.content */}
           </li>
         ))}
       </ul>
@@ -39,4 +41,8 @@ export const FrgList = () => {
   }
 
   return frgList
+}
+
+FrgList.propTypes = {
+  onGenChange: PropTypes.func
 }

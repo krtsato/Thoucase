@@ -1,13 +1,27 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
+import PropTypes from 'prop-types'
+import {NavLink, withRouter} from 'react-router-dom'
+import {axiosRails} from 'components/layouts/axios/instances'
+import {removeToken, setFlashStr, setErrObj} from 'components/layouts/axios/then_catch_funcs'
 
-export const HeaderNav = () => {
-  let tglNavLink = null
+export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
+  let tglNavLink = null // return
 
-  /* サインイン 状態確認 */
-  const isSignin = localStorage.getItem('token') === true
+  /* サインアウト */
+  const onClick = () => {
+    axiosRails
+      .post('/signout')
+      .then((response) => {
+        removeToken('authToken')
+        onGenChange(setFlashStr(response.headers.flash))
+        history.push('/') // リダイレクト
+      })
+      .catch((error) => {
+        onGenChange(setErrObj(error))
+      })
+  }
 
-  /* サインイン状態で表示変更 */
+  /* Signin していたら表示変更 */
   if (isSignin) {
     tglNavLink = (
       <>
@@ -21,7 +35,11 @@ export const HeaderNav = () => {
           <NavLink to='/users'>ユーザー覧</NavLink>
         </li>
         <li>マイページ</li>
-        <li>サインアウト</li>
+        <li>
+          <NavLink to='' onClick={onClick}>
+            サインアウト
+          </NavLink>
+        </li>
       </>
     )
   } else {
@@ -37,7 +55,7 @@ export const HeaderNav = () => {
           <NavLink to='/users'>ユーザ一覧</NavLink>
         </li>
         <li>
-          <NavLink to='/users/signin'>サインイン</NavLink>
+          <NavLink to='/signin'>サインイン</NavLink>
         </li>
       </>
     )
@@ -45,8 +63,12 @@ export const HeaderNav = () => {
 
   return (
     <nav className='headerNavWrap'>
-      HeaderNav
       <ul className='headerNavList'>{tglNavLink}</ul>
     </nav>
   )
+})
+
+HeaderNav.propTypes = {
+  isSignin: PropTypes.bool,
+  onGenChange: PropTypes.func
 }

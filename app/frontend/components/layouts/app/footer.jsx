@@ -6,11 +6,9 @@ import {Copyright} from 'components/layouts/app/footer/copyright'
 export const Footer = () => {
   return (
     <footer id='footerWrap'>
-      <section id='footerContents'>
-        <FooterNav />
-        <SocialList />
-        <Copyright />
-      </section>
+      <FooterNav />
+      <SocialList />
+      <Copyright />
     </footer>
   )
 }

@@ -1,16 +1,17 @@
 import React, {useState} from 'react'
+import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
 import {axiosRails} from 'components/layouts/axios/instances'
+import {setToken, setFlashStr, setErrObj} from 'components/layouts/axios/then_catch_funcs'
 
-export const SigninForm = () => {
-  let tglSigninForm = null
-  const [errorElem, setErrorElem] = useState(null)
+export const SigninForm = ({onGenChange}) => {
+  const [redrPath, setRedrPath] = useState(null)
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''
   })
 
-  /* フォーム 更新 */
+  /* Form 更新 */
   const onChange = (e) => {
     const inputName = e.target.name
     const inputVal = e.target.value
@@ -25,26 +26,24 @@ export const SigninForm = () => {
         password: formValue.password
       })
       .then((response) => {
-        /* サインイン状態で表示変更 */
-        const isSignin = localStorage.getItem('token') === true
-        if (response.status === 200 && isSignin) {
-          tglSigninForm = <Redirect to='/fragments' />
-        }
+        setToken('authToken', response.headers.authorization)
+        onGenChange(setFlashStr(response.headers.flash))
+        setRedrPath(<Redirect to='/fragments' />) // リダイレクト
       })
       .catch((error) => {
-        console.log(`Err / Status : ${error.response.status}`)
+        onGenChange(setErrObj(error))
         setFormValue({email: error.response.data.email, password: error.response.data.password})
-        setErrorElem(<div className='formError'>{error.message}</div>)
       })
   }
 
-  tglSigninForm = (
+  /* Form */
+  return (
     <>
+      {redrPath}
       <div className='formBody'>
-        {errorElem}
         <label htmlFor='email'>
-          E-mail
           <input id='email' name='email' type='text' value={formValue.email} onChange={onChange} />
+          E-mail
         </label>
         <label htmlFor='password'>
           Password
@@ -56,6 +55,8 @@ export const SigninForm = () => {
       </div>
     </>
   )
+}
 
-  return tglSigninForm // 要修正
+SigninForm.propTypes = {
+  onGenChange: PropTypes.func
 }
