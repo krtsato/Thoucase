@@ -1,48 +1,46 @@
 import React, {useState, useEffect, useRef} from 'react'
+import PropTypes from 'prop-types'
+import {Redirect} from 'react-router-dom'
 import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, convertToRaw} from 'draft-js'
-import Immutable from 'immutable'
-// import {axiosRails} from 'components/layouts/axios/instances'
+import {Map as ImmMap} from 'immutable'
+import {axiosRails} from 'components/layouts/axios/instances'
+import {setFlashStr, setErrObj} from 'components/layouts/axios/then_catch_funcs'
 import {Media} from 'components/fragments/draftjs/frg_editor/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_editor/toolbox'
 import {Namebox} from 'components/fragments/draftjs/frg_editor/namebox'
 
-export const FrgEditor = () => {
+export const FrgEditor = ({onGenChange}) => {
+  const [redrPath, setRedrPath] = useState(null)
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
-  /* フォーカス */
+  /* focus */
   const editorRef = useRef(null)
   const editorFocus = () => {
     editorRef.current.focus()
   }
 
-  /* editorState Did Update */
+  /* editorState didUpdate */
   useEffect(() => {
     editorFocus
   }, [editorState])
 
-  /* editorState Update 処理 */
+  /* editorState Update */
   const onEditorChange = (nextState) => {
     setEditorState(nextState)
   }
 
-  /* Media コンポーネント呼び出し */
+  /* Media component 呼出し */
   const blockRendererFn = (contentBlock) => {
     const entityType = contentBlock.getType()
-    let block = null
     switch (entityType) {
       case 'atomic':
-        block = {
-          component: Media,
-          editable: false
-        }
-        break
+        return {component: Media, editable: false}
       default:
-        break
+        return null
     }
-    return block
   }
 
-  /* Style クラス名付加 */
+  /* Style className 付加 */
   const blockStyleFn = (contentBlock) => {
     const type = contentBlock.getType()
     let className
@@ -84,8 +82,8 @@ export const FrgEditor = () => {
     return className
   }
 
-  /* Style タグ付加 */
-  const newMap = Immutable.Map({
+  /* Style HTMLタグ 付加 */
+  const newMap = ImmMap({
     inSection: {
       element: 'section'
     }
@@ -103,20 +101,32 @@ export const FrgEditor = () => {
   }
 
   /* JSONB型で保存 */
-  const save = () => {
+  const onClick = () => {
     const rawState = convertToRaw(editorState.getCurrentContent())
     console.log(JSON.stringify(rawState, undefined, 2))
-    /*
-    axiosRails.post(`crystals/${crystal_id}/fragments/create`, {
-      name: frg_name,
-      content: rawState
-    })
-    */
+
+    /* これをら用意する */
+    const crsId = 1
+    const frgName = 'hoge'
+    const frgId = 2
+
+    axiosRails
+      .post(`crystals/${crsId}/fragments`, {
+        name: frgName,
+        content: rawState
+      })
+      .then((response) => {
+        onGenChange(setFlashStr(response.header.flash))
+        setRedrPath(<Redirect to={`/fragments/${frgId}`} />) // リダイレクト
+      })
+      .catch((error) => {
+        onGenChange(setErrObj(error))
+      })
   }
 
   return (
     <>
-      {/* エラーメッセージ */}
+      {redrPath}
       <Namebox editorFocus={editorFocus} />
       <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
@@ -128,10 +138,13 @@ export const FrgEditor = () => {
         blockRenderMap={blockRenderMap}
         handleKeyCommand={handleKeyCommand}
       />
-      {/* 保存ボタン */}
-      <button type='button' onClick={save}>
-        保存
+      <button type='button' onClick={onClick}>
+        save
       </button>
     </>
   )
+}
+
+FrgEditor.propTypes = {
+  onGenChange: PropTypes.func
 }
