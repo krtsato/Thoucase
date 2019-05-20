@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {NavLink, withRouter} from 'react-router-dom'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {removeToken, setFlashStr, setErrObj} from 'components/layouts/axios/then_catch_funcs'
+import {removeToken, setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 
 export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
   let tglNavLink = null // return
 
-  /* サインアウト */
-  const onClick = () => {
+  /* signout */
+  const onSnoutClick = () => {
     axiosRails
       .post('/signout')
       .then((response) => {
@@ -17,11 +17,11 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
         history.push('/') // リダイレクト
       })
       .catch((error) => {
-        onGenChange(setErrObj(error))
+        onGenChange(setFlashStr(error.response.header.flash))
       })
   }
 
-  /* Signin していたら表示変更 */
+  /* signin していたら表示変更 */
   if (isSignin) {
     tglNavLink = (
       <>
@@ -36,7 +36,7 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
         </li>
         <li>マイページ</li>
         <li>
-          <NavLink to='' onClick={onClick}>
+          <NavLink to='' onClick={onSnoutClick}>
             サインアウト
           </NavLink>
         </li>

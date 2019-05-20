@@ -41,10 +41,9 @@ const setFlashStr = (rawFlash) => {
 }
 
 /* catch キャンセルメッセージ・エラーメッセージ 返却 */
-const setErrObj = (error) => {
+const setCclStr = (error) => {
   const cclMsg = axios.isCancel(error) ? 'リクエストがキャンセルされました' : null
-  const errMsg = error.message
-  return {errObj: {cclMsg, errMsg}}
+  return {cclStr: cclMsg}
 }
 
-export {setToken, removeToken, setFlashStr, setErrObj}
+export {setToken, removeToken, setFlashStr, setCclStr}

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
-import {setErrObj} from 'components/layouts/axios/then_catch_funcs'
+import {setFlashStr, setCclStr} from 'components/layouts/axios/then_catch_funcs'
 
 export const CrsList = ({onGenChange}) => {
   let crsList = null // return
@@ -15,7 +15,8 @@ export const CrsList = ({onGenChange}) => {
         setCrystals(response.data)
       })
       .catch((error) => {
-        onGenChange(setErrObj(error))
+        onGenChange(setCclStr(error))
+        onGenChange(setFlashStr(error.response.headers.flash))
       })
     return () => {
       canceller.cancel

@@ -2,24 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {RichUtils} from 'draft-js'
 
-export const BlockStyleButton = (props) => {
-  const {styleType, editorState, onEditorChange} = props
-
-  // スタイル 反映
-  const onMouseDown = (e) => {
+export const BlockStyleBtn = ({styleType, editorState, onEditorChange}) => {
+  /* block style 適用 */
+  const onStyleClick = (e) => {
     e.preventDefault()
     onEditorChange(RichUtils.toggleBlockType(editorState, styleType))
   }
 
   return (
-    <button type='button' onMouseDown={onMouseDown}>
+    <button type='button' onClick={onStyleClick}>
       {styleType}
     </button>
   )
 }
 
-BlockStyleButton.propTypes = {
-  styleType: PropTypes.string.isRequired,
+BlockStyleBtn.propTypes = {
+  styleType: PropTypes.string,
   editorState: PropTypes.object,
   onEditorChange: PropTypes.func
 }

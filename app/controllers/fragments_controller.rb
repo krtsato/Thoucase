@@ -20,9 +20,9 @@ class FragmentsController < ApplicationController
     @fragment = Fragment.new(fragment_params)
 
     if @fragment.save
-      render json: @fragment, status: :created, location: @fragment
+      render json: @fragment, status: 201, location: @fragment
     else
-      render json: @fragment.errors, status: :unprocessable_entity
+      render json: @fragment.errors, status: 422
     end
   end
 
