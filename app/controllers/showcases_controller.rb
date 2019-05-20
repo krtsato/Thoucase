@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ShowcasesController < ApplicationController
-  before_action :set_showcase, only: [:show, :edit, :update, :destroy]
+  before_action :set_showcase, only: [:show, :update, :destroy]
 
   # GET /showcases
   def index

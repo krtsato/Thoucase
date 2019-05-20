@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user, only: [:edit, :update, :destroy]
-  before_action :forbid_login_user, only: [:new, :create, :login_form, :login]
-  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_user, only: [:update, :destroy]
+  before_action :forbid_login_user, only: [:create, :login]
+  before_action :ensure_correct_user, only: [:update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # POST /signin

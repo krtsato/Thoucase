@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
       @current_user = User.find_by(token: token)
       if @current_user == nil
         response.status = 401
-        response.headers['flash'] = 'er-acct'
+        response.headers['flash'] = 'er-auth'
       end
     end
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CrystalsController < ApplicationController
-  before_action :set_crystal, only: [:show, :edit, :update, :destroy]
+  before_action :set_crystal, only: [:show, :update, :destroy]
 
   # GET /crystals
   def index
