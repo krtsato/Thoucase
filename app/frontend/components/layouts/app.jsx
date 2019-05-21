@@ -23,7 +23,7 @@ const General = ({children}) => {
   const [isSignin, setIsSignin] = useState(!!localStorage.getItem('authToken'))
   const [cclMsg, setCclMsg] = useState(null)
   const [flashMsg, setFlashMsg] = useState(null)
-  const [invldMsg, setInvldMsg] = useState(null)
+  const [invldMsg, setInvldMsg] = useState([])
 
   const onGenChange = (genTaskObj) => {
     const key = Object.keys(genTaskObj)[0]

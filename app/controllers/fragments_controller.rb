@@ -18,10 +18,10 @@ class FragmentsController < ApplicationController
 
   # POST /fragments
   def create
-    @fragment = Fragment.new(fragment_params)
+    @fragment = Fragment.new(fragment_params, user_id: @current_user.id)
 
     if @fragment.save
-      render json: @fragment, status: 201, location: @fragment
+      render json: @fragment, status: 201
     else
       render json: @fragment.errors, status: 422
     end
@@ -50,6 +50,6 @@ class FragmentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fragment_params
-      params.require(:fragment).permit(:name, :content, :user_id, :crystal_id)
+      params.require(:fragment).permit(:name, :content, :crystal_id)
     end
 end

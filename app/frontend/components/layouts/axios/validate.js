@@ -1,32 +1,53 @@
 /*
   form : 共通簡易的バリデーション
-  空文字・null を invalid とする
+  invalid : 空文字・null を違反とする
+  返却値 : {isInvld: bool, invldArr: array}
 */
+const checkPost = (chkObj) => {
+  const chkPairs = Object.entries(chkObj) // [[k, v], [k, v] ...]
 
-/* invalid な val が一つでもあれば false */
-const isInvalid = (chkObj) => {
-  const arrVals = Object.values(chkObj)
-  return arrVals.some((val) => !val)
-}
+  // rawFrg : text が一文字でもあれば true
+  const hasText = (val) => {
+    return val.blocks.some((block) => block.text)
+  }
 
-/* invalid な POST データに対して, 文字列配列を出力 */
-const setInvldArr = (chkObj) => {
-  const invldMsg = Object.entries(chkObj) // [[k, v], [k, v] ...]
-    .filter((pair) => !pair[1]) // invalid な [k, v] を抽出
-    .map((pair) => {
-      // invalid な [k, v] を {key, msg} に写像
-      const key = pair[0]
-      switch (key) {
+  // invalid な [k, v] が一つでもあれば true
+  const isInvld = chkPairs.some((pair) => {
+    switch (pair[0]) {
+      case 'frgName':
+        return !pair[1]
+      case 'rawFrg':
+        return !hasText(pair[1])
+      default:
+        return true
+    }
+  })
+
+  // invalid な [[k, v], [k, v] ...] を抽出
+  const invldArr = chkPairs
+    .filter((pair) => {
+      switch (pair[0]) {
         case 'frgName':
-          return {key, msg: 'フラグメントの名前を入力して下さい'}
+          return !pair[1]
         case 'rawFrg':
-          return {key, msg: 'フラグメントの内容を入力して下さい'}
+          return !hasText(pair[1])
         default:
-          return null
+          return -1
       }
     })
-  // [{key, msg}, {key, msg} ...]
-  return {invldArr: invldMsg}
+    // invalid な [k, v] を {k, m} に写像
+    .map((pair) => {
+      switch (pair[0]) {
+        case 'frgName':
+          return {key: pair[0], msg: 'フラグメントの名前を入力して下さい'}
+        case 'rawFrg':
+          return {key: pair[0], msg: 'フラグメントの内容を入力して下さい'}
+        default:
+          return -1
+      }
+    })
+
+  return {isInvld, invldArr}
 }
 
-export {isInvalid, setInvldArr}
+export {checkPost}

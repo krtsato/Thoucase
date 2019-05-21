@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
   def authenticate_user
     authenticate_with_http_token do |token|
       @current_user = User.find_by(token: token)
-      if @current_user == nil
+      if @current_user.nil?
         response.status = 401
         response.headers['flash'] = 'er-auth'
       end

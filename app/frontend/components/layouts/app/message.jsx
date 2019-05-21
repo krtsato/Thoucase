@@ -3,11 +3,15 @@ import PropTypes from 'prop-types'
 
 export const Message = ({cclMsg, flashMsg, invldMsg}) => {
   /* form バリデーション 表示 */
-  const invldMsgList = invldMsg.map((pair) => (
-    <div className='invalid' key={pair.key}>
-      {pair.msg}
-    </div>
-  ))
+  let invldMsgList = null
+
+  if (invldMsg !== []) {
+    invldMsgList = invldMsg.map((pair) => (
+      <div className='invalid' key={pair.key}>
+        {pair.msg}
+      </div>
+    ))
+  }
 
   return (
     <aside id='message'>
@@ -21,5 +25,5 @@ export const Message = ({cclMsg, flashMsg, invldMsg}) => {
 Message.propTypes = {
   cclMsg: PropTypes.string,
   flashMsg: PropTypes.string,
-  invldMsg: PropTypes.string
+  invldMsg: PropTypes.array
 }

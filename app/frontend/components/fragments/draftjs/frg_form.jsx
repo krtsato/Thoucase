@@ -10,20 +10,6 @@ import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
 import {Namebox} from 'components/fragments/draftjs/frg_form/namebox'
 
-/* To Do
-・バリデーション
-  ・配列
-    ・array : filter / map
-    ・bool : some / find / findIndex
-  ・オブジェクト : 
-・crsId
-  ・いつ入力するか
-  ・ページをどこに儲けるか
-
-・frgId
-  ・サーバから取得する
-*/
-
 export const FrgForm = ({onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
   const [frgName, setFrgName] = useState('')
@@ -121,15 +107,13 @@ export const FrgForm = ({onGenChange}) => {
   /* Editor : form 保存 */
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
-    const postObj = {frgName, rawFrg}
+    const postObj = {frgName, rawblks: rawFrg.blocks}
     console.log(`FrgForm / rawState : ${JSON.stringify(rawFrg, undefined, 2)}`)
 
     if (isInvalid(postObj)) {
       onGenChange(setInvldArr(postObj)) // validation エラーメッセージ
     } else {
-      const userId = 1 // サーバ側でトークンから取得
       const crsId = 1 // 入力のタイミング 検討
-      const frgId = 2 // サーバレスポンス 取得
 
       axiosRails
         .post(`crystals/${crsId}/fragments`, {
@@ -137,8 +121,9 @@ export const FrgForm = ({onGenChange}) => {
           content: rawFrg
         })
         .then((response) => {
-          onGenChange(setFlashStr(response.header.flash))
-          setRedrPath(<Redirect to={`/fragments/${frgId}`} />) // リダイレクト
+          console.log(response.data)
+          // onGenChange(setFlashStr(response.header.flash))
+          // setRedrPath(<Redirect to={`/fragments/${response.data.id}`} />) // リダイレクト
         })
         .catch((error) => {
           onGenChange(setFlashStr(error.response.header.flash))
