@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, convertToRaw} from 'draft-js'
 import {Map as ImmMap} from 'immutable'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {isInvalid, setInvldArr} from 'components/layouts/axios/validate'
+import {checkPost} from 'components/layouts/axios/validate'
 import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
@@ -107,11 +107,11 @@ export const FrgForm = ({onGenChange}) => {
   /* Editor : form 保存 */
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
-    const postObj = {frgName, rawblks: rawFrg.blocks}
+    const checker = checkPost({frgName, rawFrg})
     console.log(`FrgForm / rawState : ${JSON.stringify(rawFrg, undefined, 2)}`)
 
-    if (isInvalid(postObj)) {
-      onGenChange(setInvldArr(postObj)) // validation エラーメッセージ
+    if (checker.isInvld) {
+      onGenChange(checker.invldArr) // validation エラーメッセージ
     } else {
       const crsId = 1 // 入力のタイミング 検討
 
