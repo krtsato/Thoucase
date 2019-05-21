@@ -6,13 +6,15 @@ import {Map as ImmMap} from 'immutable'
 import {axiosRails} from 'components/layouts/axios/instances'
 import {checkPost} from 'components/layouts/axios/validate'
 import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
+import {Namebox} from 'components/fragments/draftjs/frg_form/namebox'
+import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
-import {Namebox} from 'components/fragments/draftjs/frg_form/namebox'
 
 export const FrgForm = ({onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
   const [frgName, setFrgName] = useState('')
+  const [crsId, setCrsId] = useState(null)
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
   /* Editor ~ Namebox : focus */
@@ -24,6 +26,11 @@ export const FrgForm = ({onGenChange}) => {
   /* Editor ~ Namebox : frgName 更新 */
   const bufNameChange = (nextState) => {
     setFrgName(nextState)
+  }
+
+  /* Editor ~ CrsSelect : crsId 更新 */
+  const bufCrsIdChange = (nextState) => {
+    setCrsId(nextState)
   }
 
   /*
@@ -108,17 +115,15 @@ export const FrgForm = ({onGenChange}) => {
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
     const checker = checkPost({frgName, rawFrg})
-    console.log(`FrgForm / rawState : ${JSON.stringify(rawFrg, undefined, 2)}`)
 
     if (checker.isInvld) {
       onGenChange(checker.invldArr) // validation エラーメッセージ
     } else {
-      const crsId = 1 // 入力のタイミング 検討
-
       axiosRails
-        .post(`crystals/${crsId}/fragments`, {
+        .post(`/crystals/${crsId}/fragments`, {
           name: frgName,
-          content: rawFrg
+          content: rawFrg,
+          crsId // セレクタ作成中
         })
         .then((response) => {
           console.log(response.data)
@@ -136,6 +141,7 @@ export const FrgForm = ({onGenChange}) => {
     <>
       {redrPath}
       <Namebox bufNameChange={bufNameChange} editorFocus={editorFocus} />
+      <CrsSelect onGenChange={onGenChange} bufCrsIdChange={bufCrsIdChange} />
       <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
         editorState={editorState}
