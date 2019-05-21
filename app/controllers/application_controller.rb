@@ -12,18 +12,18 @@ class ApplicationController < ActionController::API
       end
     end
   end
-  
-  def forbid_login_user
-    if @current_user
-      response.status = 403
-      response.headers['flash'] = 'er-logged'
-    end
+
+  def forbid_signin_user
+    return unless @current_user
+
+    response.status = 403
+    response.headers['flash'] = 'er-logged'
   end
 
   def ensure_valid_user
-    if @current_user.id != params[:id].to_i
-      response.status = 401
-      response.headers['flash'] = 'er-auth'
-    end
+    return if @current_user.id == params[:id].to_i
+
+    response.status = 401
+    response.headers['flash'] = 'er-auth'
   end
 end

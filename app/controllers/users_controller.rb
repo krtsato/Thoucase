@@ -2,8 +2,8 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user, only: [:update, :destroy]
-  before_action :forbid_login_user, only: [:create, :login]
-  before_action :ensure_correct_user, only: [:update, :destroy]
+  before_action :forbid_signin_user, only: [:create, :signin]
+  before_action :ensure_valid_user, only: [:update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # POST /signin
@@ -11,20 +11,20 @@ class UsersController < ApplicationController
     email = params[:email]
     password = params[:password]
     login_user = User.find_by(email: email)
-    if login_user && login_user.authenticate(password)
+    if login_user &.authenticate(password)
       response.headers['authorization'] = login_user.token
       response.headers['flash'] = 'ok-snin'
-      render status: 204
+      render status: :no_content
     else
       response.headers['flash'] = 'er-snin'
-      render json: {email: email, password: password}, status: 401
+      render json: {email: email, password: password}, status: :unauthorized
     end
   end
 
   def signout
     response.headers['authorization'] = nil
     response.headers['flash'] = 'ok-snout'
-    render status: 204
+    render status: :no_content
   end
 
   # GET /users

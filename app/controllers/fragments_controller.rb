@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class FragmentsController < ApplicationController
-  before_action :authenticate_user, only: [:create, :update, :destroy]
+  before_action :authenticate_user, only: [:new, :create, :update, :destroy]
   before_action :set_fragment, only: [:show, :update, :destroy]
 
   # GET /fragments
   def index
     fragments = Fragment.all
 
-    render json: fragments
+    render json: fragments, status: :ok
   end
 
   # GET /fragments/1
@@ -16,14 +16,20 @@ class FragmentsController < ApplicationController
     render json: @fragment
   end
 
+  # GET /fragments/new
+  def new
+    crystals = Crystal.where(user_id: @current_user.id).select('id, name')
+    render json: crystals, status: :ok
+  end
+
   # POST /fragments
   def create
-    @fragment = Fragment.new(fragment_params, user_id: @current_user.id)
+    fragment = Fragment.new(fragment_params, user_id: @current_user.id)
 
-    if @fragment.save
-      render json: @fragment, status: 201
+    if fragment.save
+      render json: fragment, status: :created
     else
-      render json: @fragment.errors, status: 422
+      render json: fragment.errors, status: :unprocessable_entity
     end
   end
 

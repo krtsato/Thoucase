@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get 'crystals', to: 'crystals#index'
   get 'fragments', to: 'fragments#index'
 
+  # new
+  get 'fragments/new', to: 'fragments#new'
+
   shallow do
     # showcases/ crystals
     resources :showcases do
