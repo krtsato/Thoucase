@@ -63,7 +63,7 @@ export const Toolbox = (props) => {
       <BlockStyleBtn styleType='code-block' {...props} />
       <AtomicBtn mediaType='image' bufAtomicClick={bufAtomicClick} />
       <AtomicBtn mediaType='audio' bufAtomicClick={bufAtomicClick} />
-      <AtomicBtn mediaType='video' bufAtomiclick={bufAtomicClick} />
+      <AtomicBtn mediaType='video' bufAtomicClick={bufAtomicClick} />
       <UrlInput
         showUrlInput={urlParams.showUrlInput}
         urlVal={urlParams.urlVal}

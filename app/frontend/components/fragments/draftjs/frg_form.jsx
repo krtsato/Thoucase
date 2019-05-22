@@ -14,8 +14,8 @@ import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
 export const FrgForm = ({onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
   const [frgName, setFrgName] = useState('')
+  const [crsId, setCrsId] = useState(null)
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
-  let crsId = null // from CrsSelect
 
   /* Editor ~ Namebox : focus */
   const editorRef = useRef(null)
@@ -30,7 +30,7 @@ export const FrgForm = ({onGenChange}) => {
 
   /* Editor ~ CrsSelect : crsId 更新 */
   const bufCrsIdBlur = (targetVal) => {
-    crsId = targetVal
+    setCrsId(targetVal)
   }
 
   /*
@@ -121,17 +121,14 @@ export const FrgForm = ({onGenChange}) => {
     } else {
       axiosRails
         .post(`/crystals/${crsId}/fragments`, {
-          name: frgName,
-          content: rawFrg,
-          crsId
+          fragment: {name: frgName, content: rawFrg}
         })
         .then((response) => {
-          console.log(response.data)
-          // onGenChange(setFlashStr(response.header.flash))
+          onGenChange(setFlashStr(response.headers.flash))
           // setRedrPath(<Redirect to={`/fragments/${response.data.id}`} />) // リダイレクト
         })
         .catch((error) => {
-          onGenChange(setFlashStr(error.response.header.flash))
+          onGenChange(setFlashStr(error.response.headers.flash))
         })
     }
   }

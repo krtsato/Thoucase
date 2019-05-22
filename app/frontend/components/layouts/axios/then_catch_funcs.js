@@ -35,6 +35,8 @@ const setFlashStr = (rawFlash) => {
       default:
         return null
     }
+  } else {
+    return null
   }
 }
 

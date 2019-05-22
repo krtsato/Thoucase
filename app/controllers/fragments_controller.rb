@@ -24,7 +24,7 @@ class FragmentsController < ApplicationController
 
   # POST /fragments
   def create
-    fragment = Fragment.new(fragment_params, user_id: @current_user.id)
+    fragment = Fragment.new(fragment_params)
 
     if fragment.save
       response.headers['flash'] = 'ok-crfrg'
@@ -58,6 +58,6 @@ class FragmentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fragment_params
-      params.require(:fragment).permit(:name, :content, :crystal_id)
+      params.require(:fragment).permit(:name, content: {}).merge!(user_id: @current_user.id, crystal_id: params[:crystal_id])
     end
 end

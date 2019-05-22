@@ -19,6 +19,7 @@ export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
     axiosRails
       .get('/fragments/new')
       .then((response) => {
+        bufCrsIdBlur(response.data[0].id)
         setCrsSelect(
           <label htmlFor='crsSelect'>
             作成先クリスタル
