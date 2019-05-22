@@ -12,32 +12,30 @@ const removeToken = (tokenKey) => {
 
 /* then フラッシュメッセージ 分類・返却 */
 const setFlashStr = (rawFlash) => {
-  let jaFlash = null // return
   const divStr = rawFlash.split('-')
   if (divStr[0] === 'ok') {
     switch (divStr[1]) {
       case 'snin':
-        jaFlash = 'サインインしました'
-        break
+        return {flashStr: 'サインインしました'}
       case 'snout':
-        jaFlash = 'サインアウトしました'
-        break
+        return {flashStr: 'サインアウトしました'}
+      case 'crfrg':
+        return {flashStr: 'フラグメントを作成しました'}
       default:
-        break
+        return null
     }
   } else if (divStr[0] === 'er') {
     switch (divStr[1]) {
       case 'auth':
-        jaFlash = '権限がありません'
-        break
+        return {flashStr: '権限がありません'}
       case 'snin':
-        jaFlash = 'メールアドレスまたはパスワードが間違っています'
-        break
+        return {flashStr: 'メールアドレスまたはパスワードが間違っています'}
+      case 'crfrg':
+        return {flashStr: 'フラグメントの作成に失敗しました'}
       default:
-        break
+        return null
     }
   }
-  return {flashStr: jaFlash}
 }
 
 /* catch キャンセルメッセージ・エラーメッセージ 返却 */

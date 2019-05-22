@@ -27,8 +27,10 @@ class FragmentsController < ApplicationController
     fragment = Fragment.new(fragment_params, user_id: @current_user.id)
 
     if fragment.save
+      response.headers['flash'] = 'ok-crfrg'
       render json: fragment, status: :created
     else
+      response.headers['flash'] = 'er-crfrg'
       render json: fragment.errors, status: :unprocessable_entity
     end
   end

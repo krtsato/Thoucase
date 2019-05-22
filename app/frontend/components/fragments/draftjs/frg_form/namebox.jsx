@@ -16,7 +16,12 @@ export const Namebox = ({bufNameChange, editorFocus}) => {
     }
   }
 
-  return <input type='text' required autoFocus onChange={onNameChange} onKeyDown={onKeyDown} />
+  return (
+    <label htmlFor='frgName'>
+      フラグメント名
+      <input id='frgName' type='text' required autoFocus onChange={onNameChange} onKeyDown={onKeyDown} />
+    </label>
+  )
 }
 
 Namebox.propTypes = {
