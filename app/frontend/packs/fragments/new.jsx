@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {FrgForm} from 'components/fragments/new/frg_form'
+import {FrgForm} from 'components/fragments/draftjs/frg_form'
 
 export const FrgNew = ({onGenChange}) => {
   onGenChange({sninBool: !!localStorage.getItem('authToken')})

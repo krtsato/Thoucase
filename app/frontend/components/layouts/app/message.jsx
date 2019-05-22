@@ -1,19 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const Message = ({errMsgs, flashMsg}) => {
+export const Message = ({cclMsg, flashMsg, invldMsg}) => {
+  /* form バリデーション 表示 */
+  let invldMsgList = null
+
+  if (invldMsg !== []) {
+    invldMsgList = invldMsg.map((pair) => (
+      <div className='invalid' key={pair.key}>
+        {pair.msg}
+      </div>
+    ))
+  }
+
   return (
     <aside id='message'>
       <div className='flash'>{flashMsg}</div>
-      <div className='error'>
-        <p className='cclMsg'>{errMsgs.cclMsg}</p>
-        <p className='errMsg'>{errMsgs.errMsg}</p>
-      </div>
+      <div className='cancel'>{cclMsg}</div>
+      {invldMsgList}
     </aside>
   )
 }
 
 Message.propTypes = {
-  errMsgs: PropTypes.object,
-  flashMsg: PropTypes.string
+  cclMsg: PropTypes.string,
+  flashMsg: PropTypes.string,
+  invldMsg: PropTypes.array
 }

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
-import {setErrObj} from 'components/layouts/axios/then_catch_funcs'
+import {setFlashStr, setCclStr} from 'components/layouts/axios/then_catch_funcs'
 
 export const FrgList = ({onGenChange}) => {
   let frgList = null // return
@@ -15,7 +15,8 @@ export const FrgList = ({onGenChange}) => {
         setFragments(response.data)
       })
       .catch((error) => {
-        onGenChange(setErrObj(error))
+        onGenChange(setCclStr(error))
+        onGenChange(setFlashStr(error.response.headers.flash))
       })
     return () => {
       canceller.cancel
@@ -28,7 +29,6 @@ export const FrgList = ({onGenChange}) => {
       <ul>
         {fragments.map((fragment) => (
           <li key={fragment.id}>
-            <p>id : {fragment.id}</p>
             <p>crystal_id : {fragment.crystal_id}</p>
             <p>user_id : {fragment.user_id}</p>
             <p>created_at : {fragment.created_at}</p>

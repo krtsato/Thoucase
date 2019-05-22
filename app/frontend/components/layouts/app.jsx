@@ -21,8 +21,9 @@ export const App = () => {
 /* 共通状態管理 */
 const General = ({children}) => {
   const [isSignin, setIsSignin] = useState(!!localStorage.getItem('authToken'))
-  const [errMsgs, setErrMsgs] = useState({cclMsg: null, errMsg: null})
+  const [cclMsg, setCclMsg] = useState(null)
   const [flashMsg, setFlashMsg] = useState(null)
+  const [invldMsg, setInvldMsg] = useState([])
 
   const onGenChange = (genTaskObj) => {
     const key = Object.keys(genTaskObj)[0]
@@ -31,11 +32,14 @@ const General = ({children}) => {
       case 'sninBool': // {sninBool: bool}
         setIsSignin(val)
         break
-      case 'errObj': // {errObj: {cclMsg: str, errMsg: str}}
-        setErrMsgs(val)
+      case 'cclStr': // {cclStr: str}
+        setCclMsg(val)
         break
       case 'flashStr': // {flashStr: str}
         setFlashMsg(val)
+        break
+      case 'invldArr': // {invldArr: arr of string}
+        setInvldMsg(val)
         break
       default:
         break
@@ -48,7 +52,7 @@ const General = ({children}) => {
       case Header:
         return React.cloneElement(child, {isSignin, onGenChange})
       case Message:
-        return React.cloneElement(child, {errMsgs, flashMsg})
+        return React.cloneElement(child, {cclMsg, flashMsg, invldMsg})
       case Routes:
         return React.cloneElement(child, {isSignin, onGenChange})
       default:
