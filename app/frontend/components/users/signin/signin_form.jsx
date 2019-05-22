@@ -22,8 +22,7 @@ export const SigninForm = ({onGenChange}) => {
   const onSninClick = () => {
     axiosRails
       .post('/signin', {
-        email: formValue.email,
-        password: formValue.password
+        user: {email: formValue.email, password: formValue.password}
       })
       .then((response) => {
         setToken('authToken', response.headers.authorization)
