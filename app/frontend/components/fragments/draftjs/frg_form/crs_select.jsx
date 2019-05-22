@@ -1,18 +1,32 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {setFlashStr, setCclStr} from 'components/layouts/axios/then_catch_funcs'
 
-export const CrsSelect = ({onGenChange, bufCrsIdChange}) => {
-  const crsSelect = null // return
+export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
+  const [crsSelect, setCrsSelect] = useState(null)
+
+  /* crsId 更新  */
+  const onCrsIdBlur = (e) => {
+    e.preventDefault()
+    bufCrsIdBlur(e.target.value)
+  }
 
   /* didMount */
   useEffect(() => {
     axiosRails
       .get('/fragments/new')
       .then((response) => {
-        console.log(`CrsSelect / didMount : ${JSON.stringify(response, undefined, 2)}`)
-        // crsSelect = hoge
+        // 表示確認すべし
+        setCrsSelect(
+          <select required defaultValue={response.data[0].id} onBlur={onCrsIdBlur}>
+            {response.data.map((crystal) => (
+              <option key={crystal.id} value={crystal.id}>
+                {crystal.name}
+              </option>
+            ))}
+          </select>
+        )
       })
       .catch((error) => {
         onGenChange(setCclStr(error))
@@ -23,16 +37,10 @@ export const CrsSelect = ({onGenChange, bufCrsIdChange}) => {
     }
   }, [])
 
-  /* crsId 更新  */
-  const onCrsIdChange = (e) => {
-    e.preventDefault()
-    bufCrsIdChange(e.target.value)
-  }
-
   return crsSelect
 }
 
 CrsSelect.propTypes = {
   onGenChange: PropTypes.func,
-  bufCrsIdChange: PropTypes.func
+  bufCrsIdBlur: PropTypes.func
 }
