@@ -24,8 +24,8 @@ export const Routes = ({isSignin, onGenChange}) => {
     <main id='mainWrap'>
       <Switch>
         {/* Home */}
-        <Route exact path={['/', '/top']} render={AddGenPropsTo(Top)} />
-        <Route exact path='/about' render={AddGenPropsTo(About)} />
+        <Route exact path={['/', '/top']} render={Top} />
+        <Route exact path='/about' render={About} />
         {/* Users */}
         <Route exact path='/users' render={AddGenPropsTo(UsrIndex)} />
         <Route exact path='/signin' render={AddGenPropsTo(Signin)} />

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {setToken, setFlashStr} from 'components/layouts/axios/then_catch_funcs'
+import {setToken, setFlashStr, setSninBool} from 'components/layouts/axios/then_catch_funcs'
 
 export const SigninForm = ({onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
@@ -26,6 +26,7 @@ export const SigninForm = ({onGenChange}) => {
       })
       .then((response) => {
         setToken('authToken', response.headers.authorization)
+        onGenChange(setSninBool(response.headers.flash))
         onGenChange(setFlashStr(response.headers.flash))
         setRedrPath(<Redirect to='/fragments' />) // リダイレクト
       })
