@@ -15,8 +15,7 @@ export const UsrList = ({onGenChange}) => {
         setUsers(response.data)
       })
       .catch((error) => {
-        onGenChange(setCclStr(error))
-        onGenChange(setFlashStr(error.response.headers.flash))
+        onGenChange(Object.assign(setCclStr(error), setFlashStr(error.response.headers.flash)))
       })
     return () => {
       canceller.cancel

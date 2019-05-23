@@ -26,8 +26,7 @@ export const SigninForm = ({onGenChange}) => {
       })
       .then((response) => {
         setToken('authToken', response.headers.authorization)
-        onGenChange(setSninBool(response.headers.flash))
-        onGenChange(setFlashStr(response.headers.flash))
+        onGenChange(Object.assign(setSninBool(response.headers.flash), setFlashStr(response.headers.flash)))
         setRedrPath(<Redirect to='/fragments' />) // リダイレクト
       })
       .catch((error) => {

@@ -13,8 +13,7 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
       .post('/signout')
       .then((response) => {
         removeToken('authToken')
-        onGenChange(setSninBool(response.headers.flash))
-        onGenChange(setFlashStr(response.headers.flash))
+        onGenChange(Object.assign(setSninBool(response.headers.flash), setFlashStr(response.headers.flash)))
         history.push('/') // リダイレクト
       })
       .catch((error) => {
@@ -51,6 +50,9 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
         </li>
         <li>
           <NavLink to='/about'>Thoucaseについて</NavLink>
+        </li>
+        <li>
+          <NavLink to='/fragments'>フラグメント一覧</NavLink>
         </li>
         <li>
           <NavLink to='/users'>ユーザ一覧</NavLink>
