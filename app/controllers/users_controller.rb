@@ -5,19 +5,18 @@ class UsersController < ApplicationController
   before_action :forbid_signin_user, only: [:create, :signin]
   before_action :ensure_valid_user, only: [:update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_snin_params, only: [:signin]
 
   # POST /signin
   def signin
-    email = params[:email]
-    password = params[:password]
-    login_user = User.find_by(email: email)
-    if login_user &.authenticate(password)
-      response.headers['authorization'] = login_user.token
+    snin_user = User.find_by(email: @email)
+    if snin_user &.authenticate(@password)
+      response.headers['authorization'] = snin_user.token
       response.headers['flash'] = 'ok-snin'
       render status: :no_content
     else
       response.headers['flash'] = 'er-snin'
-      render json: {email: email, password: password}, status: :unauthorized
+      render json: {email: @email, password: @password}, status: :unauthorized
     end
   end
 
@@ -73,5 +72,10 @@ class UsersController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def user_params
       params.require(:user).permit(:name, :email, :password_digest)
+    end
+
+    def set_snin_params
+      @email = params.require(:user)[:email]
+      @password = params.require(:user)[:password]
     end
 end

@@ -26,6 +26,7 @@ const General = ({children}) => {
   const [invldMsg, setInvldMsg] = useState([])
 
   const onGenChange = (genTaskObj) => {
+    // To Do 1度の呼出しで更新する Object.entries()
     const key = Object.keys(genTaskObj)[0]
     const val = Object.values(genTaskObj)[0]
     switch (key) {

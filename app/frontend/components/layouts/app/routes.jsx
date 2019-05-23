@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import withProps from 'recompose/withProps'
 import {Route, Switch, Redirect} from 'react-router-dom'
+import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 import {Top} from 'packs/home/top'
 import {About} from 'packs/home/about'
 import {ShwIndex} from 'packs/showcases/index'
@@ -9,6 +10,7 @@ import {CrsIndex} from 'packs/crystals/index'
 import {FrgIndex} from 'packs/fragments/index'
 import {UsrIndex} from 'packs/users/index'
 import {FrgNew} from 'packs/fragments/new'
+import {FrgShow} from 'packs/fragments/show'
 import {Signin} from 'packs/users/signin'
 
 export const Routes = ({isSignin, onGenChange}) => {
@@ -29,7 +31,7 @@ export const Routes = ({isSignin, onGenChange}) => {
         <Route exact path='/signin' render={AddGenPropsTo(Signin)} />
         {/* Fragments */}
         <Route exact path='/fragments' render={AddGenPropsTo(FrgIndex)} />
-        <AuthRoutes isSignin={isSignin}>
+        <AuthRoutes isSignin={isSignin} onGenChange={onGenChange}>
           <Switch>
             {/* Showcases */}
             <Route exact path='/showcases' render={AddGenPropsTo(ShwIndex)} />
@@ -37,6 +39,7 @@ export const Routes = ({isSignin, onGenChange}) => {
             <Route exact path='/crystals' render={AddGenPropsTo(CrsIndex)} />
             {/* Fragments */}
             <Route exact path='/fragments/new' render={AddGenPropsTo(FrgNew)} />
+            <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
           </Switch>
         </AuthRoutes>
       </Switch>
@@ -45,7 +48,11 @@ export const Routes = ({isSignin, onGenChange}) => {
 }
 
 /* Signin アクセス認可 */
-const AuthRoutes = ({children, isSignin}) => (isSignin ? children : <Redirect exact to='/signin' />)
+const AuthRoutes = ({children, isSignin, onGenChange}) => {
+  if (isSignin) return children
+  onGenChange(setFlashStr('er-auth'))
+  return <Redirect exact to='/signin' />
+}
 
 Routes.propTypes = {
   isSignin: PropTypes.bool,
@@ -53,8 +60,9 @@ Routes.propTypes = {
 }
 
 AuthRoutes.propTypes = {
+  children: PropTypes.object,
   isSignin: PropTypes.bool,
-  children: PropTypes.object
+  onGenChange: PropTypes.func
 }
 
 /* 追記予定

@@ -40,10 +40,15 @@ const setFlashStr = (rawFlash) => {
   }
 }
 
+const setSninBool = (rawFlash) => {
+  if (rawFlash.split('-')[1] === 'snin') return {sninBool: true}
+  return {sninBool: false}
+}
+
 /* catch キャンセルメッセージ・エラーメッセージ 返却 */
 const setCclStr = (error) => {
   const cclMsg = axios.isCancel(error) ? 'リクエストがキャンセルされました' : null
   return {cclStr: cclMsg}
 }
 
-export {setToken, removeToken, setFlashStr, setCclStr}
+export {setToken, removeToken, setFlashStr, setSninBool, setCclStr}

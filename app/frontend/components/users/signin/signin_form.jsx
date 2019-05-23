@@ -41,16 +41,16 @@ export const SigninForm = ({onGenChange}) => {
       {redrPath}
       <div className='formBody'>
         <label htmlFor='email'>
+          E-mail
           <input
             id='email'
             name='email'
             type='text'
             required
             autoFocus
-            value={formValue.email}
+            defaultValue={formValue.email}
             onChange={onFormChange}
           />
-          E-mail
         </label>
         <label htmlFor='password'>
           Password
@@ -59,7 +59,7 @@ export const SigninForm = ({onGenChange}) => {
             name='password'
             type='text'
             required
-            value={formValue.password}
+            defaultValue={formValue.password}
             onChange={onFormChange}
           />
         </label>
