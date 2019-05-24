@@ -45,7 +45,7 @@ const setSninBool = (rawFlash) => {
   return {sninBool: false}
 }
 
-/* catch キャンセルメッセージ・エラーメッセージ 返却 */
+/* catch キャンセルメッセージ 返却 */
 const setCclStr = (error) => {
   const cclMsg = axios.isCancel(error) ? 'リクエストがキャンセルされました' : null
   return {cclStr: cclMsg}

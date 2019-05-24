@@ -6,7 +6,7 @@ import {setToken, setFlashStr, setSninBool} from 'components/layouts/axios/then_
 
 export const SigninForm = ({onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
-  const [formValue, setFormValue] = useState({
+  const [formVals, setFormVals] = useState({
     email: '',
     password: ''
   })
@@ -15,14 +15,14 @@ export const SigninForm = ({onGenChange}) => {
   const onFormChange = (e) => {
     const inputName = e.target.name
     const inputVal = e.target.value
-    setFormValue((nextState) => ({...nextState, [inputName]: inputVal}))
+    setFormVals((nextState) => ({...nextState, [inputName]: inputVal}))
   }
 
   /* signin */
   const onSninClick = () => {
     axiosRails
       .post('/signin', {
-        user: {email: formValue.email, password: formValue.password}
+        user: {email: formVals.email, password: formVals.password}
       })
       .then((response) => {
         setToken('authToken', response.headers.authorization)
@@ -31,7 +31,7 @@ export const SigninForm = ({onGenChange}) => {
       })
       .catch((error) => {
         onGenChange(setFlashStr(error.response.headers.flash))
-        setFormValue({email: error.response.data.email, password: error.response.data.password})
+        setFormVals({email: error.response.data.email, password: error.response.data.password})
       })
   }
 
@@ -48,7 +48,7 @@ export const SigninForm = ({onGenChange}) => {
             type='text'
             required
             autoFocus
-            defaultValue={formValue.email}
+            defaultValue={formVals.email}
             onChange={onFormChange}
           />
         </label>
@@ -59,7 +59,7 @@ export const SigninForm = ({onGenChange}) => {
             name='password'
             type='text'
             required
-            defaultValue={formValue.password}
+            defaultValue={formVals.password}
             onChange={onFormChange}
           />
         </label>

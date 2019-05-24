@@ -115,17 +115,24 @@ export const FrgForm = ({onGenChange}) => {
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
     const checker = checkPost({frgName, rawFrg})
-
+    
     if (checker.isInvld) {
       onGenChange(checker.invldArr) // validation エラーメッセージ
     } else {
       axiosRails
         .post(`/crystals/${crsId}/fragments`, {
-          fragment: {name: frgName, content: rawFrg}
+          fragment: {name: frgName, content: rawFrg, crsId}
         })
         .then((response) => {
           onGenChange(setFlashStr(response.headers.flash))
-          // setRedrPath(<Redirect to={`/fragments/${response.data.id}`} />) // リダイレクト
+          setRedrPath(
+            <Redirect
+              to={{
+                pathname: `/fragments/${response.data.id}`,
+                state: {frgId: response.data.id, frgName, rawFrg, crsId}
+              }}
+            />
+          ) // リダイレクト
         })
         .catch((error) => {
           onGenChange(setFlashStr(error.response.headers.flash))
