@@ -14,7 +14,7 @@ export const DeleteBtn = ({frgId, onGenChange}) => {
       .delete(`/fragments/${frgId}`)
       .then((response) => {
         onGenChange(setFlashStr(response.headers.flash))
-        setRedrPath(<Redirect to='/' />) // リダイレクト
+        setRedrPath(<Redirect to='/' />) // リダイレクト先 あとで指定
       })
       .catch((error) => {
         onGenChange(setFlashStr(error.response.headers.flash))

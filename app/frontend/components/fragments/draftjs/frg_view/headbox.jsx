@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const Metabox = ({usrId, crsId, creAt, updAt}) => {
+export const Headbox = ({usrId, crsId, creAt, updAt}) => {
   return (
     <aside>
       <span>作成者 : {usrId}</span>
@@ -11,7 +11,7 @@ export const Metabox = ({usrId, crsId, creAt, updAt}) => {
     </aside>
   )
 }
-Metabox.propTypes = {
+Headbox.propTypes = {
   usrId: PropTypes.number,
   crsId: PropTypes.number,
   creAt: PropTypes.string,
