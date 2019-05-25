@@ -46,7 +46,13 @@ class FragmentsController < ApplicationController
 
   # DELETE /fragments/1
   def destroy
-    @fragment.destroy
+    if @fragment.destroy
+      response.headers['flash'] = 'ok-dlfrg'
+      render status: :no_content
+    else
+      response.headers['flash'] = 'er-dlfrg'
+      render status: :internal_server_error
+    end
   end
 
   private

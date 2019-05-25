@@ -4,7 +4,8 @@ import {Editor, EditorState, convertFromRaw} from 'draft-js'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {setCclStr} from 'components/layouts/axios/then_catch_funcs'
 import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
-import {Metabox} from 'components/fragments/draftjs/frg_view/metabox'
+import {Headbox} from 'components/fragments/draftjs/frg_view/headbox'
+import {Footbox} from 'components/fragments/draftjs/frg_view/footbox'
 
 export const FrgView = ({redrState, onGenChange}) => {
   const [frgVals, setFrgVals] = useState({
@@ -57,8 +58,9 @@ export const FrgView = ({redrState, onGenChange}) => {
   return (
     <>
       <Namebox frgName={frgVals.frgName} />
-      <Metabox usrId={frgVals.usrId} crsId={frgVals.crsId} creAt={frgVals.creAt} updAt={frgVals.updAt} />
+      <Headbox usrId={frgVals.usrId} crsId={frgVals.crsId} creAt={frgVals.creAt} updAt={frgVals.updAt} />
       <Editor readOnly={true} editorState={frgVals.editorState} />
+      <Footbox frgId={frgVals.frgId} onGenChange={onGenChange} />
     </>
   )
 }
