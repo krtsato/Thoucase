@@ -9,7 +9,7 @@ export const Footbox = ({frgId, onGenChange}) => {
       <EditBtn frgId={frgId} />
       <DeleteBtn frgId={frgId} onGenChange={onGenChange} />
       {/* いいね機能 */}
-    </>s
+    </>
   )
 }
 Footbox.propTypes = {
