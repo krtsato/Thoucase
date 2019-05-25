@@ -3,54 +3,62 @@ import PropTypes from 'prop-types'
 import {Editor, EditorState, convertFromRaw} from 'draft-js'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {setCclStr} from 'components/layouts/axios/then_catch_funcs'
+import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
+import {Metabox} from 'components/fragments/draftjs/frg_view/metabox'
 
 export const FrgView = ({redrState, onGenChange}) => {
   const [frgVals, setFrgVals] = useState({
     frgId: null,
     frgName: '',
     editorState: EditorState.createEmpty(),
-    crsId: null
+    usrId: null,
+    crsId: null,
+    creAt: null,
+    updAt: null
   })
+
+  /* editorState 復元, frgVals 更新 */
+  const bufFrgVals = ({
+    id: frgId,
+    name: frgName,
+    content: rawContent,
+    user_id: usrId,
+    crystal_id: crsId,
+    created_at: creAt,
+    updated_at: updAt
+  }) => {
+    const contentState = convertFromRaw(rawContent)
+    const editorState = EditorState.createWithContent(contentState)
+    setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
+  }
 
   /* didMount, willUnMount */
   useEffect(() => {
+    let frgObj = {}
     if (redrState) {
-      const {frgId, frgName, rawFrg, crsId} = redrState
-      bufFrgVals(frgId, frgName, rawFrg, crsId)
+      frgObj = redrState
     } else {
       const frgId = 1 // あとで取得する
       axiosRails
         .get(`/fragments/${frgId}`)
         .then((response) => {
-          const {name, content, crystal_id} = response.data
-          bufFrgVals(frgId, name, content, crystal_id)
+          frgObj = response.data
         })
         .catch((error) => {
           onGenChange(setCclStr(error))
         })
     }
+    bufFrgVals(frgObj)
     return () => {
       canceller.cancel
     }
   }, [])
 
-  /*
-    editorState 復元
-    frgVals 更新
-  */
-  const bufFrgVals = (frgId, frgName, rawContent, crsId) => {
-    console.log(`rawCont : ${rawContent}`)
-    const contentState = convertFromRaw(rawContent)
-    const editorState = EditorState.createWithContent(contentState)
-    setFrgVals({frgId, frgName, editorState, crsId})
-  }
-
   return (
     <>
-      {/* Namebox */}
+      <Namebox frgName={frgVals.frgName} />
+      <Metabox usrId={frgVals.usrId} crsId={frgVals.crsId} creAt={frgVals.creAt} updAt={frgVals.updAt} />
       <Editor readOnly={true} editorState={frgVals.editorState} />
-      {/* 編集ボタン */}
-      {/* 削除ボタン */}
     </>
   )
 }

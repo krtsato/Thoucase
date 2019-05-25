@@ -115,7 +115,7 @@ export const FrgForm = ({onGenChange}) => {
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
     const checker = checkPost({frgName, rawFrg})
-    
+
     if (checker.isInvld) {
       onGenChange(checker.invldArr) // validation エラーメッセージ
     } else {
@@ -129,7 +129,7 @@ export const FrgForm = ({onGenChange}) => {
             <Redirect
               to={{
                 pathname: `/fragments/${response.data.id}`,
-                state: {frgId: response.data.id, frgName, rawFrg, crsId}
+                state: response.data
               }}
             />
           ) // リダイレクト
