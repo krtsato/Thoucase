@@ -7,7 +7,7 @@ class FragmentsController < ApplicationController
   # GET /fragments
   def index
     fragments = Fragment.all.order(created_at: :desc)
-    users = fragments.includes(:user).map {|frg| frg.user}
+    users = fragments.includes(:user).map(&:user)
     render json: {fragments: fragments, users: users}, status: :ok
   end
 
