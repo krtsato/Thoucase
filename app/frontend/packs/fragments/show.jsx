@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import {FrgView} from 'components/fragments/draftjs/frg_view'
 
 export const FrgShow = ({location, onGenChange}) => {
-  const redrState = location.state // from FrgForm redirect
+  const transState = location.state // from FrgForm redirect
   return (
     <>
       <h2>fragments#show</h2>
-      <FrgView redrState={redrState} onGenChange={onGenChange} />
+      <FrgView transState={transState} onGenChange={onGenChange} />
     </>
   )
 }

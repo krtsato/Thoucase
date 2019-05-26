@@ -13,6 +13,16 @@ class ApplicationController < ActionController::API
     end
   end
 
+=begin
+  def user(model)
+    return User.find_by(id: model.user_id).select('id, name')
+  end
+
+  def users(models)
+    return User.where(id: models.user_id).select('id, name')
+  end
+=end
+
   def forbid_signin_user
     return unless @current_user
 

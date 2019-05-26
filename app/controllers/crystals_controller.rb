@@ -5,7 +5,7 @@ class CrystalsController < ApplicationController
 
   # GET /crystals
   def index
-    @crystals = Crystal.all
+    @crystals = Crystal.all.order(created_at: :desc)
 
     render json: @crystals
   end

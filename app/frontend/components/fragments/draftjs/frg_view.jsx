@@ -7,7 +7,7 @@ import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
 import {Headbox} from 'components/fragments/draftjs/frg_view/headbox'
 import {Footbox} from 'components/fragments/draftjs/frg_view/footbox'
 
-export const FrgView = ({redrState, onGenChange}) => {
+export const FrgView = ({transState, onGenChange}) => {
   const [frgVals, setFrgVals] = useState({
     frgId: null,
     frgName: '',
@@ -36,8 +36,8 @@ export const FrgView = ({redrState, onGenChange}) => {
   /* didMount, willUnMount */
   useEffect(() => {
     let frgObj = {}
-    if (redrState) {
-      frgObj = redrState
+    if (transState) {
+      frgObj = transState
     } else {
       const frgId = 1 // あとで取得する
       axiosRails
@@ -66,6 +66,6 @@ export const FrgView = ({redrState, onGenChange}) => {
 }
 
 FrgView.propTypes = {
-  redrState: PropTypes.object,
+  transState: PropTypes.object,
   onGenChange: PropTypes.func
 }

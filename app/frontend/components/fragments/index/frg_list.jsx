@@ -1,18 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {setFlashStr, setCclStr} from 'components/layouts/axios/then_catch_funcs'
 
 export const FrgList = ({onGenChange}) => {
   let frgList = null // return
   const [fragments, setFragments] = useState([])
+  const [users, setUsers] = useState([])
 
   /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
       .get('/fragments')
       .then((response) => {
-        setFragments(response.data)
+        console.log(JSON.stringify(response, undefined, 2))
+        setUsers(response.data.users)
+        setFragments(response.data.fragments)
       })
       .catch((error) => {
         onGenChange(Object.assign(setCclStr(error), setFlashStr(error.response.headers.flash)))
@@ -22,17 +26,41 @@ export const FrgList = ({onGenChange}) => {
     }
   }, [])
 
-  /* fragments 一覧 */
-  if (fragments) {
+  /* 単位ユーザ */
+  const setUsrPart = (index) => {
+    if (users !== []) {
+      return (
+        <p>
+          <span>ICON</span>
+          <span>{users[index].name}</span>
+        </p>
+      )
+    }
+    return null
+  }
+
+  /* 単位フラグメント */
+  const setFrgPart = (frg) => {
+    return (
+      <Link
+        to={{
+          pathname: `/fragments/${frg.id}`,
+          state: frg
+        }}>
+        <p>name : {frg.name}</p>
+        <p>created_at : {frg.created_at}</p>
+      </Link>
+    )
+  }
+
+  /* fragments + users 一覧 */
+  if (fragments !== []) {
     frgList = (
       <ul>
-        {fragments.map((fragment) => (
+        {fragments.map((fragment, index) => (
           <li key={fragment.id}>
-            <p>crystal_id : {fragment.crystal_id}</p>
-            <p>user_id : {fragment.user_id}</p>
-            <p>created_at : {fragment.created_at}</p>
-            <p>updated_at : {fragment.updated_at}</p>
-            <p>name : {fragment.name}</p>
+            {setUsrPart(index)}
+            {setFrgPart(fragment)}
           </li>
         ))}
       </ul>

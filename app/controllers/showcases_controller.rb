@@ -5,7 +5,7 @@ class ShowcasesController < ApplicationController
 
   # GET /showcases
   def index
-    @showcases = Showcase.all
+    @showcases = Showcase.all.order(created_at: :desc)
 
     render json: @showcases
   end
