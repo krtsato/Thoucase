@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {NavLink, withRouter} from 'react-router-dom'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {removeToken, setFlashStr} from 'components/layouts/axios/then_catch_funcs'
+import {removeToken, setFlashStr, setSninBool} from 'components/layouts/axios/then_catch_funcs'
 
 export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
   let tglNavLink = null // return
@@ -13,11 +13,11 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
       .post('/signout')
       .then((response) => {
         removeToken('authToken')
-        onGenChange(setFlashStr(response.headers.flash))
+        onGenChange(Object.assign(setSninBool(response.headers.flash), setFlashStr(response.headers.flash)))
         history.push('/') // リダイレクト
       })
       .catch((error) => {
-        onGenChange(setFlashStr(error.response.header.flash))
+        onGenChange(setFlashStr(error.response.headers.flash))
       })
   }
 
@@ -50,6 +50,9 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
         </li>
         <li>
           <NavLink to='/about'>Thoucaseについて</NavLink>
+        </li>
+        <li>
+          <NavLink to='/fragments'>フラグメント一覧</NavLink>
         </li>
         <li>
           <NavLink to='/users'>ユーザ一覧</NavLink>

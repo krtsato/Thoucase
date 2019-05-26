@@ -35,8 +35,7 @@ export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
         )
       })
       .catch((error) => {
-        onGenChange(setCclStr(error))
-        onGenChange(setFlashStr(error.response.header.flash))
+        onGenChange(Object.assign(setCclStr(error), setFlashStr(error.response.header.flash)))
       })
     return () => {
       canceller.cancel

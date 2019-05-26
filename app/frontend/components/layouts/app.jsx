@@ -26,24 +26,25 @@ const General = ({children}) => {
   const [invldMsg, setInvldMsg] = useState([])
 
   const onGenChange = (genTaskObj) => {
-    const key = Object.keys(genTaskObj)[0]
-    const val = Object.values(genTaskObj)[0]
-    switch (key) {
-      case 'sninBool': // {sninBool: bool}
-        setIsSignin(val)
-        break
-      case 'cclStr': // {cclStr: str}
-        setCclMsg(val)
-        break
-      case 'flashStr': // {flashStr: str}
-        setFlashMsg(val)
-        break
-      case 'invldArr': // {invldArr: arr of string}
-        setInvldMsg(val)
-        break
-      default:
-        break
-    }
+    // ここ検討
+    Object.entries(genTaskObj).forEach((task) => {
+      switch (task[0]) {
+        case 'sninBool': // {sninBool: bool}
+          setIsSignin(task[1])
+          break
+        case 'cclStr': // {cclStr: str}
+          setCclMsg(task[1])
+          break
+        case 'flashStr': // {flashStr: str}
+          setFlashMsg(task[1])
+          break
+        case 'invldArr': // {invldArr: arr of string}
+          setInvldMsg(task[1])
+          break
+        default:
+          break
+      }
+    })
   }
 
   // props 分類付加

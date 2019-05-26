@@ -6,9 +6,9 @@ class FragmentsController < ApplicationController
 
   # GET /fragments
   def index
-    fragments = Fragment.all
-
-    render json: fragments, status: :ok
+    fragments = Fragment.all.order(created_at: :desc)
+    users = fragments.includes(:user).map(&:user)
+    render json: {fragments: fragments, users: users}, status: :ok
   end
 
   # GET /fragments/1
@@ -46,7 +46,13 @@ class FragmentsController < ApplicationController
 
   # DELETE /fragments/1
   def destroy
-    @fragment.destroy
+    if @fragment.destroy
+      response.headers['flash'] = 'ok-dlfrg'
+      render status: :no_content
+    else
+      response.headers['flash'] = 'er-dlfrg'
+      render status: :internal_server_error
+    end
   end
 
   private

@@ -21,6 +21,8 @@ const setFlashStr = (rawFlash) => {
         return {flashStr: 'サインアウトしました'}
       case 'crfrg':
         return {flashStr: 'フラグメントを作成しました'}
+      case 'dlfrg':
+        return {flashStr: 'フラグメントを削除しました'}
       default:
         return null
     }
@@ -32,6 +34,8 @@ const setFlashStr = (rawFlash) => {
         return {flashStr: 'メールアドレスまたはパスワードが間違っています'}
       case 'crfrg':
         return {flashStr: 'フラグメントの作成に失敗しました'}
+      case 'dlfrg':
+        return {flashStr: 'フラグメントの削除に失敗しました'}
       default:
         return null
     }
@@ -40,10 +44,15 @@ const setFlashStr = (rawFlash) => {
   }
 }
 
-/* catch キャンセルメッセージ・エラーメッセージ 返却 */
+const setSninBool = (rawFlash) => {
+  if (rawFlash.split('-')[1] === 'snin') return {sninBool: true}
+  return {sninBool: false}
+}
+
+/* catch キャンセルメッセージ 返却 */
 const setCclStr = (error) => {
   const cclMsg = axios.isCancel(error) ? 'リクエストがキャンセルされました' : null
   return {cclStr: cclMsg}
 }
 
-export {setToken, removeToken, setFlashStr, setCclStr}
+export {setToken, removeToken, setFlashStr, setSninBool, setCclStr}

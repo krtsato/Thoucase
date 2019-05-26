@@ -2,11 +2,11 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {setToken, setFlashStr} from 'components/layouts/axios/then_catch_funcs'
+import {setToken, setFlashStr, setSninBool} from 'components/layouts/axios/then_catch_funcs'
 
 export const SigninForm = ({onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
-  const [formValue, setFormValue] = useState({
+  const [formVals, setFormVals] = useState({
     email: '',
     password: ''
   })
@@ -15,23 +15,23 @@ export const SigninForm = ({onGenChange}) => {
   const onFormChange = (e) => {
     const inputName = e.target.name
     const inputVal = e.target.value
-    setFormValue((nextState) => ({...nextState, [inputName]: inputVal}))
+    setFormVals((nextState) => ({...nextState, [inputName]: inputVal}))
   }
 
   /* signin */
   const onSninClick = () => {
     axiosRails
       .post('/signin', {
-        user: {email: formValue.email, password: formValue.password}
+        user: {email: formVals.email, password: formVals.password}
       })
       .then((response) => {
         setToken('authToken', response.headers.authorization)
-        onGenChange(setFlashStr(response.headers.flash))
+        onGenChange(Object.assign(setSninBool(response.headers.flash), setFlashStr(response.headers.flash)))
         setRedrPath(<Redirect to='/fragments' />) // リダイレクト
       })
       .catch((error) => {
         onGenChange(setFlashStr(error.response.headers.flash))
-        setFormValue({email: error.response.data.email, password: error.response.data.password})
+        setFormVals({email: error.response.data.email, password: error.response.data.password})
       })
   }
 
@@ -41,16 +41,16 @@ export const SigninForm = ({onGenChange}) => {
       {redrPath}
       <div className='formBody'>
         <label htmlFor='email'>
+          E-mail
           <input
             id='email'
             name='email'
             type='text'
             required
             autoFocus
-            value={formValue.email}
+            defaultValue={formVals.email}
             onChange={onFormChange}
           />
-          E-mail
         </label>
         <label htmlFor='password'>
           Password
@@ -59,7 +59,7 @@ export const SigninForm = ({onGenChange}) => {
             name='password'
             type='text'
             required
-            value={formValue.password}
+            defaultValue={formVals.password}
             onChange={onFormChange}
           />
         </label>

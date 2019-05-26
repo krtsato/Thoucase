@@ -121,11 +121,18 @@ export const FrgForm = ({onGenChange}) => {
     } else {
       axiosRails
         .post(`/crystals/${crsId}/fragments`, {
-          fragment: {name: frgName, content: rawFrg}
+          fragment: {name: frgName, content: rawFrg, crsId}
         })
         .then((response) => {
           onGenChange(setFlashStr(response.headers.flash))
-          // setRedrPath(<Redirect to={`/fragments/${response.data.id}`} />) // リダイレクト
+          setRedrPath(
+            <Redirect
+              to={{
+                pathname: `/fragments/${response.data.id}`,
+                state: response.data
+              }}
+            />
+          ) // リダイレクト
         })
         .catch((error) => {
           onGenChange(setFlashStr(error.response.headers.flash))
