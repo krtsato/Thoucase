@@ -1,18 +1,18 @@
 import React, {useState} from 'react'
-import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-export const EditBtn = ({frgId}) => {
+export const EditBtn = ({frgVals}) => {
   const [redrPath, setRedrPath] = useState(null)
 
+  /* フラグメント 編集 */
   const onEditClick = (e) => {
-    const hoge = {}
     e.preventDefault()
     setRedrPath(
       <Redirect
         to={{
-          pathname: `/fragments/${frgId}/edit`,
-          state: hoge
+          pathname: `/fragments/${frgVals.frgId}/edit`,
+          state: frgVals
         }}
       />
     ) // リダイレクト
@@ -29,5 +29,5 @@ export const EditBtn = ({frgId}) => {
 }
 
 EditBtn.propTypes = {
-  frgId: PropTypes.number
+  frgVals: PropTypes.object
 }

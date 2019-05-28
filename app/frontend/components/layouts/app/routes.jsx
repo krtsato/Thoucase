@@ -6,11 +6,12 @@ import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 import {Top} from 'packs/home/top'
 import {About} from 'packs/home/about'
 import {ShwIndex} from 'packs/showcases/index'
+import {FrgNew} from 'packs/fragments/new'
+import {FrgShow} from 'packs/fragments/show'
+import {FrgEdit} from 'packs/fragments/edit'
 import {CrsIndex} from 'packs/crystals/index'
 import {FrgIndex} from 'packs/fragments/index'
 import {UsrIndex} from 'packs/users/index'
-import {FrgNew} from 'packs/fragments/new'
-import {FrgShow} from 'packs/fragments/show'
 import {Signin} from 'packs/users/signin'
 
 export const Routes = ({isSignin, onGenChange}) => {
@@ -31,6 +32,7 @@ export const Routes = ({isSignin, onGenChange}) => {
         <Route exact path='/signin' render={AddGenPropsTo(Signin)} />
         {/* Fragments */}
         <Route exact path='/fragments' render={AddGenPropsTo(FrgIndex)} />
+        <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
         <AuthRoutes isSignin={isSignin} onGenChange={onGenChange}>
           <Switch>
             {/* Showcases */}
@@ -39,7 +41,7 @@ export const Routes = ({isSignin, onGenChange}) => {
             <Route exact path='/crystals' render={AddGenPropsTo(CrsIndex)} />
             {/* Fragments */}
             <Route exact path='/fragments/new' render={AddGenPropsTo(FrgNew)} />
-            <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
+            <Route exact path='/fragments/:id/edit' component={AddGenPropsTo(FrgEdit)} />
           </Switch>
         </AuthRoutes>
       </Switch>
