@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {EditorState} from 'draft-js'
+import {EditorState, convertFromRaw} from 'draft-js'
 import {FrgView} from 'components/fragments/draftjs/frg_view'
 
 export const FrgShow = ({location, onGenChange}) => {
@@ -10,6 +10,7 @@ export const FrgShow = ({location, onGenChange}) => {
   */
   let initState = null
   if (location.state) {
+    location.state.content = convertFromRaw(location.state.content)
     initState = location.state
   } else {
     initState = {
@@ -22,6 +23,7 @@ export const FrgShow = ({location, onGenChange}) => {
       updAt: null
     }
   }
+  console.log(`initState : ${JSON.stringify(initState, undefined, 2)}`)
 
   return (
     <>

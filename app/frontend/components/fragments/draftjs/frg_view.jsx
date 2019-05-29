@@ -25,6 +25,8 @@ export const FrgView = ({initState, onGenChange}) => {
     setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
   }
 
+  // location.state がなかった時だけ通信
+
   /* didMount, willUnMount */
   useEffect(() => {
     const frgId = 1 // あとで取得する
