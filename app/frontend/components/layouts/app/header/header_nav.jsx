@@ -26,13 +26,19 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
     tglNavLink = (
       <>
         <li>
-          <NavLink to='/fragments'>フラグメント一覧</NavLink>
+          <NavLink exact to='/fragments'>
+            フラグメント一覧
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/fragments/new'>新規フラグメント</NavLink>
+          <NavLink exact to='/fragments/new'>
+            新規フラグメント
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/users'>ユーザー覧</NavLink>
+          <NavLink exact to='/users'>
+            ユーザー覧
+          </NavLink>
         </li>
         <li>マイページ</li>
         <li>
@@ -46,19 +52,29 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
     tglNavLink = (
       <>
         <li>
-          <NavLink to='/'>トップページ</NavLink>
+          <NavLink exact to='/'>
+            トップページ
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/about'>Thoucaseについて</NavLink>
+          <NavLink exact to='/about'>
+            Thoucaseについて
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/fragments'>フラグメント一覧</NavLink>
+          <NavLink exact to='/fragments'>
+            フラグメント一覧
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/users'>ユーザ一覧</NavLink>
+          <NavLink exact to='/users'>
+            ユーザ一覧
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/signin'>サインイン</NavLink>
+          <NavLink exact to='/signin'>
+            サインイン
+          </NavLink>
         </li>
       </>
     )

@@ -145,7 +145,7 @@ export const FrgForm = ({initState, onGenChange}) => {
   return (
     <>
       {redrPath}
-      <Namebox bufNameChange={bufNameChange} editorFocus={editorFocus} />
+      <Namebox frgName={frgName} bufNameChange={bufNameChange} editorFocus={editorFocus} />
       <CrsSelect onGenChange={onGenChange} bufCrsIdBlur={bufCrsIdBlur} />
       <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
@@ -158,7 +158,7 @@ export const FrgForm = ({initState, onGenChange}) => {
         ref={editorRef}
       />
       <button type='button' onClick={onSaveClick}>
-        save
+        保存
       </button>
     </>
   )

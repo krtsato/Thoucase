@@ -25,13 +25,14 @@ export const FrgView = ({initState, onGenChange}) => {
     setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
   }
 
-  // location.state がなかった時だけ通信
-
-  /* didMount, willUnMount */
+  /*
+    didMount, willUnMount 
+    URL から遷移して来る場合は axios 通信
+  */
   useEffect(() => {
-    const frgId = 1 // あとで取得する
+    if (frgVals.frgName) return undefined
     axiosRails
-      .get(`/fragments/${frgId}`)
+      .get(`/fragments/${frgVals.frgId}`)
       .then((response) => {
         bufFrgVals(response.data)
       })

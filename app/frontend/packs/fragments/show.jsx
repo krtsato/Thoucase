@@ -3,18 +3,27 @@ import PropTypes from 'prop-types'
 import {EditorState, convertFromRaw} from 'draft-js'
 import {FrgView} from 'components/fragments/draftjs/frg_view'
 
-export const FrgShow = ({location, onGenChange}) => {
-  /*
-    linked by FrgList
-    redirected from FrgForm
-  */
+export const FrgShow = ({location, match, onGenChange}) => {
+  /* FrgView : frgVals 初期化 */
   let initState = null
   if (location.state) {
-    location.state.content = convertFromRaw(location.state.content)
-    initState = location.state
+    // Link, Redirect から遷移して来る場合
+    const {
+      id: frgId,
+      name: frgName,
+      content: rawContent,
+      user_id: usrId,
+      crystal_id: crsId,
+      created_at: creAt,
+      updated_at: updAt
+    } = location.state
+    const contentState = convertFromRaw(rawContent)
+    const editorState = EditorState.createWithContent(contentState)
+    initState = {frgId, frgName, editorState, usrId, crsId, creAt, updAt}
   } else {
+    // URL から遷移して来る場合
     initState = {
-      frgId: null,
+      frgId: match.params.id,
       frgName: '',
       editorState: EditorState.createEmpty(),
       usrId: null,
@@ -23,7 +32,6 @@ export const FrgShow = ({location, onGenChange}) => {
       updAt: null
     }
   }
-  console.log(`initState : ${JSON.stringify(initState, undefined, 2)}`)
 
   return (
     <>
@@ -35,5 +43,6 @@ export const FrgShow = ({location, onGenChange}) => {
 
 FrgShow.propTypes = {
   location: PropTypes.object,
+  match: PropTypes.object,
   onGenChange: PropTypes.func
 }

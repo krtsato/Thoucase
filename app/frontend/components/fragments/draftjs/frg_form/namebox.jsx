@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const Namebox = ({bufNameChange, editorFocus}) => {
+export const Namebox = ({frgName, bufNameChange, editorFocus}) => {
   /* frgName 更新 */
   const onNameChange = (e) => {
     e.preventDefault()
@@ -19,12 +19,21 @@ export const Namebox = ({bufNameChange, editorFocus}) => {
   return (
     <label htmlFor='frgName'>
       フラグメント名
-      <input id='frgName' type='text' required autoFocus onChange={onNameChange} onKeyDown={onKeyDown} />
+      <input
+        id='frgName'
+        type='text'
+        required
+        autoFocus
+        value={frgName}
+        onChange={onNameChange}
+        onKeyDown={onKeyDown}
+      />
     </label>
   )
 }
 
 Namebox.propTypes = {
+  frgName: PropTypes.string,
   bufNameChange: PropTypes.func,
   editorFocus: PropTypes.func
 }

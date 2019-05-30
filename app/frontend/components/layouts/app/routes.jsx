@@ -34,7 +34,7 @@ export const Routes = ({isSignin, onGenChange}) => {
         <Route exact path='/fragments' render={AddGenPropsTo(FrgIndex)} />
         <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
         <AuthRoutes isSignin={isSignin} onGenChange={onGenChange}>
-          <Switch>
+          <>
             {/* Showcases */}
             <Route exact path='/showcases' render={AddGenPropsTo(ShwIndex)} />
             {/* Crystals */}
@@ -42,7 +42,7 @@ export const Routes = ({isSignin, onGenChange}) => {
             {/* Fragments */}
             <Route exact path='/fragments/new' render={AddGenPropsTo(FrgNew)} />
             <Route exact path='/fragments/:id/edit' component={AddGenPropsTo(FrgEdit)} />
-          </Switch>
+          </>
         </AuthRoutes>
       </Switch>
     </main>
