@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
-import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, convertToRaw} from 'draft-js'
+import {Editor, RichUtils, DefaultDraftBlockRenderMap, convertToRaw} from 'draft-js'
 import {Map as ImmMap} from 'immutable'
 import {axiosRails} from 'components/layouts/axios/instances'
 import {checkPost} from 'components/layouts/axios/validate'
@@ -11,11 +11,11 @@ import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
 
-export const FrgForm = ({onGenChange}) => {
+export const FrgForm = ({initState, onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
-  const [frgName, setFrgName] = useState('')
-  const [crsId, setCrsId] = useState(null)
-  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [frgName, setFrgName] = useState(initState.frgName)
+  const [crsId, setCrsId] = useState(initState.crsId)
+  const [editorState, setEditorState] = useState(initState.editorState)
 
   /* Editor ~ Namebox : focus */
   const editorRef = useRef(null)
@@ -111,7 +111,8 @@ export const FrgForm = ({onGenChange}) => {
     return false
   }
 
-  /* Editor : form 保存 */
+  /* Editor : form 保存, 更新 */
+  // 更新処理を追記予定
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
     const checker = checkPost({frgName, rawFrg})
@@ -144,7 +145,7 @@ export const FrgForm = ({onGenChange}) => {
   return (
     <>
       {redrPath}
-      <Namebox bufNameChange={bufNameChange} editorFocus={editorFocus} />
+      <Namebox frgName={frgName} bufNameChange={bufNameChange} editorFocus={editorFocus} />
       <CrsSelect onGenChange={onGenChange} bufCrsIdBlur={bufCrsIdBlur} />
       <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
@@ -157,12 +158,13 @@ export const FrgForm = ({onGenChange}) => {
         ref={editorRef}
       />
       <button type='button' onClick={onSaveClick}>
-        save
+        保存
       </button>
     </>
   )
 }
 
 FrgForm.propTypes = {
+  initState: PropTypes.object,
   onGenChange: PropTypes.func
 }

@@ -14,7 +14,6 @@ export const FrgList = ({onGenChange}) => {
     axiosRails
       .get('/fragments')
       .then((response) => {
-        console.log(JSON.stringify(response, undefined, 2))
         setUsers(response.data.users)
         setFragments(response.data.fragments)
       })

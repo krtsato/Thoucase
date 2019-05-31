@@ -6,11 +6,12 @@ import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 import {Top} from 'packs/home/top'
 import {About} from 'packs/home/about'
 import {ShwIndex} from 'packs/showcases/index'
+import {FrgNew} from 'packs/fragments/new'
+import {FrgShow} from 'packs/fragments/show'
+import {FrgEdit} from 'packs/fragments/edit'
 import {CrsIndex} from 'packs/crystals/index'
 import {FrgIndex} from 'packs/fragments/index'
 import {UsrIndex} from 'packs/users/index'
-import {FrgNew} from 'packs/fragments/new'
-import {FrgShow} from 'packs/fragments/show'
 import {Signin} from 'packs/users/signin'
 
 export const Routes = ({isSignin, onGenChange}) => {
@@ -23,35 +24,51 @@ export const Routes = ({isSignin, onGenChange}) => {
   return (
     <main id='mainWrap'>
       <Switch>
-        {/* Home */}
         <Route exact path={['/', '/top']} render={Top} />
         <Route exact path='/about' render={About} />
-        {/* Users */}
         <Route exact path='/users' render={AddGenPropsTo(UsrIndex)} />
         <Route exact path='/signin' render={AddGenPropsTo(Signin)} />
-        {/* Fragments */}
         <Route exact path='/fragments' render={AddGenPropsTo(FrgIndex)} />
-        <AuthRoutes isSignin={isSignin} onGenChange={onGenChange}>
-          <Switch>
-            {/* Showcases */}
-            <Route exact path='/showcases' render={AddGenPropsTo(ShwIndex)} />
-            {/* Crystals */}
-            <Route exact path='/crystals' render={AddGenPropsTo(CrsIndex)} />
-            {/* Fragments */}
-            <Route exact path='/fragments/new' render={AddGenPropsTo(FrgNew)} />
-            <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
-          </Switch>
-        </AuthRoutes>
+        <AuthRoute
+          isSignin={isSignin}
+          onGenChange={onGenChange}
+          path='/showcases'
+          authComp={AddGenPropsTo(ShwIndex)}
+        />
+        <AuthRoute
+          isSignin={isSignin}
+          onGenChange={onGenChange}
+          path='/crystals'
+          authComp={AddGenPropsTo(CrsIndex)}
+        />
+        <AuthRoute
+          isSignin={isSignin}
+          onGenChange={onGenChange}
+          path='/fragments/new'
+          authComp={AddGenPropsTo(FrgNew)}
+        />
+        <AuthRoute
+          isSignin={isSignin}
+          onGenChange={onGenChange}
+          path='/fragments/:id/edit'
+          authComp={AddGenPropsTo(FrgEdit)}
+        />
       </Switch>
+      {/* :id 回避 */}
+      <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
     </main>
   )
 }
 
-/* Signin アクセス認可 */
-const AuthRoutes = ({children, isSignin, onGenChange}) => {
-  if (isSignin) return children
-  onGenChange(setFlashStr('er-auth'))
-  return <Redirect exact to='/signin' />
+const AuthRoute = ({isSignin, onGenChange, path, authComp: AuthComp}) => {
+  let authRoute = null // return
+  if (isSignin) {
+    authRoute = <Route exact path={path} render={AuthComp} />
+  } else {
+    onGenChange(setFlashStr('er-auth'))
+    authRoute = <Redirect exact to='/signin' />
+  }
+  return authRoute
 }
 
 Routes.propTypes = {
@@ -59,10 +76,11 @@ Routes.propTypes = {
   onGenChange: PropTypes.func
 }
 
-AuthRoutes.propTypes = {
-  children: PropTypes.object,
+AuthRoute.propTypes = {
   isSignin: PropTypes.bool,
-  onGenChange: PropTypes.func
+  onGenChange: PropTypes.func,
+  path: PropTypes.string,
+  authComp: PropTypes.func
 }
 
 /* 追記予定

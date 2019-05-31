@@ -7,18 +7,10 @@ import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
 import {Headbox} from 'components/fragments/draftjs/frg_view/headbox'
 import {Footbox} from 'components/fragments/draftjs/frg_view/footbox'
 
-export const FrgView = ({transState, onGenChange}) => {
-  const [frgVals, setFrgVals] = useState({
-    frgId: null,
-    frgName: '',
-    editorState: EditorState.createEmpty(),
-    usrId: null,
-    crsId: null,
-    creAt: null,
-    updAt: null
-  })
+export const FrgView = ({initState, onGenChange}) => {
+  const [frgVals, setFrgVals] = useState(initState)
 
-  /* editorState 復元, frgVals 更新 */
+  /* FrgView : editorState 復元, frgVals 更新 */
   const bufFrgVals = ({
     id: frgId,
     name: frgName,
@@ -33,39 +25,37 @@ export const FrgView = ({transState, onGenChange}) => {
     setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
   }
 
-  /* didMount, willUnMount */
+  /*
+    didMount, willUnMount 
+    URL から遷移して来る場合は axios 通信
+  */
   useEffect(() => {
-    let frgObj = {}
-    if (transState) {
-      frgObj = transState
-    } else {
-      const frgId = 1 // あとで取得する
-      axiosRails
-        .get(`/fragments/${frgId}`)
-        .then((response) => {
-          frgObj = response.data
-        })
-        .catch((error) => {
-          onGenChange(setCclStr(error))
-        })
-    }
-    bufFrgVals(frgObj)
+    if (frgVals.frgName) return undefined
+    axiosRails
+      .get(`/fragments/${frgVals.frgId}`)
+      .then((response) => {
+        bufFrgVals(response.data)
+      })
+      .catch((error) => {
+        onGenChange(setCclStr(error))
+      })
     return () => {
       canceller.cancel
     }
   }, [])
 
+  /* form */
   return (
     <>
       <Namebox frgName={frgVals.frgName} />
       <Headbox usrId={frgVals.usrId} crsId={frgVals.crsId} creAt={frgVals.creAt} updAt={frgVals.updAt} />
       <Editor readOnly={true} editorState={frgVals.editorState} />
-      <Footbox frgId={frgVals.frgId} onGenChange={onGenChange} />
+      <Footbox frgVals={frgVals} onGenChange={onGenChange} />
     </>
   )
 }
 
 FrgView.propTypes = {
-  transState: PropTypes.object,
+  initState: PropTypes.object,
   onGenChange: PropTypes.func
 }
