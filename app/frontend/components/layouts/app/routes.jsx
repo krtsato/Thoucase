@@ -53,9 +53,9 @@ export const Routes = ({isSignin, onGenChange}) => {
           path='/fragments/:id/edit'
           authComp={AddGenPropsTo(FrgEdit)}
         />
+        {/* :id 回避 */}
+        <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
       </Switch>
-      {/* :id 回避 */}
-      <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
     </main>
   )
 }
