@@ -21,6 +21,8 @@ const setFlashStr = (rawFlash) => {
         return {flashStr: 'サインアウトしました'}
       case 'crfrg':
         return {flashStr: 'フラグメントを作成しました'}
+      case 'udfrg':
+        return {flashStr: 'フラグメントを更新しました'}
       case 'dlfrg':
         return {flashStr: 'フラグメントを削除しました'}
       default:
@@ -34,6 +36,8 @@ const setFlashStr = (rawFlash) => {
         return {flashStr: 'メールアドレスまたはパスワードが間違っています'}
       case 'crfrg':
         return {flashStr: 'フラグメントの作成に失敗しました'}
+      case 'upfrg':
+        return {flashStr: 'フラグメントの更新に失敗しました'}
       case 'dlfrg':
         return {flashStr: 'フラグメントの削除に失敗しました'}
       default:

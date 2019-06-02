@@ -38,8 +38,10 @@ class FragmentsController < ApplicationController
   # PATCH/PUT /fragments/1
   def update
     if @fragment.update(fragment_params)
-      render json: @fragment
+      response.headers['flash'] = 'ok-udfrg'
+      render json: @fragment, status: :ok
     else
+      response.headers['flash'] = 'er-udfrg'
       render json: @fragment.errors, status: :unprocessable_entity
     end
   end
@@ -64,6 +66,10 @@ class FragmentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fragment_params
-      params.require(:fragment).permit(:name, content: {}).merge!(user_id: @current_user.id, crystal_id: params[:crystal_id])
+      if request.request_method == 'POST'
+        params.require(:fragment).permit(:name, content: {}).merge!(user_id: @current_user.id, crystal_id: params[:crystal_id])
+      else
+        params.require(:fragment).permit(:name, :crystal_id, content: {}).merge!(user_id: @current_user.id)
+      end
     end
 end

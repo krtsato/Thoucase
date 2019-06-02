@@ -11,7 +11,7 @@ import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
 
-export const FrgForm = ({initState, onGenChange}) => {
+export const FrgForm = ({reqMethod, initState, onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
   const [frgName, setFrgName] = useState(initState.frgName)
   const [crsId, setCrsId] = useState(initState.crsId)
@@ -112,35 +112,26 @@ export const FrgForm = ({initState, onGenChange}) => {
   }
 
   /* Editor : form 保存, 更新 */
-  // 更新処理を追記予定
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
     const checker = checkPost({frgName, rawFrg})
 
+    // post or patch
     const axiosBy = (method) => {
-      switch (method) {
-        case 'post':
-          return () => {
-            axiosRails.post(`/crystals/${crsId}/fragments`, {
-              fragment: {name: frgName, content: rawFrg, crsId}
-            })
-          }
-        case 'patch':
-          return () => {
-            const frgId = 1 // あとで取得する
-            axiosRails.patch(`/fragments/${frgId}`, {
-              fragment: {name: frgName, content: rawFrg, crsId}
-            })
-          }
-        default:
-          return null
+      if (method === 'post') {
+        return axiosRails.post(`/crystals/${crsId}/fragments`, {
+          fragment: {name: frgName, content: rawFrg}
+        })
       }
+      return axiosRails.patch(`/fragments/${initState.frgId}`, {
+        fragment: {name: frgName, content: rawFrg, crystal_id: crsId}
+      })
     }
 
     if (checker.isInvld) {
       onGenChange(checker.invldArr) // validation エラーメッセージ
     } else {
-      axiosBy('hoge')
+      axiosBy(reqMethod)
         .then((response) => {
           onGenChange(setFlashStr(response.headers.flash))
           setRedrPath(
@@ -182,6 +173,7 @@ export const FrgForm = ({initState, onGenChange}) => {
 }
 
 FrgForm.propTypes = {
+  reqMethod: PropTypes.string,
   initState: PropTypes.object,
   onGenChange: PropTypes.func
 }
