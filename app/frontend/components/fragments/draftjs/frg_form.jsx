@@ -117,13 +117,30 @@ export const FrgForm = ({initState, onGenChange}) => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
     const checker = checkPost({frgName, rawFrg})
 
+    const axiosBy = (method) => {
+      switch (method) {
+        case 'post':
+          return () => {
+            axiosRails.post(`/crystals/${crsId}/fragments`, {
+              fragment: {name: frgName, content: rawFrg, crsId}
+            })
+          }
+        case 'patch':
+          return () => {
+            const frgId = 1 // あとで取得する
+            axiosRails.patch(`/fragments/${frgId}`, {
+              fragment: {name: frgName, content: rawFrg, crsId}
+            })
+          }
+        default:
+          return null
+      }
+    }
+
     if (checker.isInvld) {
       onGenChange(checker.invldArr) // validation エラーメッセージ
     } else {
-      axiosRails
-        .post(`/crystals/${crsId}/fragments`, {
-          fragment: {name: frgName, content: rawFrg, crsId}
-        })
+      axiosBy('hoge')
         .then((response) => {
           onGenChange(setFlashStr(response.headers.flash))
           setRedrPath(
