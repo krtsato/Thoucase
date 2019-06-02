@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {Editor, RichUtils, DefaultDraftBlockRenderMap, convertToRaw} from 'draft-js'
 import {Map as ImmMap} from 'immutable'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {checkPost} from 'components/layouts/axios/validate'
+import {validCheck} from 'components/layouts/axios/validate'
 import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 import {Namebox} from 'components/fragments/draftjs/frg_form/namebox'
 import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
@@ -114,7 +114,7 @@ export const FrgForm = ({reqMethod, initState, onGenChange}) => {
   /* Editor : form 保存, 更新 */
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
-    const checker = checkPost({frgName, rawFrg})
+    const check = validCheck({frgName, rawFrg})
 
     // post or patch
     const axiosBy = (method) => {
@@ -128,8 +128,8 @@ export const FrgForm = ({reqMethod, initState, onGenChange}) => {
       })
     }
 
-    if (checker.isInvld) {
-      onGenChange(checker.invldArr) // validation エラーメッセージ
+    if (check[0]) {
+      onGenChange(check[1]) // validation エラーメッセージ
     } else {
       axiosBy(reqMethod)
         .then((response) => {

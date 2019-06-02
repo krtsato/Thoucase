@@ -3,7 +3,7 @@
   invalid : 空文字・null を違反とする
   返却値 : {isInvld: bool, invldArr: array}
 */
-const checkPost = (chkObj) => {
+const validCheck = (chkObj) => {
   const chkPairs = Object.entries(chkObj) // [[k, v], [k, v] ...]
 
   // rawFrg : text が一文字でもあれば true
@@ -47,7 +47,7 @@ const checkPost = (chkObj) => {
       }
     })
 
-  return {isInvld, invldArr}
+  return [isInvld, {invldArr}]
 }
 
-export {checkPost}
+export {validCheck}

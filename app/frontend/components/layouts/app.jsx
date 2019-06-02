@@ -38,7 +38,7 @@ const General = ({children}) => {
         case 'flashStr': // {flashStr: str}
           setFlashMsg(task[1])
           break
-        case 'invldArr': // {invldArr: arr of string}
+        case 'invldArr': // {invldArr: [{str, str}, {} ...]}
           setInvldMsg(task[1])
           break
         default:
