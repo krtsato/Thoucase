@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'fragments/new', to: 'fragments#new'
 
   shallow do
-    # showcases/ crystals
+    # showcases / crystals
     resources :showcases do
       resources :crystals, except: :index
     end
