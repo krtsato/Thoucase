@@ -21,17 +21,19 @@ export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
       .then((response) => {
         bufCrsIdBlur(response.data[0].id)
         setCrsSelect(
-          <label htmlFor='crsSelect'>
-            作成先クリスタル
-            <select id='crsSelect' required defaultValue={response.data[0].id} onBlur={onCrsIdBlur}>
-              {response.data.map((crystal) => (
-                <option key={crystal.id} value={crystal.id}>
-                  {crystal.name}
-                </option>
-              ))}
-              <option value='new'>新規作成</option>
-            </select>
-          </label>
+          <div>
+            <label htmlFor='crsSelect'>
+              作成先クリスタル
+              <select id='crsSelect' required defaultValue={response.data[0].id} onBlur={onCrsIdBlur}>
+                {response.data.map((crystal) => (
+                  <option key={crystal.id} value={crystal.id}>
+                    {crystal.name}
+                  </option>
+                ))}
+                <option value='new'>新規作成</option>
+              </select>
+            </label>
+          </div>
         )
       })
       .catch((error) => {

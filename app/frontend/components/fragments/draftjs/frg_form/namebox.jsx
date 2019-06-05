@@ -17,18 +17,20 @@ export const Namebox = ({frgName, bufNameChange, editorFocus}) => {
   }
 
   return (
-    <label htmlFor='frgName'>
-      フラグメント名
-      <input
-        id='frgName'
-        type='text'
-        required
-        autoFocus
-        value={frgName}
-        onChange={onNameChange}
-        onKeyDown={onKeyDown}
-      />
-    </label>
+    <div>
+      <label htmlFor='frgName'>
+        フラグメント名
+        <input
+          id='frgName'
+          type='text'
+          required
+          autoFocus
+          value={frgName}
+          onChange={onNameChange}
+          onKeyDown={onKeyDown}
+        />
+      </label>
+    </div>
   )
 }
 

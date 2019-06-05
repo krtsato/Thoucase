@@ -49,7 +49,7 @@ export const Toolbox = (props) => {
   }
 
   return (
-    <>
+    <div>
       <InlineStyleBtn styleType='BOLD' {...props} />
       <InlineStyleBtn styleType='ITALIC' {...props} />
       <BlockStyleBtn styleType='paragraph' {...props} />
@@ -70,7 +70,7 @@ export const Toolbox = (props) => {
         bufUrlChange={bufUrlChange}
         bufAddMedia={bufAddMedia}
       />
-    </>
+    </div>
   )
 }
 
