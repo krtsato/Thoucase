@@ -5,18 +5,16 @@ import {Message} from 'components/layouts/app/message'
 import {Routes} from 'components/layouts/app/routes'
 import {Footer} from 'components/layouts/app/footer'
 
-export const App = () => {
-  return (
-    <BrowserRouter>
-      <General>
-        <Message />
-        <Header />
-        <Routes />
-        <Footer />
-      </General>
-    </BrowserRouter>
-  )
-}
+export const App = () => (
+  <BrowserRouter>
+    <General>
+      <Message />
+      <Header />
+      <Routes />
+      <Footer />
+    </General>
+  </BrowserRouter>
+)
 
 /* 共通状態管理 */
 const General = ({children}) => {
@@ -38,7 +36,7 @@ const General = ({children}) => {
         case 'flashStr': // {flashStr: str}
           setFlashMsg(task[1])
           break
-        case 'invldArr': // {invldArr: arr of string}
+        case 'invldArr': // {invldArr: [{str, str}, {} ...]}
           setInvldMsg(task[1])
           break
         default:

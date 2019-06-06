@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
     return unless @current_user
 
     response.status = 403
-    response.headers['flash'] = 'er-logged'
+    response.headers['flash'] = 'er-signed'
   end
 
   def ensure_valid_user

@@ -4,14 +4,14 @@ import {Redirect} from 'react-router-dom'
 import {Editor, RichUtils, DefaultDraftBlockRenderMap, convertToRaw} from 'draft-js'
 import {Map as ImmMap} from 'immutable'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {checkPost} from 'components/layouts/axios/validate'
+import {validCheck} from 'components/layouts/axios/validate'
 import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 import {Namebox} from 'components/fragments/draftjs/frg_form/namebox'
 import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
 
-export const FrgForm = ({initState, onGenChange}) => {
+export const FrgForm = ({reqMethod, initState, onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
   const [frgName, setFrgName] = useState(initState.frgName)
   const [crsId, setCrsId] = useState(initState.crsId)
@@ -112,18 +112,26 @@ export const FrgForm = ({initState, onGenChange}) => {
   }
 
   /* Editor : form 保存, 更新 */
-  // 更新処理を追記予定
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
-    const checker = checkPost({frgName, rawFrg})
+    const check = validCheck({frgName, rawFrg})
 
-    if (checker.isInvld) {
-      onGenChange(checker.invldArr) // validation エラーメッセージ
-    } else {
-      axiosRails
-        .post(`/crystals/${crsId}/fragments`, {
-          fragment: {name: frgName, content: rawFrg, crsId}
+    // post or patch
+    const axiosBy = (method) => {
+      if (method === 'post') {
+        return axiosRails.post(`/crystals/${crsId}/fragments`, {
+          fragment: {name: frgName, content: rawFrg}
         })
+      }
+      return axiosRails.patch(`/fragments/${initState.frgId}`, {
+        fragment: {name: frgName, content: rawFrg, crystal_id: crsId}
+      })
+    }
+
+    if (check[0]) {
+      onGenChange(check[1]) // validation エラーメッセージ
+    } else {
+      axiosBy(reqMethod)
         .then((response) => {
           onGenChange(setFlashStr(response.headers.flash))
           setRedrPath(
@@ -165,6 +173,7 @@ export const FrgForm = ({initState, onGenChange}) => {
 }
 
 FrgForm.propTypes = {
+  reqMethod: PropTypes.string,
   initState: PropTypes.object,
   onGenChange: PropTypes.func
 }
