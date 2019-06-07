@@ -9,32 +9,41 @@ import {Footbox} from 'components/fragments/draftjs/frg_view/footbox'
 
 export const FrgView = ({initState, onGenChange}) => {
   const [frgVals, setFrgVals] = useState(initState)
-
-  /* FrgView : editorState 復元, frgVals 更新 */
-  const bufFrgVals = ({
-    id: frgId,
-    name: frgName,
-    content: rawContent,
-    user_id: usrId,
-    crystal_id: crsId,
-    created_at: creAt,
-    updated_at: updAt
-  }) => {
-    const contentState = convertFromRaw(rawContent)
-    const editorState = EditorState.createWithContent(contentState)
-    setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
-  }
+  const [isSelf, setIsSelf] = useState(false)
 
   /*
-    didMount, willUnMount 
-    URL から遷移して来る場合は axios 通信
+    from Link, Redirect : isSelf で fragment 所有者か判定
+    from URL            : fragment 取得
   */
+  const resDivider = (resData) => {
+    if (frgVals.usrId) {
+      // FrgView ~ Footbox : isSelf 更新
+      setIsSelf(resData)
+    } else {
+      // FrgView : editorState 復元, frgVals 更新
+      const {
+        id: frgId,
+        name: frgName,
+        content: rawContent,
+        user_id: usrId,
+        crystal_id: crsId,
+        created_at: creAt,
+        updated_at: updAt
+      } = resData
+      const contentState = convertFromRaw(rawContent)
+      const editorState = EditorState.createWithContent(contentState)
+      setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
+    }
+  }
+
+  /* didMount, willUnMount */
   useEffect(() => {
-    if (frgVals.frgName) return undefined
     axiosRails
-      .get(`/fragments/${frgVals.frgId}`)
+      .get(`/fragments/${frgVals.frgId}`, {
+        params: {user_id: frgVals.usrId}
+      })
       .then((response) => {
-        bufFrgVals(response.data)
+        resDivider(response.data)
       })
       .catch((error) => {
         onGenChange(setCclStr(error))
@@ -44,13 +53,12 @@ export const FrgView = ({initState, onGenChange}) => {
     }
   }, [])
 
-  /* form */
   return (
     <>
       <Namebox frgName={frgVals.frgName} />
       <Headbox usrId={frgVals.usrId} crsId={frgVals.crsId} creAt={frgVals.creAt} updAt={frgVals.updAt} />
       <Editor readOnly={true} editorState={frgVals.editorState} />
-      <Footbox frgVals={frgVals} onGenChange={onGenChange} />
+      <Footbox isSelf={isSelf} frgVals={frgVals} onGenChange={onGenChange} />
     </>
   )
 }

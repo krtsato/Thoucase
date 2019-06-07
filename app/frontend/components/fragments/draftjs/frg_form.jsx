@@ -1,18 +1,15 @@
 import React, {useState, useRef} from 'react'
 import PropTypes from 'prop-types'
-import {Redirect} from 'react-router-dom'
-import {Editor, RichUtils, DefaultDraftBlockRenderMap, convertToRaw} from 'draft-js'
+import {Editor, RichUtils, DefaultDraftBlockRenderMap} from 'draft-js'
 import {Map as ImmMap} from 'immutable'
-import {axiosRails} from 'components/layouts/axios/instances'
-import {validCheck} from 'components/layouts/axios/validate'
-import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 import {Namebox} from 'components/fragments/draftjs/frg_form/namebox'
 import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
+import {Footbox} from 'components/fragments/draftjs/frg_form/footbox'
 
 export const FrgForm = ({reqMethod, initState, onGenChange}) => {
-  const [redrPath, setRedrPath] = useState(null)
+  const {frgId} = initState
   const [frgName, setFrgName] = useState(initState.frgName)
   const [crsId, setCrsId] = useState(initState.crsId)
   const [editorState, setEditorState] = useState(initState.editorState)
@@ -29,8 +26,8 @@ export const FrgForm = ({reqMethod, initState, onGenChange}) => {
   }
 
   /* Editor ~ CrsSelect : crsId 更新 */
-  const bufCrsIdBlur = (targetVal) => {
-    setCrsId(targetVal)
+  const bufCrsIdBlur = (nextState) => {
+    setCrsId(nextState)
   }
 
   /*
@@ -111,48 +108,9 @@ export const FrgForm = ({reqMethod, initState, onGenChange}) => {
     return false
   }
 
-  /* Editor : form 保存, 更新 */
-  const onSaveClick = () => {
-    const rawFrg = convertToRaw(editorState.getCurrentContent())
-    const check = validCheck({frgName, rawFrg})
-
-    // post or patch
-    const axiosBy = (method) => {
-      if (method === 'post') {
-        return axiosRails.post(`/crystals/${crsId}/fragments`, {
-          fragment: {name: frgName, content: rawFrg}
-        })
-      }
-      return axiosRails.patch(`/fragments/${initState.frgId}`, {
-        fragment: {name: frgName, content: rawFrg, crystal_id: crsId}
-      })
-    }
-
-    if (check[0]) {
-      onGenChange(check[1]) // validation エラーメッセージ
-    } else {
-      axiosBy(reqMethod)
-        .then((response) => {
-          onGenChange(setFlashStr(response.headers.flash))
-          setRedrPath(
-            <Redirect
-              to={{
-                pathname: `/fragments/${response.data.id}`,
-                state: response.data
-              }}
-            />
-          ) // リダイレクト
-        })
-        .catch((error) => {
-          onGenChange(setFlashStr(error.response.headers.flash))
-        })
-    }
-  }
-
   /* form */
   return (
     <>
-      {redrPath}
       <Namebox frgName={frgName} bufNameChange={bufNameChange} editorFocus={editorFocus} />
       <CrsSelect onGenChange={onGenChange} bufCrsIdBlur={bufCrsIdBlur} />
       <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
@@ -165,9 +123,14 @@ export const FrgForm = ({reqMethod, initState, onGenChange}) => {
         handleKeyCommand={handleKeyCommand}
         ref={editorRef}
       />
-      <button type='button' onClick={onSaveClick}>
-        保存
-      </button>
+      <Footbox
+        onGenChange={onGenChange}
+        reqMethod={reqMethod}
+        frgId={frgId}
+        frgName={frgName}
+        crsId={crsId}
+        editorState={editorState}
+      />
     </>
   )
 }

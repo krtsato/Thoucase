@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class FragmentsController < ApplicationController
-  before_action :authenticate_user, only: [:new, :create, :update, :destroy]
-  before_action :set_fragment, only: [:show, :update, :destroy]
+  before_action :authenticate_user, only: [:new, :create, :show]
+  before_action :ensure_valid_user, only: [:update, :destroy]
+  before_action :set_fragment, only: [:update, :destroy]
 
   # GET /fragments
   def index
@@ -13,7 +14,13 @@ class FragmentsController < ApplicationController
 
   # GET /fragments/1
   def show
-    render json: @fragment
+    if params[:user_id].nil?
+      fragment = Fragment.find(params[:id])
+      render json: fragment, status: :ok
+    else
+      is_self = @current_user.id == params[:user_id].to_i
+      render json: is_self, status: :ok
+    end
   end
 
   # GET /fragments/new

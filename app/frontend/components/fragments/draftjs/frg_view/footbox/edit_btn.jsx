@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 export const EditBtn = ({frgVals}) => {
   const [redrPath, setRedrPath] = useState(null)
 
-  /* フラグメント 編集 */
+  /* fragment 編集 */
   const onEditClick = (e) => {
     e.preventDefault()
     setRedrPath(

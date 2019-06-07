@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {axiosRails} from 'components/layouts/axios/instances'
 import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
 
-export const DeleteBtn = ({frgId, onGenChange}) => {
+export const DeleteBtn = ({frgId, crsId, onGenChange}) => {
   const [redrPath, setRedrPath] = useState(null)
 
   /* fragment 削除 */
@@ -14,7 +14,8 @@ export const DeleteBtn = ({frgId, onGenChange}) => {
       .delete(`/fragments/${frgId}`)
       .then((response) => {
         onGenChange(setFlashStr(response.headers.flash))
-        setRedrPath(<Redirect to='/' />) // リダイレクト先 あとで指定
+        setRedrPath(<Redirect to={`/crystals/${crsId}`} />)
+        // リダイレクト
       })
       .catch((error) => {
         onGenChange(setFlashStr(error.response.headers.flash))
@@ -33,5 +34,6 @@ export const DeleteBtn = ({frgId, onGenChange}) => {
 
 DeleteBtn.propTypes = {
   frgId: PropTypes.number,
+  crsId: PropTypes.number,
   onGenChange: PropTypes.func
 }
