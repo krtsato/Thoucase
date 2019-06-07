@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 export const Headbox = ({usrId, crsId, creAt, updAt}) => {
   return (
-    <aside>
+    <aside className='frgHead'>
       <span>作成者 : {usrId}</span>
       <span>クリスタル : {crsId}</span>
       <time>作成日 : {creAt}</time>

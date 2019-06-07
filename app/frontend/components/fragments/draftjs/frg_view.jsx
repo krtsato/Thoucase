@@ -44,7 +44,6 @@ export const FrgView = ({initState, onGenChange}) => {
     }
   }, [])
 
-  /* form */
   return (
     <>
       <Namebox frgName={frgVals.frgName} />

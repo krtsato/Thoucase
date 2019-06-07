@@ -11,7 +11,7 @@ export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
     e.preventDefault()
     // newCrs プロセス作成すべし
     if (e.target.value === 'new') console.log('newCrs')
-    else bufCrsIdBlur(e.target.value)
+    else bufCrsIdBlur(parseInt(e.target.value, 10))
   }
 
   /* didMount willUnMount */
