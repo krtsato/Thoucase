@@ -16,7 +16,6 @@ export const DeleteBtn = ({frgId, crsId, onGenChange}) => {
         onGenChange(setFlashStr(response.headers.flash))
         setRedrPath(<Redirect to={`/crystals/${crsId}`} />)
         // リダイレクト
-        // 所属クリスタルへ
       })
       .catch((error) => {
         onGenChange(setFlashStr(error.response.headers.flash))
