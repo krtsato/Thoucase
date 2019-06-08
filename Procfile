@@ -1,2 +1,2 @@
 rails: bundle exec rails s --port=3000
-webpack: bin/webpack-dev-server --history-api-fallback
+webpack: bin/webpack-dev-server
