@@ -6,6 +6,7 @@ import {setCclStr} from 'components/layouts/axios/then_catch_funcs'
 import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
 import {Headbox} from 'components/fragments/draftjs/frg_view/headbox'
 import {Footbox} from 'components/fragments/draftjs/frg_view/footbox'
+import {Media} from 'components/fragments/draftjs/frg_form/media'
 
 export const FrgView = ({initState, onGenChange}) => {
   const [frgVals, setFrgVals] = useState(initState)
@@ -53,11 +54,25 @@ export const FrgView = ({initState, onGenChange}) => {
     }
   }, [])
 
+  /* 
+    Editor : block 要素を描画
+    Editor ~ Media : Media 呼出し
+  */
+  const blockRendererFn = (contentBlock) => {
+    const type = contentBlock.getType()
+    switch (type) {
+      case 'atomic':
+        return {component: Media, editable: false}
+      default:
+        return null
+    }
+  }
+
   return (
     <>
       <Namebox frgName={frgVals.frgName} />
       <Headbox usrId={frgVals.usrId} crsId={frgVals.crsId} creAt={frgVals.creAt} updAt={frgVals.updAt} />
-      <Editor readOnly={true} editorState={frgVals.editorState} />
+      <Editor readOnly={true} editorState={frgVals.editorState} blockRendererFn={blockRendererFn} />
       <Footbox isSelf={isSelf} frgVals={frgVals} onGenChange={onGenChange} />
     </>
   )
