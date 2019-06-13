@@ -1,5 +1,5 @@
 import React from 'react'
 
 export const FooterNav = () => {
-  return <nav>FooterNav</nav>
+  return <nav className='footerNav'>FooterNav</nav>
 }

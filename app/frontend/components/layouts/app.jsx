@@ -24,7 +24,6 @@ const General = ({children}) => {
   const [invldMsg, setInvldMsg] = useState([])
 
   const onGenChange = (genTaskObj) => {
-    // ここ検討
     Object.entries(genTaskObj).forEach((task) => {
       switch (task[0]) {
         case 'sninBool': // {sninBool: bool}

@@ -49,7 +49,7 @@ export const Toolbox = (props) => {
   }
 
   return (
-    <div>
+    <div className='frgTool'>
       <InlineStyleBtn styleType='BOLD' {...props} />
       <InlineStyleBtn styleType='ITALIC' {...props} />
       <BlockStyleBtn styleType='paragraph' {...props} />

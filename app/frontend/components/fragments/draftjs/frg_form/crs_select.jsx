@@ -21,7 +21,7 @@ export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
       .then((response) => {
         bufCrsIdBlur(response.data[0].id)
         setCrsSelect(
-          <div>
+          <div className='crsSelect'>
             <label htmlFor='crsSelect'>
               作成先クリスタル
               <select id='crsSelect' required defaultValue={response.data[0].id} onBlur={onCrsIdBlur}>
