@@ -81,7 +81,7 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
   }
 
   return (
-    <nav className='headerNavWrap'>
+    <nav className='headerNav'>
       <ul className='headerNavList'>{tglNavLink}</ul>
     </nav>
   )

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FragmentsController < ApplicationController
-  before_action :authenticate_user, only: [:new, :create, :show]
+  before_action :authenticate_user, only: [:new, :create, :show, :update, :destroy]
   before_action :ensure_valid_user, only: [:update, :destroy]
   before_action :set_fragment, only: [:update, :destroy]
 

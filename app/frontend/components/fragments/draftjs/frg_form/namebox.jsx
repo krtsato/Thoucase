@@ -17,7 +17,7 @@ export const Namebox = ({frgName, bufNameChange, editorFocus}) => {
   }
 
   return (
-    <div>
+    <div className='frgName'>
       <label htmlFor='frgName'>
         フラグメント名
         <input

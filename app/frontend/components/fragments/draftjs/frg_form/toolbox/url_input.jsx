@@ -30,7 +30,7 @@ export const UrlInput = ({showUrlInput, urlVal, bufUrlChange, bufAddMedia}) => {
       <>
         <input type='url' required autoFocus value={urlVal} onChange={onUrlChange} onKeyDown={onEnterDown} />
         <button type='button' onClick={onAddClick}>
-          Add
+          追加
         </button>
       </>
     )

@@ -12,22 +12,16 @@ Rails.application.routes.draw do
   resources :users
 
   # index
-  get 'crystals', to: 'crystals#index'
   get 'fragments', to: 'fragments#index'
 
   # new
   get 'fragments/new', to: 'fragments#new'
 
-  shallow do
-    # showcases / crystals
-    resources :showcases do
-      resources :crystals, except: :index
-    end
+  # showcases
+  resources :showcases
 
-    # crystals / fragments
-    # only : URL重複回避
-    resources :crystals, only: [] do
-      resources :fragments, except: :index
-    end
+  # crystals / fragments
+  resources :crystals do
+    resources :fragments, shallow: true, except: :index
   end
 end

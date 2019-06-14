@@ -25,6 +25,12 @@ const setFlashStr = (rawFlash) => {
         return {flashStr: 'フラグメントを更新しました'}
       case 'dlfrg':
         return {flashStr: 'フラグメントを削除しました'}
+      case 'crcrs':
+        return {flashStr: 'クリスタルを作成しました'}
+      case 'udcrs':
+        return {flashStr: 'クリスタルを更新しました'}
+      case 'dlcrs':
+        return {flashStr: 'クリスタルを削除しました'}
       default:
         return null
     }
@@ -40,6 +46,12 @@ const setFlashStr = (rawFlash) => {
         return {flashStr: 'フラグメントの更新に失敗しました'}
       case 'dlfrg':
         return {flashStr: 'フラグメントの削除に失敗しました'}
+      case 'crcrs':
+        return {flashStr: 'クリスタルの作成に失敗しました'}
+      case 'udcrs':
+        return {flashStr: 'クリスタルの更新に失敗しました'}
+      case 'dlcrs':
+        return {flashStr: 'クリスタルの削除に失敗しました'}
       default:
         return null
     }

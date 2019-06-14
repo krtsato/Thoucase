@@ -34,9 +34,9 @@ end
 
 # Showcase
 [
-  ['アニメ作品', 1],
-  ['読書', 1],
-  ['音楽', 1]
+  ['教訓になるアニメ作品', 1],
+  ['人生に向き会う読書', 2],
+  ['心に根付く音楽', 3]
 ].each do |name, usr_id|
   Showcase.create!(
     {name: name, user_id: usr_id}
@@ -47,8 +47,9 @@ end
 [
   ['ジョジョの奇妙な冒険', 1, 1],
   ['宝石の国', 1, 1],
-  ['タタール人の砂漠', 1, 2],
-  ['サウンドトラック', 1, 3]
+  ['開発裏話', 1, nil],
+  ['タタール人の砂漠', 2, 2],
+  ['サウンドトラック', 3, 3]
 ].each do |name, usr_id, shw_id|
   Crystal.create!(
     {name: name, user_id: usr_id, showcase_id: shw_id}
