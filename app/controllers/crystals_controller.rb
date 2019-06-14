@@ -2,6 +2,7 @@
 
 class CrystalsController < ApplicationController
   before_action :set_crystal, only: [:show, :update, :destroy]
+  before_action :authenticate_user, only: [:create, :show, :update, :destroy]
 
   # GET /crystals
   def index
@@ -17,12 +18,15 @@ class CrystalsController < ApplicationController
 
   # POST /crystals
   def create
-    @crystal = Crystal.new(crystal_params)
+    crystal = Crystal.new(crystal_params)
 
-    if @crystal.save
-      render json: @crystal, status: :created, location: @crystal
+    if crystal.save
+      response.headers['flash'] = 'ok-crcrs'
+      crystals = Crystal.where(user_id: @current_user.id).select('id, name')
+      render json: crystals, status: :created
     else
-      render json: @crystal.errors, status: :unprocessable_entity
+      response.headers['flash'] = 'er-crcrs'
+      render json: crystal.errors, status: :unprocessable_entity
     end
   end
 
@@ -49,6 +53,7 @@ class CrystalsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def crystal_params
-      params.require(:crystal).permit(:name, :user_id, :showcase_id)
+      params.require(:crystal).permit(:name).merge!(user_id: @current_user.id)
+      # :showcase_id
     end
 end
