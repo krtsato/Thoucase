@@ -47,7 +47,7 @@ const validCheck = (chkObj) => {
       }
     })
 
-  return [isInvld, {invldArr}]
+  return [isInvld, invldArr]
 }
 
 export {validCheck}

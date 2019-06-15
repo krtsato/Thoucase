@@ -1,0 +1,75 @@
+@確認する機能
+・各ページ表示
+・authRoutes
+・サインアウト
+・各種 flash
+・各種 cancal
+・fragment バリデーション
+・yarn remove recompose(確認後)
+
+
+@then_catch_func
+// 削除
+const setSninBool = (rawFlash) => {
+  if (rawFlash.split('-')[1] === 'snin') return {sninBool: true}
+  return {sninBool: false}
+}
+
+// 名称変更
+setCclStr -> cancelLine
+setFlashMsg -> transFlash
+
+
+@header
+// 削除
+import withProps from 'recompose/withProps'
+const AddPropsTo = (rawComp) => {
+  const compWithProps = withProps({...props})(rawComp)
+  return compWithProps
+}
+
+
+@routes
+// 削除
+import withProps from 'recompose/withProps'
+const AddGenPropsTo = (rawComp) => {
+  const compWithProps = withProps({onGenChange})(rawComp)
+  return compWithProps
+}
+isSignin
+onGenChange
+
+
+@user_list
+// 変更
+onGenChange
+setCclStr -> cancelLine
+setFlashMsg -> transFlash
+
+
+@signin_form
+// 変更
+onGenChange
+signinBool -> setIsSignin
+setFlashMsg -> transFlash
+
+
+@frg_list
+// 変更
+onGenChange
+setCclStr -> cancelLine
+setFlashMsg -> transFlash
+
+
+@shw_list
+// 変更
+onGenChange
+setCclStr -> cancelLine
+setFlashMsg -> transFlash
+
+
+@crs_list
+// 変更
+onGenChange
+setCclStr -> cancelLine
+setFlashMsg -> transFlash

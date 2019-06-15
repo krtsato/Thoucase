@@ -1,11 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import {NavLink, withRouter} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
+import {SigninContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {removeToken, setFlashStr, setSninBool} from 'components/layouts/axios/then_catch_funcs'
+import {removeToken, transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
+export const HeaderNav = ({history}) => {
   let tglNavLink = null // return
+  const {isSignin, setIsSignin} = useContext(SigninContext)
+  const {setFlashMsg} = useContext(FlashContext)
 
   /* signout */
   const onSnoutClick = () => {
@@ -13,11 +16,12 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
       .post('/signout')
       .then((response) => {
         removeToken('authToken')
-        onGenChange(Object.assign(setSninBool(response.headers.flash), setFlashStr(response.headers.flash)))
+        setIsSignin(false)
+        setFlashMsg(transFlash(response.headers.flash))
         history.push('/') // リダイレクト
       })
       .catch((error) => {
-        onGenChange(setFlashStr(error.response.headers.flash))
+        setFlashMsg(transFlash(error.response.headers.flash))
       })
   }
 
@@ -85,9 +89,8 @@ export const HeaderNav = withRouter(({history, isSignin, onGenChange}) => {
       <ul className='headerNavList'>{tglNavLink}</ul>
     </nav>
   )
-})
+}
 
 HeaderNav.propTypes = {
-  isSignin: PropTypes.bool,
-  onGenChange: PropTypes.func
+  history: PropTypes.object
 }

@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import PropTypes from 'prop-types'
+import {FlashContext} from 'components/layouts/app/context'
 import {axiosRails} from 'components/layouts/axios/instances'
+import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 
 export const NameInput = ({showNameInput, setCrsSelect, onCrsIdChange, onCrsIdBlur}) => {
   let nameInput = null // return
+  const {setFlashMsg} = useContext(FlashContext)
   const [crsName, setCrsName] = useState('')
 
   /* crystal name 変更 */
@@ -19,6 +22,7 @@ export const NameInput = ({showNameInput, setCrsSelect, onCrsIdChange, onCrsIdBl
         crystal: {name: crsName}
       })
       .then((response) => {
+        setFlashMsg(transFlash(response.headers.flash))
         setCrsSelect(
           <select
             id='crsSelect'
@@ -36,7 +40,7 @@ export const NameInput = ({showNameInput, setCrsSelect, onCrsIdChange, onCrsIdBl
         ) // CrsSelect ~ NameInput : select option 更新
       })
       .catch((error) => {
-        console.log(JSON.stringify(error, undefined, 1))
+        setFlashMsg(transFlash(error.response.headers.flash))
       })
   }
 

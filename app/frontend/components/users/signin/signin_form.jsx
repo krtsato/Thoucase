@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
-import PropTypes from 'prop-types'
+import React, {useState, useContext} from 'react'
+import {SigninContext, FlashContext} from 'components/layouts/app/context'
 import {Redirect} from 'react-router-dom'
 import {axiosRails} from 'components/layouts/axios/instances'
-import {setToken, setFlashStr, setSninBool} from 'components/layouts/axios/then_catch_funcs'
+import {setToken, transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const SigninForm = ({onGenChange}) => {
+export const SigninForm = () => {
+  const {setIsSignin} = useContext(SigninContext)
+  const {setFlashMsg} = useContext(FlashContext)
   const [redrPath, setRedrPath] = useState(null)
   const [formVals, setFormVals] = useState({
     email: '',
@@ -26,11 +28,12 @@ export const SigninForm = ({onGenChange}) => {
       })
       .then((response) => {
         setToken('authToken', response.headers.authorization)
-        onGenChange(Object.assign(setSninBool(response.headers.flash), setFlashStr(response.headers.flash)))
+        setIsSignin(true)
+        setFlashMsg(transFlash(response.headers.flash))
         setRedrPath(<Redirect to='/fragments' />) // リダイレクト
       })
       .catch((error) => {
-        onGenChange(setFlashStr(error.response.headers.flash))
+        setFlashMsg(transFlash(error.response.headers.flash))
         setFormVals({email: error.response.data.email, password: error.response.data.password})
       })
   }
@@ -69,8 +72,4 @@ export const SigninForm = ({onGenChange}) => {
       </div>
     </>
   )
-}
-
-SigninForm.propTypes = {
-  onGenChange: PropTypes.func
 }

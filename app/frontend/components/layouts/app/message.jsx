@@ -1,9 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, {useContext} from 'react'
+import {CancelContext, FlashContext, InvldContext} from 'components/layouts/app/context'
 
-export const Message = ({cclMsg, flashMsg, invldMsg}) => {
+export const Message = () => {
   /* form バリデーション 表示 */
   let invldMsgList = null
+  const {cclMsg} = useContext(CancelContext)
+  const {flashMsg} = useContext(FlashContext)
+  const {invldMsg} = useContext(InvldContext)
 
   if (invldMsg !== []) {
     invldMsgList = invldMsg.map((pair) => (
@@ -20,10 +23,4 @@ export const Message = ({cclMsg, flashMsg, invldMsg}) => {
       {invldMsgList}
     </aside>
   )
-}
-
-Message.propTypes = {
-  cclMsg: PropTypes.string,
-  flashMsg: PropTypes.string,
-  invldMsg: PropTypes.array
 }

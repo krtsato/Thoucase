@@ -8,7 +8,7 @@ import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
 import {Footbox} from 'components/fragments/draftjs/frg_form/footbox'
 
-export const FrgForm = ({reqMethod, initState, onGenChange}) => {
+export const FrgForm = ({reqMethod, initState}) => {
   const {frgId} = initState
   const [frgName, setFrgName] = useState(initState.frgName)
   const [crsId, setCrsId] = useState(initState.crsId)
@@ -112,7 +112,7 @@ export const FrgForm = ({reqMethod, initState, onGenChange}) => {
   return (
     <>
       <Namebox frgName={frgName} bufNameChange={bufNameChange} editorFocus={editorFocus} />
-      <CrsSelect onGenChange={onGenChange} bufCrsIdBlur={bufCrsIdBlur} />
+      <CrsSelect bufCrsIdBlur={bufCrsIdBlur} />
       <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
         editorState={editorState}
@@ -124,7 +124,6 @@ export const FrgForm = ({reqMethod, initState, onGenChange}) => {
         ref={editorRef}
       />
       <Footbox
-        onGenChange={onGenChange}
         reqMethod={reqMethod}
         frgId={frgId}
         frgName={frgName}
@@ -137,6 +136,5 @@ export const FrgForm = ({reqMethod, initState, onGenChange}) => {
 
 FrgForm.propTypes = {
   reqMethod: PropTypes.string,
-  initState: PropTypes.object,
-  onGenChange: PropTypes.func
+  initState: PropTypes.object
 }

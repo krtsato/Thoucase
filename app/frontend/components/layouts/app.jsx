@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {BrowserRouter} from 'react-router-dom'
+import {GenProvider} from 'components/layouts/app/context'
 import {Header} from 'components/layouts/app/header'
 import {Message} from 'components/layouts/app/message'
 import {Routes} from 'components/layouts/app/routes'
@@ -7,16 +8,16 @@ import {Footer} from 'components/layouts/app/footer'
 
 export const App = () => (
   <BrowserRouter>
-    <General>
+    <GenProvider>
       <Message />
       <Header />
       <Routes />
       <Footer />
-    </General>
+    </GenProvider>
   </BrowserRouter>
 )
 
-/* 共通状態管理 */
+/* 共通状態管理
 const General = ({children}) => {
   const [isSignin, setIsSignin] = useState(!!localStorage.getItem('authToken'))
   const [cclMsg, setCclMsg] = useState(null)
@@ -60,3 +61,4 @@ const General = ({children}) => {
 
   return childrenWithProps
 }
+*/

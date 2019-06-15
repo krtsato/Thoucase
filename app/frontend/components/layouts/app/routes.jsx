@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import withProps from 'recompose/withProps'
 import {Route, Switch, Redirect} from 'react-router-dom'
-import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
+import {SigninContext, FlashContext} from 'components/layouts/app/context'
+import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 import {Top} from 'packs/home/top'
 import {About} from 'packs/home/about'
 import {ShwIndex} from 'packs/showcases/index'
@@ -14,71 +14,39 @@ import {FrgIndex} from 'packs/fragments/index'
 import {UsrIndex} from 'packs/users/index'
 import {Signin} from 'packs/users/signin'
 
-export const Routes = ({isSignin, onGenChange}) => {
-  /* raw component に props 付加 */
-  const AddGenPropsTo = (rawComp) => {
-    const compWithProps = withProps({onGenChange})(rawComp)
-    return compWithProps
-  }
+export const Routes = () => (
+  <main id='mainWrap'>
+    <Switch>
+      <Route exact path={['/', '/top']} render={Top} />
+      <Route exact path='/about' render={About} />
+      <Route exact path='/users' render={UsrIndex} />
+      <Route exact path='/signin' render={Signin} />
+      <Route exact path='/fragments' render={FrgIndex} />
+      <AuthRoute path='/showcases' authComp={ShwIndex} />
+      <AuthRoute path='/crystals' authComp={CrsIndex} />
+      <AuthRoute path='/fragments/new' authComp={FrgNew} />
+      <AuthRoute path='/fragments/:id/edit' authComp={FrgEdit} />
+      {/* :id 回避 */}
+      <Route exact path='/fragments/:id' render={FrgShow} />
+    </Switch>
+  </main>
+)
 
-  return (
-    <main id='mainWrap'>
-      <Switch>
-        <Route exact path={['/', '/top']} render={Top} />
-        <Route exact path='/about' render={About} />
-        <Route exact path='/users' render={AddGenPropsTo(UsrIndex)} />
-        <Route exact path='/signin' render={AddGenPropsTo(Signin)} />
-        <Route exact path='/fragments' render={AddGenPropsTo(FrgIndex)} />
-        <AuthRoute
-          isSignin={isSignin}
-          onGenChange={onGenChange}
-          path='/showcases'
-          authComp={AddGenPropsTo(ShwIndex)}
-        />
-        <AuthRoute
-          isSignin={isSignin}
-          onGenChange={onGenChange}
-          path='/crystals'
-          authComp={AddGenPropsTo(CrsIndex)}
-        />
-        <AuthRoute
-          isSignin={isSignin}
-          onGenChange={onGenChange}
-          path='/fragments/new'
-          authComp={AddGenPropsTo(FrgNew)}
-        />
-        <AuthRoute
-          isSignin={isSignin}
-          onGenChange={onGenChange}
-          path='/fragments/:id/edit'
-          authComp={AddGenPropsTo(FrgEdit)}
-        />
-        {/* :id 回避 */}
-        <Route exact path='/fragments/:id' render={AddGenPropsTo(FrgShow)} />
-      </Switch>
-    </main>
-  )
-}
-
-const AuthRoute = ({isSignin, onGenChange, path, authComp: AuthComp}) => {
+const AuthRoute = ({path, authComp: AuthComp}) => {
   let authRoute = null // return
+  const {isSignin} = useContext(SigninContext)
+  const {setFlashMsg} = useContext(FlashContext)
+
   if (isSignin) {
     authRoute = <Route exact path={path} render={AuthComp} />
   } else {
-    onGenChange(setFlashStr('er-auth'))
+    setFlashMsg(transFlash('er-auth'))
     authRoute = <Redirect exact to='/signin' />
   }
   return authRoute
 }
 
-Routes.propTypes = {
-  isSignin: PropTypes.bool,
-  onGenChange: PropTypes.func
-}
-
 AuthRoute.propTypes = {
-  isSignin: PropTypes.bool,
-  onGenChange: PropTypes.func,
   path: PropTypes.string,
   authComp: PropTypes.func
 }

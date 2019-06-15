@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react'
-import PropTypes from 'prop-types'
+import React, {useState, useEffect, useContext} from 'react'
+import {CancelContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
-import {setFlashStr, setCclStr} from 'components/layouts/axios/then_catch_funcs'
+import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const UsrList = ({onGenChange}) => {
+export const UsrList = () => {
   let usrList = null // return
+  const {setCclMsg} = useContext(CancelContext)
+  const {setFlashMsg} = useContext(FlashContext)
   const [users, setUsers] = useState([])
 
   /* didMount, willUnMount */
@@ -15,7 +17,8 @@ export const UsrList = ({onGenChange}) => {
         setUsers(response.data)
       })
       .catch((error) => {
-        onGenChange(Object.assign(setCclStr(error), setFlashStr(error.response.headers.flash)))
+        setCclMsg(cancelLine(error))
+        setFlashMsg(transFlash(error.response.headers.flash))
       })
     return () => {
       canceller.cancel
@@ -38,8 +41,4 @@ export const UsrList = ({onGenChange}) => {
   }
 
   return usrList
-}
-
-UsrList.propTypes = {
-  onGenChange: PropTypes.func
 }

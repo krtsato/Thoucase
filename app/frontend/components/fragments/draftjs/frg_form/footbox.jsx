@@ -1,13 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import PropTypes from 'prop-types'
 import {convertToRaw} from 'draft-js'
 import {Redirect} from 'react-router-dom'
+import {FlashContext, InvldContext} from 'components/layouts/app/context'
 import {axiosRails} from 'components/layouts/axios/instances'
 import {validCheck} from 'components/layouts/axios/validate'
-import {setFlashStr} from 'components/layouts/axios/then_catch_funcs'
+import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const Footbox = ({onGenChange, reqMethod, frgId, frgName, crsId, editorState}) => {
+export const Footbox = ({reqMethod, frgId, frgName, crsId, editorState}) => {
   /* fragment 作成, 更新 */
+  const {setFlashMsg} = useContext(FlashContext)
+  const {setInvldMsg} = useContext(InvldContext)
   const [redrPath, setRedrPath] = useState(null)
 
   // start save process
@@ -29,11 +32,11 @@ export const Footbox = ({onGenChange, reqMethod, frgId, frgName, crsId, editorSt
 
     // validation, axios
     if (check[0]) {
-      onGenChange(check[1]) // validation エラーメッセージ
+      setInvldMsg(check[1]) // validation エラーメッセージ
     } else {
       axiosBy(reqMethod)
         .then((response) => {
-          onGenChange(setFlashStr(response.headers.flash))
+          setFlashMsg(transFlash(response.headers.flash))
           setRedrPath(
             <Redirect
               to={{
@@ -44,7 +47,7 @@ export const Footbox = ({onGenChange, reqMethod, frgId, frgName, crsId, editorSt
           ) // リダイレクト
         })
         .catch((error) => {
-          onGenChange(setFlashStr(error.response.headers.flash))
+          setFlashMsg(transFlash(error.response.headers.flash))
         })
     }
   }
@@ -60,7 +63,6 @@ export const Footbox = ({onGenChange, reqMethod, frgId, frgName, crsId, editorSt
 }
 
 Footbox.propTypes = {
-  onGenChange: PropTypes.func,
   reqMethod: PropTypes.string,
   frgId: PropTypes.number,
   frgName: PropTypes.string,

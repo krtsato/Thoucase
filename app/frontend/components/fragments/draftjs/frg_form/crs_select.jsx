@@ -1,19 +1,20 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import PropTypes from 'prop-types'
+import {CancelContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
-import {setFlashStr, setCclStr} from 'components/layouts/axios/then_catch_funcs'
+import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
 import {NameInput} from 'components/fragments/draftjs/frg_form/crs_select/name_input'
 
-export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
+export const CrsSelect = ({bufCrsIdBlur}) => {
+  const {setCclMsg} = useContext(CancelContext)
+  const {setFlashMsg} = useContext(FlashContext)
   const [crsSelect, setCrsSelect] = useState(null)
   const [showNameInput, setShowNameInput] = useState(false)
 
   /* crsId 更新  */
   const onCrsIdBlur = (e) => {
     e.preventDefault()
-    // newCrs プロセス作成すべし
-    if (e.target.value === 'new') console.log('newCrs')
-    else bufCrsIdBlur(parseInt(e.target.value, 10))
+    bufCrsIdBlur(parseInt(e.target.value, 10))
   }
 
   /* CrsSelect ~ NameInput : NameInput 表示 */
@@ -45,7 +46,8 @@ export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
         )
       })
       .catch((error) => {
-        onGenChange(Object.assign(setCclStr(error), setFlashStr(error.response.header.flash)))
+        setCclMsg(cancelLine(error))
+        setFlashMsg(transFlash(error.response.header.flash))
       })
     return () => {
       canceller.cancel
@@ -69,6 +71,5 @@ export const CrsSelect = ({onGenChange, bufCrsIdBlur}) => {
 }
 
 CrsSelect.propTypes = {
-  onGenChange: PropTypes.func,
   bufCrsIdBlur: PropTypes.func
 }
