@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {EditorState, convertFromRaw} from 'draft-js'
 import {FrgView} from 'components/fragments/draftjs/frg_view'
 
-export const FrgShow = ({location, match, onGenChange}) => {
+export const FrgShow = ({location, match}) => {
   /* FrgView : frgVals 初期化 */
   let initState = null
   if (location.state) {
@@ -36,13 +36,12 @@ export const FrgShow = ({location, match, onGenChange}) => {
   return (
     <>
       <h2>fragments#show</h2>
-      <FrgView initState={initState} onGenChange={onGenChange} />
+      <FrgView initState={initState} />
     </>
   )
 }
 
 FrgShow.propTypes = {
   location: PropTypes.object,
-  match: PropTypes.object,
-  onGenChange: PropTypes.func
+  match: PropTypes.object
 }

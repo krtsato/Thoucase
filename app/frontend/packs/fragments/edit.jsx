@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {FrgForm} from 'components/fragments/draftjs/frg_form'
 
-export const FrgEdit = ({location, onGenChange}) => {
+export const FrgEdit = ({location}) => {
   /* redirect from FrgView */
   const reqMethod = 'patch'
   const {frgId, frgName, crsId, editorState} = location.state
@@ -11,12 +11,11 @@ export const FrgEdit = ({location, onGenChange}) => {
   return (
     <>
       <h2>fragments#edit</h2>
-      <FrgForm reqMethod={reqMethod} initState={initState} onGenChange={onGenChange} />
+      <FrgForm reqMethod={reqMethod} initState={initState} />
     </>
   )
 }
 
 FrgEdit.propTypes = {
-  location: PropTypes.object,
-  onGenChange: PropTypes.func
+  location: PropTypes.object
 }

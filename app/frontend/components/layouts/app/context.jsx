@@ -36,4 +36,4 @@ GenProvider.propTypes = {
   children: PropTypes.node
 }
 
-export {GenProvider, SigninContext, CancelContext, FlashContext, InvldProvider}
+export {GenProvider, SigninContext, CancelContext, FlashContext, InvldContext}

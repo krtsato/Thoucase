@@ -1,14 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import PropTypes from 'prop-types'
 import {Editor, EditorState, convertFromRaw} from 'draft-js'
+import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
-import {setCclStr} from 'components/layouts/axios/then_catch_funcs'
+import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
 import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
 import {Headbox} from 'components/fragments/draftjs/frg_view/headbox'
 import {Footbox} from 'components/fragments/draftjs/frg_view/footbox'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 
-export const FrgView = ({initState, onGenChange}) => {
+export const FrgView = ({initState}) => {
+  const {setCclMsg} = useContext(CancelContext)
   const [frgVals, setFrgVals] = useState(initState)
   const [isSelf, setIsSelf] = useState(false)
 
@@ -47,7 +49,7 @@ export const FrgView = ({initState, onGenChange}) => {
         resDivider(response.data)
       })
       .catch((error) => {
-        onGenChange(setCclStr(error))
+        setCclMsg(cancelLine(error))
       })
     return () => {
       canceller.cancel
@@ -73,12 +75,11 @@ export const FrgView = ({initState, onGenChange}) => {
       <Namebox frgName={frgVals.frgName} />
       <Headbox usrId={frgVals.usrId} crsId={frgVals.crsId} creAt={frgVals.creAt} updAt={frgVals.updAt} />
       <Editor readOnly={true} editorState={frgVals.editorState} blockRendererFn={blockRendererFn} />
-      <Footbox isSelf={isSelf} frgVals={frgVals} onGenChange={onGenChange} />
+      <Footbox isSelf={isSelf} frgVals={frgVals} />
     </>
   )
 }
 
 FrgView.propTypes = {
-  initState: PropTypes.object,
-  onGenChange: PropTypes.func
+  initState: PropTypes.object
 }

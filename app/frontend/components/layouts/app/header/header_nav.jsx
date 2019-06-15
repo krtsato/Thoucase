@@ -1,11 +1,11 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import {NavLink} from 'react-router-dom'
+import {NavLink, withRouter} from 'react-router-dom'
 import {SigninContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails} from 'components/layouts/axios/instances'
 import {removeToken, transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const HeaderNav = ({history}) => {
+export const HeaderNav = withRouter(({history}) => {
   let tglNavLink = null // return
   const {isSignin, setIsSignin} = useContext(SigninContext)
   const {setFlashMsg} = useContext(FlashContext)
@@ -89,7 +89,7 @@ export const HeaderNav = ({history}) => {
       <ul className='headerNavList'>{tglNavLink}</ul>
     </nav>
   )
-}
+})
 
 HeaderNav.propTypes = {
   history: PropTypes.object
