@@ -12,17 +12,16 @@ import {Media} from 'components/fragments/draftjs/frg_form/media'
 export const FrgView = ({initState}) => {
   const {setCclMsg} = useContext(CancelContext)
   const [frgVals, setFrgVals] = useState(initState)
+  const [addNames, setAddNames] = useState({usrName: '', crsName: ''})
   const [isSelf, setIsSelf] = useState(false)
 
   /*
-    from Link, Redirect : isSelf で fragment 所有者か判定
+    from Link, Redirect : fragment 既存
     from URL            : fragment 取得
+    common              : usrName, crsName, isSelf 取得 
   */
   const resDivider = (resData) => {
-    if (frgVals.usrId) {
-      // FrgView ~ Footbox : isSelf 更新
-      setIsSelf(resData)
-    } else {
+    if (resData.fragment) {
       // FrgView : editorState 復元, frgVals 更新
       const {
         id: frgId,
@@ -32,18 +31,22 @@ export const FrgView = ({initState}) => {
         crystal_id: crsId,
         created_at: creAt,
         updated_at: updAt
-      } = resData
+      } = resData.fragment
       const contentState = convertFromRaw(rawContent)
       const editorState = EditorState.createWithContent(contentState)
       setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
     }
+    const usrName = resData.usr_name
+    const crsName = resData.crs_name
+    setAddNames({usrName, crsName})
+    setIsSelf(resData.is_self) // FrgView ~ Footbox : isSelf 更新
   }
 
   /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
       .get(`/fragments/${frgVals.frgId}`, {
-        params: {user_id: frgVals.usrId}
+        params: {user_id: frgVals.usrId, crystal_id: frgVals.crsId}
       })
       .then((response) => {
         resDivider(response.data)
@@ -73,7 +76,12 @@ export const FrgView = ({initState}) => {
   return (
     <>
       <Namebox frgName={frgVals.frgName} />
-      <Headbox usrId={frgVals.usrId} crsId={frgVals.crsId} creAt={frgVals.creAt} updAt={frgVals.updAt} />
+      <Headbox
+        usrName={addNames.usrName}
+        crsName={addNames.crsName}
+        creAt={frgVals.creAt}
+        updAt={frgVals.updAt}
+      />
       <Editor readOnly={true} editorState={frgVals.editorState} blockRendererFn={blockRendererFn} />
       <Footbox isSelf={isSelf} frgVals={frgVals} />
     </>

@@ -29,31 +29,24 @@ export const FrgList = () => {
   }, [])
 
   /* 単位ユーザ */
-  const setUsrPart = (index) => {
-    if (users !== []) {
-      return (
-        <p>
-          <span>ICON</span>
-          <span>{users[index].name}</span>
-        </p>
-      )
-    }
-    return null
-  }
+  const setUsrPart = (index) => (
+    <p>
+      <span>ICON</span>
+      <span>{users[index].name}</span>
+    </p>
+  )
 
   /* 単位フラグメント */
-  const setFrgPart = (frg) => {
-    return (
-      <Link
-        to={{
-          pathname: `/fragments/${frg.id}`,
-          state: frg
-        }}>
-        <p>name : {frg.name}</p>
-        <p>created_at : {frg.created_at}</p>
-      </Link>
-    )
-  }
+  const setFrgPart = (frg) => (
+    <Link
+      to={{
+        pathname: `/fragments/${frg.id}`,
+        state: frg
+      }}>
+      <p>name : {frg.name}</p>
+      <p>created_at : {frg.created_at}</p>
+    </Link>
+  )
 
   /* fragments + users 一覧 */
   if (fragments !== []) {
