@@ -5,14 +5,15 @@ import {SigninContext, FlashContext} from 'components/layouts/app/context'
 import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 import {Top} from 'packs/home/top'
 import {About} from 'packs/home/about'
+import {Signin} from 'packs/users/signin'
+import {UsrIndex} from 'packs/users/index'
+import {UsrShow} from 'packs/users/show'
 import {ShwIndex} from 'packs/showcases/index'
+import {CrsIndex} from 'packs/crystals/index'
+import {FrgIndex} from 'packs/fragments/index'
 import {FrgNew} from 'packs/fragments/new'
 import {FrgShow} from 'packs/fragments/show'
 import {FrgEdit} from 'packs/fragments/edit'
-import {CrsIndex} from 'packs/crystals/index'
-import {FrgIndex} from 'packs/fragments/index'
-import {UsrIndex} from 'packs/users/index'
-import {Signin} from 'packs/users/signin'
 
 export const Routes = () => (
   <main id='mainWrap'>
@@ -27,6 +28,7 @@ export const Routes = () => (
       <AuthRoute path='/fragments/new' authComp={FrgNew} />
       <AuthRoute path='/fragments/:id/edit' authComp={FrgEdit} />
       {/* :id 回避 */}
+      <Route exact path='/users/:id' component={UsrShow} />
       <Route exact path='/fragments/:id' render={FrgShow} />
     </Switch>
   </main>

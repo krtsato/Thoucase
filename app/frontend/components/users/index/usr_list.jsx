@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
+import {Link} from 'react-router-dom'
 import {CancelContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
@@ -31,9 +32,11 @@ export const UsrList = () => {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            <p>name : {user.name}</p>
-            <p>created_at : {user.created_at}</p>
-            <p>updated_at : {user.updated_at}</p>
+            <Link to={`/users/${user.id}`}>
+              <p>name : {user.name}</p>
+              <p>created_at : {user.created_at}</p>
+              <p>updated_at : {user.updated_at}</p>
+            </Link>
           </li>
         ))}
       </ul>

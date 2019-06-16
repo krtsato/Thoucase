@@ -12,8 +12,7 @@ export const CrsSelect = ({bufSelectBlur, editorFocus}) => {
   const [selectVal, setSelectVal] = useState('')
 
   const onSelectBlur = () => {
-    // select による型変換を相殺
-    bufSelectBlur(parseInt(selectVal, 10))
+    bufSelectBlur(parseInt(selectVal, 10)) // select による型変換を相殺
   }
 
   /* focus Enter 切替 */
