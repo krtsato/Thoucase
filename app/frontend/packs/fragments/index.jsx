@@ -1,14 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {FrgList} from 'components/fragments/index/frg_list'
 
-export const FrgIndex = ({onGenChange}) => (
+export const FrgIndex = () => (
   <>
     <h2>fragments#index</h2>
-    <FrgList onGenChange={onGenChange} />
+    <FrgList />
   </>
 )
-
-FrgIndex.propTypes = {
-  onGenChange: PropTypes.func
-}

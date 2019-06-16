@@ -1,43 +1,44 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import PropTypes from 'prop-types'
+import {FlashContext, InvldContext} from 'components/layouts/app/context'
 import {axiosRails} from 'components/layouts/axios/instances'
+import {validCheck} from 'components/layouts/axios/validate'
+import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const NameInput = ({showNameInput, setCrsSelect, onCrsIdChange, onCrsIdBlur}) => {
+export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
   let nameInput = null // return
+  const {setFlashMsg} = useContext(FlashContext)
+  const {setInvldMsg} = useContext(InvldContext)
   const [crsName, setCrsName] = useState('')
+  const [inputShow, tglInputShow] = useState(false)
 
-  /* crystal name 変更 */
-  const onNameChange = (e) => {
-    e.preventDefault()
-    setCrsName(e.target.value)
-  }
+  /* selectVal 検知 */
+  useEffect(() => {
+    if (selectVal === 'new') tglInputShow(true)
+    else tglInputShow(false)
+  }, [selectVal])
 
   /* crystal 新規作成 */
   const postCrystal = () => {
-    axiosRails
-      .post('/crystals', {
-        crystal: {name: crsName}
-      })
-      .then((response) => {
-        setCrsSelect(
-          <select
-            id='crsSelect'
-            required
-            defaultValue={response.data[0].id}
-            onChange={onCrsIdChange}
-            onBlur={onCrsIdBlur}>
-            {response.data.map((crystal) => (
-              <option key={crystal.id} value={crystal.id}>
-                {crystal.name}
-              </option>
-            ))}
-            <option value='new'>新規作成</option>
-          </select>
-        ) // CrsSelect ~ NameInput : select option 更新
-      })
-      .catch((error) => {
-        console.log(JSON.stringify(error, undefined, 1))
-      })
+    const check = validCheck({crsName})
+    if (check[0]) {
+      setInvldMsg(check[1]) // validation エラーメッセージ
+    } else {
+      axiosRails
+        .post('/crystals', {
+          crystal: {name: crsName}
+        })
+        .then((response) => {
+          const resData = response.data
+          setFlashMsg(transFlash(response.headers.flash))
+          tglInputShow(false) // NameInput 非表示
+          setCrsName('') // name input 初期化
+          genSelectSeq(resData, resData.slice(-1)[0].id)
+        })
+        .catch((error) => {
+          setFlashMsg(transFlash(error.response.headers.flash))
+        })
+    }
   }
 
   /* crystal name Enter 追加 */
@@ -45,6 +46,7 @@ export const NameInput = ({showNameInput, setCrsSelect, onCrsIdChange, onCrsIdBl
     if (e.which === 13) {
       e.preventDefault()
       postCrystal()
+      editorFocus()
     }
   }
 
@@ -52,10 +54,17 @@ export const NameInput = ({showNameInput, setCrsSelect, onCrsIdChange, onCrsIdBl
   const onCreateClick = (e) => {
     e.preventDefault()
     postCrystal()
+    editorFocus()
+  }
+
+  /* crystal name 変更 */
+  const onNameChange = (e) => {
+    e.preventDefault()
+    setCrsName(e.target.value)
   }
 
   /* name input 生成 */
-  if (showNameInput) {
+  if (inputShow) {
     nameInput = (
       <>
         <input
@@ -77,8 +86,7 @@ export const NameInput = ({showNameInput, setCrsSelect, onCrsIdChange, onCrsIdBl
 }
 
 NameInput.propTypes = {
-  showNameInput: PropTypes.bool,
-  setCrsSelect: PropTypes.func,
-  onCrsIdChange: PropTypes.func,
-  onCrsIdBlur: PropTypes.func
+  selectVal: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  genSelectSeq: PropTypes.func,
+  editorFocus: PropTypes.func
 }

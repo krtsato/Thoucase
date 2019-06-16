@@ -18,6 +18,10 @@ const validCheck = (chkObj) => {
         return !pair[1]
       case 'rawFrg':
         return !hasText(pair[1])
+      case 'crsId':
+        return !pair[1]
+      case 'crsName':
+        return !pair[1]
       default:
         return true
     }
@@ -31,6 +35,10 @@ const validCheck = (chkObj) => {
           return !pair[1]
         case 'rawFrg':
           return !hasText(pair[1])
+        case 'crsId':
+          return !pair[1]
+        case 'crsName':
+          return !pair[1]
         default:
           return -1
       }
@@ -42,12 +50,16 @@ const validCheck = (chkObj) => {
           return {key: pair[0], msg: 'フラグメントの名前を入力して下さい'}
         case 'rawFrg':
           return {key: pair[0], msg: 'フラグメントの内容を入力して下さい'}
+        case 'crsId':
+          return {key: pair[0], msg: 'クリスタルを選択して下さい'}
+        case 'crsName':
+          return {key: pair[0], msg: 'クリスタルの名前を入力して下さい'}
         default:
           return -1
       }
     })
 
-  return [isInvld, {invldArr}]
+  return [isInvld, invldArr]
 }
 
 export {validCheck}

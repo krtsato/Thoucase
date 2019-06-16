@@ -14,12 +14,19 @@ class FragmentsController < ApplicationController
 
   # GET /fragments/1
   def show
-    if params[:user_id].nil?
+    usr_id = params[:user_id]
+    crs_id = params[:crystal_id]
+    is_self = @current_user ? @current_user.id == usr_id.to_i : false
+
+    if usr_id.blank? || crs_id.blank?
+      # from direct URL
       fragment = Fragment.find(params[:id])
-      render json: fragment, status: :ok
+      set_usr_crs_name(fragment.user_id, fragment.crystal_id)
+      render json: {fragment: fragment, crs_name: @crs_name, usr_name: @usr_name, is_self: is_self}, status: :ok
     else
-      is_self = @current_user.id == params[:user_id].to_i
-      render json: is_self, status: :ok
+      # from Link or Redirect
+      set_usr_crs_name(usr_id, crs_id)
+      render json: {crs_name: @crs_name, usr_name: @usr_name, is_self: is_self}, status: :ok
     end
   end
 
@@ -69,6 +76,11 @@ class FragmentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_fragment
       @fragment = Fragment.find(params[:id])
+    end
+
+    def set_usr_crs_name(usr_id, crs_id)
+      @usr_name = User.where(id: usr_id)[0].name
+      @crs_name = Crystal.where(id: crs_id)[0].name
     end
 
     # Only allow a trusted parameter "white list" through.

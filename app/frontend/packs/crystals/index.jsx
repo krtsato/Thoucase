@@ -1,14 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {CrsList} from 'components/crystals/index/crs_list'
 
-export const CrsIndex = ({onGenChange}) => (
+export const CrsIndex = () => (
   <>
     <h2>crystals#index</h2>
-    <CrsList onGenChange={onGenChange} />
+    <CrsList />
   </>
 )
-
-CrsIndex.propTypes = {
-  onGenChange: PropTypes.func
-}

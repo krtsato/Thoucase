@@ -11,47 +11,47 @@ const removeToken = (tokenKey) => {
 }
 
 /* then フラッシュメッセージ 分類・返却 */
-const setFlashStr = (rawFlash) => {
+const transFlash = (rawFlash) => {
   const divStr = rawFlash.split('-')
   if (divStr[0] === 'ok') {
     switch (divStr[1]) {
       case 'snin':
-        return {flashStr: 'サインインしました'}
+        return 'サインインしました'
       case 'snout':
-        return {flashStr: 'サインアウトしました'}
+        return 'サインアウトしました'
       case 'crfrg':
-        return {flashStr: 'フラグメントを作成しました'}
+        return 'フラグメントを作成しました'
       case 'udfrg':
-        return {flashStr: 'フラグメントを更新しました'}
+        return 'フラグメントを更新しました'
       case 'dlfrg':
-        return {flashStr: 'フラグメントを削除しました'}
+        return 'フラグメントを削除しました'
       case 'crcrs':
-        return {flashStr: 'クリスタルを作成しました'}
+        return 'クリスタルを作成しました'
       case 'udcrs':
-        return {flashStr: 'クリスタルを更新しました'}
+        return 'クリスタルを更新しました'
       case 'dlcrs':
-        return {flashStr: 'クリスタルを削除しました'}
+        return 'クリスタルを削除しました'
       default:
         return null
     }
   } else if (divStr[0] === 'er') {
     switch (divStr[1]) {
       case 'auth':
-        return {flashStr: '権限がありません'}
+        return '権限がありません'
       case 'snin':
-        return {flashStr: 'メールアドレスまたはパスワードが間違っています'}
+        return 'メールアドレスまたはパスワードが間違っています'
       case 'crfrg':
-        return {flashStr: 'フラグメントの作成に失敗しました'}
+        return 'フラグメントの作成に失敗しました'
       case 'upfrg':
-        return {flashStr: 'フラグメントの更新に失敗しました'}
+        return 'フラグメントの更新に失敗しました'
       case 'dlfrg':
-        return {flashStr: 'フラグメントの削除に失敗しました'}
+        return 'フラグメントの削除に失敗しました'
       case 'crcrs':
-        return {flashStr: 'クリスタルの作成に失敗しました'}
+        return 'クリスタルの作成に失敗しました'
       case 'udcrs':
-        return {flashStr: 'クリスタルの更新に失敗しました'}
+        return 'クリスタルの更新に失敗しました'
       case 'dlcrs':
-        return {flashStr: 'クリスタルの削除に失敗しました'}
+        return 'クリスタルの削除に失敗しました'
       default:
         return null
     }
@@ -60,15 +60,7 @@ const setFlashStr = (rawFlash) => {
   }
 }
 
-const setSninBool = (rawFlash) => {
-  if (rawFlash.split('-')[1] === 'snin') return {sninBool: true}
-  return {sninBool: false}
-}
-
 /* catch キャンセルメッセージ 返却 */
-const setCclStr = (error) => {
-  const cclMsg = axios.isCancel(error) ? 'リクエストがキャンセルされました' : null
-  return {cclStr: cclMsg}
-}
+const cancelLine = (error) => (axios.isCancel(error) ? 'リクエストがキャンセルされました' : null)
 
-export {setToken, removeToken, setFlashStr, setSninBool, setCclStr}
+export {setToken, removeToken, transFlash, cancelLine}

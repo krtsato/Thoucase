@@ -1,14 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {UsrList} from 'components/users/index/usr_list'
 
-export const UsrIndex = ({onGenChange}) => (
+export const UsrIndex = () => (
   <>
     <h2>users#index</h2>
-    <UsrList onGenChange={onGenChange} />
+    <UsrList />
   </>
 )
-
-UsrIndex.propTypes = {
-  onGenChange: PropTypes.func
-}
