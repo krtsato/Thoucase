@@ -26,7 +26,7 @@ export const FrgForm = ({reqMethod, initState}) => {
   }
 
   /* Editor ~ CrsSelect : crsId 更新 */
-  const bufCrsIdBlur = (nextState) => {
+  const bufSelectBlur = (nextState) => {
     setCrsId(nextState)
   }
 
@@ -112,7 +112,7 @@ export const FrgForm = ({reqMethod, initState}) => {
   return (
     <>
       <Namebox frgName={frgName} bufNameChange={bufNameChange} editorFocus={editorFocus} />
-      <CrsSelect bufCrsIdBlur={bufCrsIdBlur} />
+      <CrsSelect bufSelectBlur={bufSelectBlur} editorFocus={editorFocus} />
       <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
         editorState={editorState}
@@ -128,6 +128,7 @@ export const FrgForm = ({reqMethod, initState}) => {
         frgId={frgId}
         frgName={frgName}
         crsId={crsId}
+        crs
         editorState={editorState}
       />
     </>

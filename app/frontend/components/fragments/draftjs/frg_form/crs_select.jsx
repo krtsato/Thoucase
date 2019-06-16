@@ -5,22 +5,46 @@ import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
 import {NameInput} from 'components/fragments/draftjs/frg_form/crs_select/name_input'
 
-export const CrsSelect = ({bufCrsIdBlur}) => {
+export const CrsSelect = ({bufSelectBlur, editorFocus}) => {
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
-  const [crsSelect, setCrsSelect] = useState(null)
-  const [showNameInput, setShowNameInput] = useState(false)
+  const [crsOpts, setCrsOpts] = useState(null)
+  const [selectVal, setSelectVal] = useState('')
 
-  /* crsId 更新  */
-  const onCrsIdBlur = (e) => {
-    e.preventDefault()
-    bufCrsIdBlur(parseInt(e.target.value, 10))
+  const onSelectBlur = () => {
+    bufSelectBlur(parseInt(selectVal, 10)) // select による型変換を相殺
   }
 
-  /* CrsSelect ~ NameInput : NameInput 表示 */
-  const onCrsIdChange = (e) => {
+  /* focus Enter 切替 */
+  const onEnterDown = (e) => {
+    if (e.which === 13) {
+      e.preventDefault()
+      editorFocus() // -> onCrsIdBlur
+    }
+  }
+
+  /* select value コントロール */
+  const onSelectChange = (e) => {
     e.preventDefault()
-    if (e.target.value === 'new') setShowNameInput(true)
+    setSelectVal(e.target.value)
+  }
+
+  /* CrsSelect ~ NameInput : option 生成 */
+  const optionList = (crystals) => (
+    <>
+      {crystals.map((crystal) => (
+        <option key={crystal.id} value={crystal.id}>
+          {crystal.name}
+        </option>
+      ))}
+    </>
+  )
+
+  /* CrsSelect ~ NameInput : axios then 共通処理 */
+  const genSelectSeq = (res, id) => {
+    bufSelectBlur(id) // FrgForm ~ CrsSelect : crsId 初期値を設定
+    setSelectVal(id) // select value 初期値
+    setCrsOpts(optionList(res)) // select 生成・更新
   }
 
   /* didMount willUnMount */
@@ -28,26 +52,12 @@ export const CrsSelect = ({bufCrsIdBlur}) => {
     axiosRails
       .get('/fragments/new')
       .then((response) => {
-        bufCrsIdBlur(response.data[0].id)
-        setCrsSelect(
-          <select
-            id='crsSelect'
-            required
-            defaultValue={response.data[0].id}
-            onChange={onCrsIdChange}
-            onBlur={onCrsIdBlur}>
-            {response.data.map((crystal) => (
-              <option key={crystal.id} value={crystal.id}>
-                {crystal.name}
-              </option>
-            ))}
-            <option value='new'>新規作成</option>
-          </select>
-        )
+        const resData = response.data
+        genSelectSeq(resData, resData[0].id)
       })
       .catch((error) => {
         setCclMsg(cancelLine(error))
-        setFlashMsg(transFlash(error.response.header.flash))
+        setFlashMsg(transFlash(error.response.headers.flash))
       })
     return () => {
       canceller.cancel
@@ -58,18 +68,23 @@ export const CrsSelect = ({bufCrsIdBlur}) => {
     <div className='crsSelect'>
       <label htmlFor='crsSelect'>
         作成先クリスタル
-        {crsSelect}
+        <select
+          id='crsSelect'
+          required
+          value={selectVal}
+          onChange={onSelectChange}
+          onKeyDown={onEnterDown}
+          onBlur={onSelectBlur}>
+          {crsOpts}
+          <option value='new'>新規作成</option>
+        </select>
       </label>
-      <NameInput
-        showNameInput={showNameInput}
-        setCrsSelect={setCrsSelect}
-        onCrsIdChange={onCrsIdChange}
-        onCrsIdBlur={onCrsIdBlur}
-      />
+      <NameInput selectVal={selectVal} genSelectSeq={genSelectSeq} editorFocus={editorFocus} />
     </div>
   )
 }
 
 CrsSelect.propTypes = {
-  bufCrsIdBlur: PropTypes.func
+  bufSelectBlur: PropTypes.func,
+  editorFocus: PropTypes.func
 }
