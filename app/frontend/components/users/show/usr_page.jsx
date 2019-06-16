@@ -9,21 +9,21 @@ import {UsrCrs} from 'components/users/show/usr_page/usr_crs'
 import {UsrFrg} from 'components/users/show/usr_page/usr_frg'
 
 export const UsrPage = ({usrId}) => {
-  let activeComp = null
   const {setCclMsg} = useContext(CancelContext)
+  const [user, setUser] = useState({})
+  const [crystals, setCrystals] = useState([])
+  const [fragments, setFragments] = useState([])
   const [activeFlag, setActiveFlag] = useState('crs')
-  const [usrVals, setUsrVals] = useState(null)
-  const [crsVals, setCrsVals] = useState(null)
-  const [frgVals, setFrgVals] = useState(null)
 
   /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
       .get(`/users/${usrId}`)
       .then((response) => {
-        setUsrVals(response.data.user)
-        setCrsVals(response.data.crystals)
-        setFrgVals(response.data.fragments)
+        const resData = response.data
+        setUser(resData.user)
+        setCrystals(resData.crystals)
+        setFragments(resData.fragments)
       })
       .catch((error) => {
         setCclMsg(cancelLine(error))
@@ -33,25 +33,25 @@ export const UsrPage = ({usrId}) => {
     }
   }, [])
 
-  /* on activeFlag change */
-  useEffect(() => {
-    switch (activeFlag) {
-      case 'crs':
-        activeComp = <UsrCrs crsVals={crsVals} />
-        break
-      case 'frg':
-        activeComp = <UsrFrg frgVals={frgVals} />
-        break
-      default:
-        break // いいね機能実装予定
+  const ActiveComp = ({active}) => {
+    ActiveComp.propTypes = {
+      active: PropTypes.string
     }
-  }, [activeFlag])
+    switch (active) {
+      case 'crs':
+        return <UsrCrs crystals={crystals} />
+      case 'frg':
+        return <UsrFrg fragments={fragments} />
+      default:
+        return null // いいね機能
+    }
+  }
 
   return (
     <>
-      <UsrInfo usrVals={usrVals} />
+      <UsrInfo user={user} />
       <UsrTab setActiveFlag={setActiveFlag} />
-      {activeComp}
+      <ActiveComp active={activeFlag} />
     </>
   )
 }

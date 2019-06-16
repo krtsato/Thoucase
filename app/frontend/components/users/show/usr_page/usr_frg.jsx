@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const UsrFrg = ({frgVals}) => {
-  console.log(`frgVals : ${JSON.stringify(frgVals, undefined, 2)}`)
+export const UsrFrg = ({fragments}) => {
+  console.log(`fragments : ${JSON.stringify(fragments, undefined, 2)}`)
   return <h3>UserFrg</h3>
 }
 
 UsrFrg.propTypes = {
-  frgVals: PropTypes.object
+  fragments: PropTypes.array
 }

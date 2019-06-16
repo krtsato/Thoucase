@@ -34,7 +34,9 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    crystals = Crystal.where(user_id: @user.id)
+    fragments = Fragment.where(user_id: @user.id)
+    render json: {user: @user, crystals: crystals, fragments: fragments}, status: :ok
   end
 
   # POST /users
