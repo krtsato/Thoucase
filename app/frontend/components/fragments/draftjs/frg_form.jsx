@@ -128,7 +128,6 @@ export const FrgForm = ({reqMethod, initState}) => {
         frgId={frgId}
         frgName={frgName}
         crsId={crsId}
-        crs
         editorState={editorState}
       />
     </>

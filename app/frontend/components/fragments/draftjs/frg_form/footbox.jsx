@@ -16,7 +16,7 @@ export const Footbox = ({reqMethod, frgId, frgName, crsId, editorState}) => {
   // start save process
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
-    const check = validCheck({frgName, rawFrg})
+    const check = validCheck({frgName, rawFrg, crsId})
 
     // post or patch
     const axiosBy = (method) => {
