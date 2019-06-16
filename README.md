@@ -1,16 +1,17 @@
 # README
 
-## ブログサイト Thoucase を開発中。
+## ブログサイト Thoucase を開発中
 
 人間の思考力・創造性は宝石のように輝きます。  
 記事を fragment と呼び crystal を形作ります。  
 crystal は showcase に展示されます。
 
-## 機能(開発中)
+## 機能
 トークン認証・認可  
-fragment, crystal, showcaseuserのCRUD  
+fragment, crystal, showcase, userのCRUD  
 Draft.js によるエディタ  
-Three.js による crystal の立体表示  
+フロントエンドでの validation  
+Three.js による crystal の立体表示(開発中)  
 など
 
 ## 開発環境
