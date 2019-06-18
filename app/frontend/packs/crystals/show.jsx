@@ -31,7 +31,7 @@ export const CrsShow = ({location, match}) => {
 
   return (
     <>
-      <h2>crystalss#show</h2>
+      <h2>crystals#show</h2>
       <CrsView initState={initState} />
     </>
   )

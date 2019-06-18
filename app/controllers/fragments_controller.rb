@@ -20,9 +20,9 @@ class FragmentsController < ApplicationController
 
     if usr_id.blank? || crs_id.blank?
       # from direct URL
-      fragment = Fragment.find(params[:id])
-      set_usr_crs_name(fragment.user_id, fragment.crystal_id)
-      render json: {fragment: fragment, crs_name: @crs_name, usr_name: @usr_name, is_self: is_self}, status: :ok
+      set_fragment()
+      set_usr_crs_name(@fragment.user_id, @fragment.crystal_id)
+      render json: {fragment: @fragment, crs_name: @crs_name, usr_name: @usr_name, is_self: is_self}, status: :ok
     else
       # from Link or Redirect
       set_usr_crs_name(usr_id, crs_id)
@@ -77,10 +77,10 @@ class FragmentsController < ApplicationController
     def set_fragment
       @fragment = Fragment.find(params[:id])
     end
-
+    # For show action
     def set_usr_crs_name(usr_id, crs_id)
-      @usr_name = User.where(id: usr_id)[0].name
-      @crs_name = Crystal.where(id: crs_id)[0].name
+      @usr_name = User.find(usr_id).name
+      @crs_name = Crystal.find(crs_id).name
     end
 
     # Only allow a trusted parameter "white list" through.

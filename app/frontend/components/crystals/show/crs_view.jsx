@@ -6,7 +6,7 @@ import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
 import {Namebox} from 'components/crystals/show/crs_view/namebox'
 import {Headbox} from 'components/crystals/show/crs_view/headbox'
 import {Actionbox} from 'components/crystals/show/crs_view/actionbox'
-import {Frgbox} from 'components/crystals/show/crs_view/frgbox'
+import {CrsFrg} from 'components/crystals/show/crs_view/crs_frg'
 
 export const CrsView = ({initState}) => {
   const {setCclMsg} = useContext(CancelContext)
@@ -30,7 +30,7 @@ export const CrsView = ({initState}) => {
         showcase_id: shwId,
         created_at: creAt,
         updated_at: updAt
-      } = resData.fragment
+      } = resData.crystal
       setCrsVals({crsId, crsName, usrId, shwId, creAt, updAt})
     }
     const usrName = resData.usr_name
@@ -44,7 +44,7 @@ export const CrsView = ({initState}) => {
   useEffect(() => {
     axiosRails
       .get(`/crystals/${crsVals.crsId}`, {
-        params: {user_id: crsVals.usrId, showcase_id: crsVals.shwId} // どちらか blank 考慮
+        params: {user_id: crsVals.usrId, showcase_id: crsVals.shwId}
       })
       .then((response) => {
         resDivider(response.data)
@@ -67,7 +67,7 @@ export const CrsView = ({initState}) => {
         updAt={crsVals.updAt}
       />
       <Actionbox isSelf={isSelf} crsVals={crsVals} />
-      <Frgbox fragments={fragments} />
+      <CrsFrg fragments={fragments} />
     </>
   )
 }

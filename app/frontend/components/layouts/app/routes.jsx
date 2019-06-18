@@ -25,12 +25,12 @@ export const Routes = () => (
       <Route exact path='/signin' render={Signin} />
       <Route exact path='/fragments' render={FrgIndex} />
       <AuthRoute path='/showcases' authComp={ShwIndex} />
-      <AuthRoute path='/crystals' authComp={CrsIndex} />
+      <AuthRoute exact path='/crystals' authComp={CrsIndex} />
       <AuthRoute path='/fragments/new' authComp={FrgNew} />
       <AuthRoute path='/fragments/:id/edit' authComp={FrgEdit} />
       {/* :id 回避 */}
-      <Route exact path='/users/:id' component={UsrShow} />
-      <Route exact path='/crystals/:id' component={CrsShow} />
+      <Route exact path='/users/:id' render={UsrShow} />
+      <Route exact path='/crystals/:id' render={CrsShow} />
       <Route exact path='/fragments/:id' render={FrgShow} />
     </Switch>
   </main>
