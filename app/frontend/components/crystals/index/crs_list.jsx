@@ -4,7 +4,6 @@ import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
 
 export const CrsList = () => {
-  let crsList = null // return
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [crystals, setCrystals] = useState([])
@@ -26,10 +25,11 @@ export const CrsList = () => {
   }, [])
 
   /* crystals 一覧 */
-  if (crystals) {
-    crsList = (
+  const crsList = (crsArray) => {
+    if (crsArray === []) return null
+    return (
       <ul>
-        {crystals.map((crystal) => (
+        {crsArray.map((crystal) => (
           <li key={crystal.id}>
             <p>showcase_id : {crystal.showcase_id}</p>
             <p>user_id : {crystal.user_id}</p>
@@ -42,5 +42,5 @@ export const CrsList = () => {
     )
   }
 
-  return crsList
+  return crsList(crystals)
 }

@@ -5,7 +5,6 @@ import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {transFlash, cancelLine} from 'components/layouts/axios/then_catch_funcs'
 
 export const FrgList = () => {
-  let frgList = null // return
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [fragments, setFragments] = useState([])
@@ -49,10 +48,11 @@ export const FrgList = () => {
   )
 
   /* fragments + users 一覧 */
-  if (fragments !== []) {
-    frgList = (
+  const frgList = (frgArray) => {
+    if (fragments === []) return null
+    return (
       <ul>
-        {fragments.map((fragment, index) => (
+        {frgArray.map((fragment, index) => (
           <li key={fragment.id}>
             {setUsrPart(index)}
             {setFrgPart(fragment)}
@@ -62,5 +62,5 @@ export const FrgList = () => {
     )
   }
 
-  return frgList
+  return frgList(fragments)
 }

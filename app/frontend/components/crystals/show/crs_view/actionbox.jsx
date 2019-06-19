@@ -4,12 +4,11 @@ import {EditBtn} from 'components/crystals/show/crs_view/actionbox/edit_btn'
 import {DeleteBtn} from 'components/crystals/show/crs_view/actionbox/delete_btn'
 
 export const Actionbox = ({isSelf, crsVals}) => {
-  let buttons = null // return
-
-  // crystal 所有者は編集可能
-  if (isSelf) {
-    buttons = (
-      <div className='crsFoot'>
+  /* crystal 所有者は編集・削除可能 */
+  const actionBtns = (selfBool) => {
+    if (!selfBool) return null
+    return (
+      <div className='crsAction'>
         <EditBtn crsVals={crsVals} />
         <DeleteBtn crsId={crsVals.crsId} usrId={crsVals.usrId} />
         {/* いいね機能 */}
@@ -17,7 +16,7 @@ export const Actionbox = ({isSelf, crsVals}) => {
     )
   }
 
-  return buttons
+  return actionBtns(isSelf)
 }
 
 Actionbox.propTypes = {

@@ -5,25 +5,25 @@ import {FrgView} from 'components/fragments/draftjs/frg_view'
 
 export const FrgShow = ({location, match}) => {
   /* FrgView : frgVals 初期化 */
-  let initState = null
-  if (location.state) {
-    // Link, Redirect から遷移して来る場合
-    const {
-      id: frgId,
-      name: frgName,
-      content: rawContent,
-      user_id: usrId,
-      crystal_id: crsId,
-      created_at: creAt,
-      updated_at: updAt
-    } = location.state
-    const contentState = convertFromRaw(rawContent)
-    const editorState = EditorState.createWithContent(contentState)
-    initState = {frgId, frgName, editorState, usrId, crsId, creAt, updAt}
-  } else {
+  const initState = (state, id) => {
+    if (state) {
+      // Link, Redirect から遷移して来る場合
+      const {
+        id: frgId,
+        name: frgName,
+        content: rawContent,
+        user_id: usrId,
+        crystal_id: crsId,
+        created_at: creAt,
+        updated_at: updAt
+      } = state
+      const contentState = convertFromRaw(rawContent)
+      const editorState = EditorState.createWithContent(contentState)
+      return {frgId, frgName, editorState, usrId, crsId, creAt, updAt}
+    }
     // URL から遷移して来る場合
-    initState = {
-      frgId: match.params.id,
+    return {
+      frgId: id,
       frgName: '',
       editorState: EditorState.createEmpty(),
       usrId: null,
@@ -36,7 +36,7 @@ export const FrgShow = ({location, match}) => {
   return (
     <>
       <h2>fragments#show</h2>
-      <FrgView initState={initState} />
+      <FrgView initState={initState(location.state, match.params.id)} />
     </>
   )
 }

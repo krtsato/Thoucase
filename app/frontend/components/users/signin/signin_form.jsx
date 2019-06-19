@@ -51,7 +51,7 @@ export const SigninForm = () => {
             type='text'
             required
             autoFocus
-            defaultValue={formVals.email}
+            value={formVals.email}
             onChange={onFormChange}
           />
         </label>
@@ -62,7 +62,7 @@ export const SigninForm = () => {
             name='password'
             type='text'
             required
-            defaultValue={formVals.password}
+            value={formVals.password}
             onChange={onFormChange}
           />
         </label>

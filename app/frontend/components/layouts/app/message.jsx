@@ -3,13 +3,13 @@ import {CancelContext, FlashContext, InvldContext} from 'components/layouts/app/
 
 export const Message = () => {
   /* form バリデーション 表示 */
-  let invldMsgList = null
   const {cclMsg} = useContext(CancelContext)
   const {flashMsg} = useContext(FlashContext)
   const {invldMsg} = useContext(InvldContext)
 
-  if (invldMsg !== []) {
-    invldMsgList = invldMsg.map((pair) => (
+  const invldMsgList = () => {
+    if (invldMsg === []) return null
+    return invldMsg.map((pair) => (
       <div className='invalid' key={pair.key}>
         {pair.msg}
       </div>
@@ -20,7 +20,7 @@ export const Message = () => {
     <aside id='message'>
       <div className='flash'>{flashMsg}</div>
       <div className='cancel'>{cclMsg}</div>
-      {invldMsgList}
+      {invldMsgList()}
     </aside>
   )
 }

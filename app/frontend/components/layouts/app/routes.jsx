@@ -37,17 +37,16 @@ export const Routes = () => (
 )
 
 const AuthRoute = ({path, authComp: AuthComp}) => {
-  let authRoute = null // return
   const {isSignin} = useContext(SigninContext)
   const {setFlashMsg} = useContext(FlashContext)
 
-  if (isSignin) {
-    authRoute = <Route exact path={path} render={AuthComp} />
-  } else {
+  const authRoute = () => {
+    if (isSignin) return <Route exact path={path} render={AuthComp} />
     setFlashMsg(transFlash('er-auth'))
-    authRoute = <Redirect exact to='/signin' />
+    return <Redirect exact to='/signin' />
   }
-  return authRoute
+
+  return authRoute()
 }
 
 AuthRoute.propTypes = {

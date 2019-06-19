@@ -4,8 +4,10 @@ import {CrsView} from 'components/crystals/show/crs_view'
 
 export const CrsShow = ({location, match}) => {
   /* CrsView : crsVals 初期化 */
-  let initState = null
-  if (location.state) {
+  const initState = (state, id) => {
+    // URL から遷移して来る場合
+    if (!state) return {crsId: id, crsName: '', usrId: null, shwId: null, creAt: null, updAt: null}
+
     // Link, Redirect から遷移して来る場合
     const {
       id: crsId,
@@ -14,25 +16,14 @@ export const CrsShow = ({location, match}) => {
       showcase_id: shwId,
       created_at: creAt,
       updated_at: updAt
-    } = location.state
-
-    initState = {crsId, crsName, usrId, shwId, creAt, updAt}
-  } else {
-    // URL から遷移して来る場合
-    initState = {
-      crsId: match.params.id,
-      crsName: '',
-      usrId: null,
-      shwId: null,
-      creAt: null,
-      updAt: null
-    }
+    } = state
+    return {crsId, crsName, usrId, shwId, creAt, updAt}
   }
 
   return (
     <>
       <h2>crystals#show</h2>
-      <CrsView initState={initState} />
+      <CrsView initState={initState(location.state, match.params.id)} />
     </>
   )
 }

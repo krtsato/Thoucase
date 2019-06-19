@@ -6,7 +6,7 @@ import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
 import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
 import {Headbox} from 'components/fragments/draftjs/frg_view/headbox'
-import {Footbox} from 'components/fragments/draftjs/frg_view/footbox'
+import {Actionbox} from 'components/fragments/draftjs/frg_view/actionbox'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 
 export const FrgView = ({initState}) => {
@@ -83,7 +83,7 @@ export const FrgView = ({initState}) => {
         updAt={frgVals.updAt}
       />
       <Editor readOnly={true} editorState={frgVals.editorState} blockRendererFn={blockRendererFn} />
-      <Footbox isSelf={isSelf} frgVals={frgVals} />
+      <Actionbox isSelf={isSelf} frgVals={frgVals} />
     </>
   )
 }

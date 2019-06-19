@@ -101,11 +101,9 @@ export const FrgForm = ({reqMethod, initState}) => {
   */
   const handleKeyCommand = (command) => {
     const newState = RichUtils.handleKeyCommand(editorState, command)
-    if (newState) {
-      onEditorChange(newState)
-      return true
-    }
-    return false
+    if (!newState) return false
+    onEditorChange(newState)
+    return true
   }
 
   /* form */
