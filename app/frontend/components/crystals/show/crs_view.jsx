@@ -16,9 +16,9 @@ export const CrsView = ({initState}) => {
   const [isSelf, setIsSelf] = useState(false)
 
   /*
-    from Link, Redirect : fragment 既存
-    from URL            : fragment 取得
-    common              : usrName, crsName, isSelf 取得 
+    from Link, Redirect : crystal 既存
+    from URL            : crystal 取得
+    common              : usrName, crsName, fragments, isSelf 取得 
   */
   const resDivider = (resData) => {
     if (resData.crystal) {
@@ -35,8 +35,8 @@ export const CrsView = ({initState}) => {
     }
     const usrName = resData.usr_name
     const shwName = resData.shw_name
-    setAddNames({usrName, shwName})
-    setFragments(resData.fragments)
+    setAddNames({usrName, shwName}) // CrsView ~ Headbox : fragments 更新
+    setFragments(resData.fragments) // CrsView ~ CrsFrg : fragments 更新
     setIsSelf(resData.is_self) // CrsView ~ Actionbox : isSelf 更新
   }
 

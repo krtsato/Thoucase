@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
 export const UsrCrs = ({crystals}) => {
-  // ここで立体描画
+  // ここで立体描画処理
   return (
     <ul>
       {crystals.map((crystal) => (
