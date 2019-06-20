@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {CancelContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {transFlash, cancelLine} from 'components/layouts/axios/then_catch_funcs'
+import {dateFormat} from 'components/layouts/date_format'
 
 export const FrgList = () => {
   const {setCclMsg} = useContext(CancelContext)
@@ -43,7 +44,7 @@ export const FrgList = () => {
         state: frg
       }}>
       <p>name : {frg.name}</p>
-      <p>created_at : {frg.created_at}</p>
+      <p>created_at : {dateFormat(frg.created_at)}</p>
     </Link>
   )
 
