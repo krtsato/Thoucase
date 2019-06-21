@@ -17,7 +17,7 @@ export const CrsSelect = ({bufSelectBlur, editorFocus}) => {
 
   /* focus Enter 切替 */
   const onEnterDown = (e) => {
-    if (e.which === 13) {
+    if (e.key === 'Enter') {
       e.preventDefault()
       editorFocus() // -> onCrsIdBlur
     }
@@ -25,7 +25,6 @@ export const CrsSelect = ({bufSelectBlur, editorFocus}) => {
 
   /* select value コントロール */
   const onSelectChange = (e) => {
-    e.preventDefault()
     setSelectVal(e.target.value)
   }
 
@@ -76,7 +75,7 @@ export const CrsSelect = ({bufSelectBlur, editorFocus}) => {
           onKeyDown={onEnterDown}
           onBlur={onSelectBlur}>
           {crsOpts}
-          <option value='new'>新規作成</option>
+          <option value='0'>新規作成</option>
         </select>
       </label>
       <NameInput selectVal={selectVal} genSelectSeq={genSelectSeq} editorFocus={editorFocus} />

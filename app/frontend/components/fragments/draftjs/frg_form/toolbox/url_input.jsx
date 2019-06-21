@@ -4,21 +4,19 @@ import PropTypes from 'prop-types'
 export const UrlInput = ({showUrlInput, urlVal, bufUrlChange, bufAddMedia}) => {
   /* URL 更新 */
   const onUrlChange = (e) => {
-    e.preventDefault()
     bufUrlChange(e.target.value)
   }
 
   /* メディア Enter 追加 */
   const onEnterDown = (e) => {
-    if (e.which === 13) {
+    if (e.key === 'Enter') {
       e.preventDefault()
       bufAddMedia()
     }
   }
 
   /* メディア ボタン押下 追加 */
-  const onAddClick = (e) => {
-    e.preventDefault()
+  const onAddClick = () => {
     bufAddMedia()
   }
 

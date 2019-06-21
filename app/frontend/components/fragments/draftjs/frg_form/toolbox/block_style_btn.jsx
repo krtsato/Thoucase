@@ -4,8 +4,7 @@ import {RichUtils} from 'draft-js'
 
 export const BlockStyleBtn = ({styleType, editorState, onEditorChange}) => {
   /* block style 適用 */
-  const onStyleClick = (e) => {
-    e.preventDefault()
+  const onStyleClick = () => {
     onEditorChange(RichUtils.toggleBlockType(editorState, styleType))
   }
 

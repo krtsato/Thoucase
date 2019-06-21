@@ -10,8 +10,7 @@ export const DeleteBtn = ({frgId, crsId}) => {
   const {setFlashMsg} = useContext(FlashContext)
 
   /* fragment 削除 */
-  const onDeleteClick = (e) => {
-    e.preventDefault()
+  const onDeleteClick = () => {
     axiosRails
       .delete(`/fragments/${frgId}`)
       .then((response) => {

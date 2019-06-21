@@ -10,8 +10,7 @@ export const DeleteBtn = ({crsId, usrId}) => {
   const {setFlashMsg} = useContext(FlashContext)
 
   /* crystal 削除 */
-  const onDeleteClick = (e) => {
-    e.preventDefault()
+  const onDeleteClick = () => {
     axiosRails
       .delete(`/crystals/${crsId}`)
       .then((response) => {

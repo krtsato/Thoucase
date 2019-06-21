@@ -4,8 +4,7 @@ import {RichUtils} from 'draft-js'
 
 export const InlineStyleBtn = ({styleType, editorState, onEditorChange}) => {
   /* inline style 適用 */
-  const onStyleClick = (e) => {
-    e.preventDefault()
+  const onStyleClick = () => {
     onEditorChange(RichUtils.toggleInlineStyle(editorState, styleType))
   }
 

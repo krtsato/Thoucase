@@ -10,7 +10,7 @@ export const Namebox = ({frgName, bufNameChange, editorFocus}) => {
 
   /* focus Enter 切替 */
   const onKeyDown = (e) => {
-    if (e.which === 13) {
+    if (e.key === 'Enter') {
       e.preventDefault()
       editorFocus()
     }

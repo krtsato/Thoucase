@@ -7,8 +7,7 @@ export const EditBtn = ({frgVals}) => {
   const {setRedrPath} = useContext(RedrContext)
 
   /* fragment 編集 */
-  const onEditClick = (e) => {
-    e.preventDefault()
+  const onEditClick = () => {
     setRedrPath(
       <Redirect
         to={{

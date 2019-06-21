@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 
 export const AtomicBtn = ({mediaType, bufAtomicClick}) => {
   /* URL input 生成 */
-  const onAtomicClick = (e) => {
-    e.preventDefault()
+  const onAtomicClick = () => {
     bufAtomicClick(mediaType)
   }
 
