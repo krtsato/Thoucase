@@ -38,7 +38,7 @@ export const FrgView = ({initState}) => {
     const usrName = resData.usr_name
     const crsName = resData.crs_name
     setAddNames({usrName, crsName})
-    setIsSelf(resData.is_self) // FrgView ~ Footbox : isSelf 更新
+    setIsSelf(resData.is_self) // FrgView ~ Actionbox : isSelf 更新
   }
 
   /* didMount, willUnMount */

@@ -6,7 +6,7 @@ import {NameInput} from 'components/fragments/draftjs/frg_form/name_input'
 import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
-import {Footbox} from 'components/fragments/draftjs/frg_form/footbox'
+import {SaveBtn} from 'components/fragments/draftjs/frg_form/save_btn'
 
 export const FrgForm = ({reqMethod, initState}) => {
   const {frgId} = initState
@@ -121,7 +121,7 @@ export const FrgForm = ({reqMethod, initState}) => {
         handleKeyCommand={handleKeyCommand}
         ref={editorRef}
       />
-      <Footbox
+      <SaveBtn
         reqMethod={reqMethod}
         frgId={frgId}
         frgName={frgName}

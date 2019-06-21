@@ -7,7 +7,7 @@ import {axiosRails} from 'components/layouts/axios/instances'
 import {validCheck} from 'components/layouts/axios/validate'
 import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const Footbox = ({reqMethod, frgId, frgName, crsId, editorState}) => {
+export const SaveBtn = ({reqMethod, frgId, frgName, crsId, editorState}) => {
   /* fragment 作成, 更新 */
   const {setRedrPath} = useContext(RedrContext)
   const {setFlashMsg} = useContext(FlashContext)
@@ -53,15 +53,13 @@ export const Footbox = ({reqMethod, frgId, frgName, crsId, editorState}) => {
   }
 
   return (
-    <div className='frgFoot'>
-      <button type='button' onClick={onSaveClick}>
-        保存
-      </button>
-    </div>
+    <button type='button' onClick={onSaveClick}>
+      保存
+    </button>
   )
 }
 
-Footbox.propTypes = {
+SaveBtn.propTypes = {
   reqMethod: PropTypes.string,
   frgId: PropTypes.number,
   frgName: PropTypes.string,
