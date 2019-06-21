@@ -6,8 +6,7 @@ export const EditBtn = ({crsVals}) => {
   const [redrPath, setRedrPath] = useState(null)
 
   /* crystal 編集 */
-  const onEditClick = (e) => {
-    e.preventDefault()
+  const onEditClick = () => {
     setRedrPath(
       <Redirect
         to={{

@@ -38,11 +38,7 @@ export const Toolbox = (props) => {
     })
 
     // UrlInput 初期化・非表示
-    setUrlParams((nextState) => ({
-      ...nextState,
-      showUrlInput: false,
-      urlVal: ''
-    }))
+    setUrlParams((unChanged) => ({...unChanged, showUrlInput: false, urlVal: ''}))
 
     // editorState 更新
     onEditorChange(AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' '))

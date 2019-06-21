@@ -11,6 +11,7 @@ import {UsrShow} from 'packs/users/show'
 import {ShwIndex} from 'packs/showcases/index'
 import {CrsIndex} from 'packs/crystals/index'
 import {CrsShow} from 'packs/crystals/show'
+import {CrsEdit} from 'packs/crystals/edit'
 import {FrgIndex} from 'packs/fragments/index'
 import {FrgNew} from 'packs/fragments/new'
 import {FrgShow} from 'packs/fragments/show'
@@ -19,13 +20,14 @@ import {FrgEdit} from 'packs/fragments/edit'
 export const Routes = () => (
   <main id='mainWrap'>
     <Switch>
-      <Route exact path={['/', '/top']} render={Top} />
-      <Route exact path='/about' render={About} />
-      <Route exact path='/users' render={UsrIndex} />
-      <Route exact path='/signin' render={Signin} />
-      <Route exact path='/fragments' render={FrgIndex} />
-      <AuthRoute path='/showcases' authComp={ShwIndex} />
-      <AuthRoute exact path='/crystals' authComp={CrsIndex} />
+      <Route exact strict path={['/', '/top']} render={Top} />
+      <Route exact strict path='/about' render={About} />
+      <Route exact strict path='/signin' render={Signin} />
+      <Route exact strict path='/users' render={UsrIndex} />
+      <Route exact strict path='/fragments' render={FrgIndex} />
+      <Route exact strict path='/showcases' render={ShwIndex} />
+      <Route exact strict path='/crystals' render={CrsIndex} />
+      <AuthRoute path='/crystals/:id/edit' authComp={CrsEdit} />
       <AuthRoute path='/fragments/new' authComp={FrgNew} />
       <AuthRoute path='/fragments/:id/edit' authComp={FrgEdit} />
       {/* :id 回避 */}
@@ -57,12 +59,8 @@ AuthRoute.propTypes = {
 /* 追記予定
   <Route exact path='/users/new' component={UsrNew} />
   <Route exact path='/users/:id/edit' component={UsrEdit} />
-  <Route exact path='/users/:id' component={UsrShow} />
   <Route exact path='/showcases/new' component={ShwNew} />
   <Route exact path='/showcases/:id/edit' component={ShwEdit} />
   <Route exact path='/showcases/:id' component={ShwShow} />
   <Route exact path='/crystals/new' component={CrsNew} />
-  <Route exact path='/crystals/:id/edit' component={CrsEdit} />
-  <Route exact path='/fragments/:id/edit' component={FrgEdit} />
-  <Route exact path='/fragments/:id' component={FrgShow} />
 */
