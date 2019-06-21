@@ -1,17 +1,17 @@
-import React, {useState, useContext} from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import {convertToRaw} from 'draft-js'
 import {Redirect} from 'react-router-dom'
-import {FlashContext, InvldContext} from 'components/layouts/app/context'
+import {RedrContext, FlashContext, InvldContext} from 'components/layouts/app/context'
 import {axiosRails} from 'components/layouts/axios/instances'
 import {validCheck} from 'components/layouts/axios/validate'
 import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 
 export const Footbox = ({reqMethod, frgId, frgName, crsId, editorState}) => {
   /* fragment 作成, 更新 */
+  const {setRedrPath} = useContext(RedrContext)
   const {setFlashMsg} = useContext(FlashContext)
   const {setInvldMsg} = useContext(InvldContext)
-  const [redrPath, setRedrPath] = useState(null)
 
   // start save process
   const onSaveClick = () => {
@@ -54,7 +54,6 @@ export const Footbox = ({reqMethod, frgId, frgName, crsId, editorState}) => {
 
   return (
     <div className='frgFoot'>
-      {redrPath}
       <button type='button' onClick={onSaveClick}>
         保存
       </button>

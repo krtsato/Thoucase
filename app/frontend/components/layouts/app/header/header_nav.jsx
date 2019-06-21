@@ -1,11 +1,11 @@
 import React, {useContext} from 'react'
-import PropTypes from 'prop-types'
-import {NavLink, withRouter} from 'react-router-dom'
-import {SigninContext, FlashContext} from 'components/layouts/app/context'
+import {NavLink, Redirect} from 'react-router-dom'
+import {RedrContext, SigninContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails} from 'components/layouts/axios/instances'
 import {removeToken, transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const HeaderNav = withRouter(({history}) => {
+export const HeaderNav = () => {
+  const {setRedrPath} = useContext(RedrContext)
   const {isSignin, setIsSignin} = useContext(SigninContext)
   const {setFlashMsg} = useContext(FlashContext)
 
@@ -17,7 +17,7 @@ export const HeaderNav = withRouter(({history}) => {
         removeToken('authToken')
         setIsSignin(false)
         setFlashMsg(transFlash(response.headers.flash))
-        history.push('/') // リダイレクト
+        setRedrPath(<Redirect exact to='/' />) // リダイレクト
       })
       .catch((error) => {
         setFlashMsg(transFlash(error.response.headers.flash))
@@ -86,8 +86,4 @@ export const HeaderNav = withRouter(({history}) => {
       <ul className='headerNavList'>{navLink()}</ul>
     </nav>
   )
-})
-
-HeaderNav.propTypes = {
-  history: PropTypes.object
 }

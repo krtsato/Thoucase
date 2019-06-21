@@ -1,13 +1,13 @@
 import React, {useState, useContext} from 'react'
-import {SigninContext, FlashContext} from 'components/layouts/app/context'
+import {RedrContext, SigninContext, FlashContext} from 'components/layouts/app/context'
 import {Redirect} from 'react-router-dom'
 import {axiosRails} from 'components/layouts/axios/instances'
 import {setToken, transFlash} from 'components/layouts/axios/then_catch_funcs'
 
 export const SigninForm = () => {
+  const {setRedrPath} = useContext(RedrContext)
   const {setIsSignin} = useContext(SigninContext)
   const {setFlashMsg} = useContext(FlashContext)
-  const [redrPath, setRedrPath] = useState(null)
   const [formVals, setFormVals] = useState({
     email: '',
     password: ''
@@ -21,7 +21,7 @@ export const SigninForm = () => {
   }
 
   /* signin */
-  const onSninClick = () => {
+  const postSnin = () => {
     axiosRails
       .post('/signin', {
         user: {email: formVals.email, password: formVals.password}
@@ -30,7 +30,7 @@ export const SigninForm = () => {
         setToken('authToken', response.headers.authorization)
         setIsSignin(true)
         setFlashMsg(transFlash(response.headers.flash))
-        setRedrPath(<Redirect to='/fragments' />) // リダイレクト
+        setRedrPath(<Redirect exact to='/fragments' />) // リダイレクト
       })
       .catch((error) => {
         setFlashMsg(transFlash(error.response.headers.flash))
@@ -38,38 +38,48 @@ export const SigninForm = () => {
       })
   }
 
+  /* signin Enter 実行 */
+  const onEnterDown = (e) => {
+    if (e.which === 13) {
+      e.preventDefault()
+      postSnin()
+    }
+  }
+
+  /* signin ボタン押下 実行 */
+  const onSninClick = () => {
+    postSnin()
+  }
+
   /* form */
   return (
-    <>
-      {redrPath}
-      <div className='formBody'>
-        <label htmlFor='email'>
-          E-mail
-          <input
-            id='email'
-            name='email'
-            type='text'
-            required
-            autoFocus
-            value={formVals.email}
-            onChange={onFormChange}
-          />
-        </label>
-        <label htmlFor='password'>
-          Password
-          <input
-            id='password'
-            name='password'
-            type='text'
-            required
-            value={formVals.password}
-            onChange={onFormChange}
-          />
-        </label>
-        <button type='button' onClick={onSninClick}>
-          Signin
-        </button>
-      </div>
-    </>
+    <div className='formBody'>
+      <label htmlFor='email'>
+        E-mail
+        <input
+          id='email'
+          name='email'
+          type='text'
+          required
+          autoFocus
+          value={formVals.email}
+          onChange={onFormChange}
+        />
+      </label>
+      <label htmlFor='password'>
+        Password
+        <input
+          id='password'
+          name='password'
+          type='text'
+          required
+          value={formVals.password}
+          onChange={onFormChange}
+        />
+      </label>
+      <button type='button' onClick={onSninClick} onKeyDown={onEnterDown}>
+        Signin
+      </button>
+    </div>
   )
 }

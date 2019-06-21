@@ -8,7 +8,7 @@ export const Message = () => {
   const {invldMsg} = useContext(InvldContext)
 
   const invldMsgList = () => {
-    if (invldMsg === []) return null
+    if (!invldMsg) return null
     return invldMsg.map((pair) => (
       <div className='invalid' key={pair.key}>
         {pair.msg}
