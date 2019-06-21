@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
-import {Headbox} from 'components/crystals/show/crs_view/headbox'
+import {HeadInfo} from 'components/crystals/show/crs_view/head_info'
 import {Actionbox} from 'components/crystals/show/crs_view/actionbox'
 import {CrsFrg} from 'components/crystals/show/crs_view/crs_frg'
 
@@ -34,7 +34,7 @@ export const CrsView = ({initState}) => {
     }
     const usrName = resData.usr_name
     const shwName = resData.shw_name
-    setAddNames({usrName, shwName}) // CrsView ~ Headbox : fragments 更新
+    setAddNames({usrName, shwName}) // CrsView ~ HeadInfo : fragments 更新
     setFragments(resData.fragments) // CrsView ~ CrsFrg : fragments 更新
     setIsSelf(resData.is_self) // CrsView ~ Actionbox : isSelf 更新
   }
@@ -59,7 +59,7 @@ export const CrsView = ({initState}) => {
   return (
     <>
       <h1 className='crsName'>{crsVals.crsName}</h1>
-      <Headbox
+      <HeadInfo
         usrName={addNames.usrName}
         shwName={addNames.shwName}
         creAt={crsVals.creAt}
