@@ -14,6 +14,10 @@ const validCheck = (chkObj) => {
   // invalid な [k, v] が一つでもあれば true
   const isInvld = chkPairs.some((pair) => {
     switch (pair[0]) {
+      case 'email':
+        return !pair[1]
+      case 'passwd':
+        return !pair[1]
       case 'frgName':
         return !pair[1]
       case 'rawFrg':
@@ -31,6 +35,10 @@ const validCheck = (chkObj) => {
   const invldArr = chkPairs
     .filter((pair) => {
       switch (pair[0]) {
+        case 'email':
+          return !pair[1]
+        case 'passwd':
+          return !pair[1]
         case 'frgName':
           return !pair[1]
         case 'rawFrg':
@@ -46,6 +54,10 @@ const validCheck = (chkObj) => {
     // invalid な [k, v] を {k, m} に写像
     .map((pair) => {
       switch (pair[0]) {
+        case 'email':
+          return {key: pair[0], msg: 'Eメールを入力して下さい'}
+        case 'passwd':
+          return {key: pair[0], msg: 'パスワードを入力して下さい'}
         case 'frgName':
           return {key: pair[0], msg: 'フラグメントの名前を入力して下さい'}
         case 'rawFrg':
