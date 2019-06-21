@@ -42,7 +42,7 @@ export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
 
   /* crystal name Enter 追加 */
   const onEnterDown = (e) => {
-    if (e.which === 13) {
+    if (e.key === 'Enter') {
       e.preventDefault()
       postCrystal()
       editorFocus()

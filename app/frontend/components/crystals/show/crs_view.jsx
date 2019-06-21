@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
-import {Namebox} from 'components/crystals/show/crs_view/namebox'
 import {Headbox} from 'components/crystals/show/crs_view/headbox'
 import {Actionbox} from 'components/crystals/show/crs_view/actionbox'
 import {CrsFrg} from 'components/crystals/show/crs_view/crs_frg'
@@ -59,7 +58,7 @@ export const CrsView = ({initState}) => {
 
   return (
     <>
-      <Namebox crsName={crsVals.crsName} />
+      <h1 className='crsName'>{crsVals.crsName}</h1>
       <Headbox
         usrName={addNames.usrName}
         shwName={addNames.shwName}

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const Namebox = ({crsName, bufNameChange}) => {
+export const NameInput = ({crsName, bufNameChange}) => {
   const onNameChange = (e) => {
     bufNameChange(e.target.value)
   }
@@ -15,7 +15,7 @@ export const Namebox = ({crsName, bufNameChange}) => {
   )
 }
 
-Namebox.propTypes = {
+NameInput.propTypes = {
   crsName: PropTypes.string,
   bufNameChange: PropTypes.func
 }

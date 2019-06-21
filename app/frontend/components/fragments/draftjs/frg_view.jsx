@@ -4,7 +4,6 @@ import {Editor, EditorState, convertFromRaw} from 'draft-js'
 import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
-import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
 import {Headbox} from 'components/fragments/draftjs/frg_view/headbox'
 import {Actionbox} from 'components/fragments/draftjs/frg_view/actionbox'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
@@ -75,7 +74,7 @@ export const FrgView = ({initState}) => {
 
   return (
     <>
-      <Namebox frgName={frgVals.frgName} />
+      <h1 className='frgName'>{frgVals.frgName}</h1>
       <Headbox
         usrName={addNames.usrName}
         crsName={addNames.crsName}

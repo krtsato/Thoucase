@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
-import {Namebox} from 'components/crystals/edit/crs_form/namebox'
+import {NameInput} from 'components/crystals/edit/crs_form/name_input'
 import {ShwLink} from 'components/crystals/edit/crs_form/shw_link'
 import {SaveBtn} from 'components/crystals/edit/crs_form/save_btn'
 
@@ -17,7 +17,7 @@ export const CrsForm = ({initState}) => {
 
   return (
     <>
-      <Namebox crsName={crsVals.crsName} bufNameChange={bufNameChange} />
+      <NameInput crsName={crsVals.crsName} bufNameChange={bufNameChange} />
       {/* 説明欄 */}
       <ShwLink shwId={crsVals.shwId} bufShwIdChange={bufShwIdChange} />
       <SaveBtn crsVals={crsVals} />

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const Namebox = ({frgName, bufNameChange, editorFocus}) => {
+export const NameInput = ({frgName, bufNameChange, editorFocus}) => {
   /* frgName 更新 */
   const onNameChange = (e) => {
     e.preventDefault()
@@ -34,7 +34,7 @@ export const Namebox = ({frgName, bufNameChange, editorFocus}) => {
   )
 }
 
-Namebox.propTypes = {
+NameInput.propTypes = {
   frgName: PropTypes.string,
   bufNameChange: PropTypes.func,
   editorFocus: PropTypes.func

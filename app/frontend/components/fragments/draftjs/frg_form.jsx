@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Editor, RichUtils, DefaultDraftBlockRenderMap} from 'draft-js'
 import {Map as ImmMap} from 'immutable'
-import {Namebox} from 'components/fragments/draftjs/frg_form/namebox'
+import {NameInput} from 'components/fragments/draftjs/frg_form/name_input'
 import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
@@ -14,13 +14,13 @@ export const FrgForm = ({reqMethod, initState}) => {
   const [crsId, setCrsId] = useState(initState.crsId)
   const [editorState, setEditorState] = useState(initState.editorState)
 
-  /* Editor ~ Namebox : focus */
+  /* Editor ~ NameInput : focus */
   const editorRef = useRef(null)
   const editorFocus = () => {
     editorRef.current.focus()
   }
 
-  /* Editor ~ Namebox : frgName 更新 */
+  /* Editor ~ NameInput : frgName 更新 */
   const bufNameChange = (nextState) => {
     setFrgName(nextState)
   }
@@ -109,7 +109,7 @@ export const FrgForm = ({reqMethod, initState}) => {
   /* form */
   return (
     <>
-      <Namebox frgName={frgName} bufNameChange={bufNameChange} editorFocus={editorFocus} />
+      <NameInput frgName={frgName} bufNameChange={bufNameChange} editorFocus={editorFocus} />
       <CrsSelect bufSelectBlur={bufSelectBlur} editorFocus={editorFocus} />
       <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
       <Editor
