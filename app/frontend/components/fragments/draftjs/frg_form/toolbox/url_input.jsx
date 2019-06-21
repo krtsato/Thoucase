@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export const UrlInput = ({showUrlInput, urlVal, bufUrlChange, bufAddMedia}) => {
-  let urlInput = null // return
-
   /* URL 更新 */
   const onUrlChange = (e) => {
     e.preventDefault()
@@ -25,8 +23,9 @@ export const UrlInput = ({showUrlInput, urlVal, bufUrlChange, bufAddMedia}) => {
   }
 
   /* URL input 生成 */
-  if (showUrlInput) {
-    urlInput = (
+  const urlInput = (showBool) => {
+    if (!showBool) return null
+    return (
       <>
         <input type='url' required autoFocus value={urlVal} onChange={onUrlChange} onKeyDown={onEnterDown} />
         <button type='button' onClick={onAddClick}>
@@ -36,7 +35,7 @@ export const UrlInput = ({showUrlInput, urlVal, bufUrlChange, bufAddMedia}) => {
     )
   }
 
-  return urlInput
+  return urlInput(showUrlInput)
 }
 
 UrlInput.propTypes = {

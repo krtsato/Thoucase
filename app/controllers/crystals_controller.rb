@@ -48,8 +48,10 @@ class CrystalsController < ApplicationController
   # PATCH/PUT /crystals/1
   def update
     if @crystal.update(crystal_params)
+      response.headers['flash'] = 'ok-udcrs'
       render json: @crystal
     else
+      response.headers['flash'] = 'er-udcrs'
       render json: @crystal.errors, status: :unprocessable_entity
     end
   end
@@ -81,7 +83,6 @@ class CrystalsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def crystal_params
-      params.require(:crystal).permit(:name).merge!(user_id: @current_user.id)
-      # :showcase_id
+      params.require(:crystal).permit(:name, :showcase_id).merge!(user_id: @current_user.id)
     end
 end

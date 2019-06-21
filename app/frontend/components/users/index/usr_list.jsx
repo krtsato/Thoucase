@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom'
 import {CancelContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
+import {dateFormat} from 'components/layouts/date_format'
 
 export const UsrList = () => {
-  let usrList = null // return
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [users, setUsers] = useState([])
@@ -27,15 +27,16 @@ export const UsrList = () => {
   }, [])
 
   /* users 一覧 生成 */
-  if (users) {
-    usrList = (
+  const usrList = (usrArray) => {
+    if (usrArray === []) return null
+    return (
       <ul>
-        {users.map((user) => (
+        {usrArray.map((user) => (
           <li key={user.id}>
             <Link to={`/users/${user.id}`}>
               <p>name : {user.name}</p>
-              <p>created_at : {user.created_at}</p>
-              <p>updated_at : {user.updated_at}</p>
+              <p>created_at : {dateFormat(user.created_at)}</p>
+              <p>updated_at : {dateFormat(user.updated_at)}</p>
             </Link>
           </li>
         ))}
@@ -43,5 +44,5 @@ export const UsrList = () => {
     )
   }
 
-  return usrList
+  return usrList(users)
 }

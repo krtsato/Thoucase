@@ -6,7 +6,6 @@ import {axiosRails} from 'components/layouts/axios/instances'
 import {removeToken, transFlash} from 'components/layouts/axios/then_catch_funcs'
 
 export const HeaderNav = withRouter(({history}) => {
-  let tglNavLink = null // return
   const {isSignin, setIsSignin} = useContext(SigninContext)
   const {setFlashMsg} = useContext(FlashContext)
 
@@ -26,8 +25,8 @@ export const HeaderNav = withRouter(({history}) => {
   }
 
   /* signin していたら表示変更 */
-  if (isSignin) {
-    tglNavLink = (
+  const navLink = () => {
+    return isSignin ? (
       <>
         <li>
           <NavLink exact to='/fragments'>
@@ -51,9 +50,7 @@ export const HeaderNav = withRouter(({history}) => {
           </NavLink>
         </li>
       </>
-    )
-  } else {
-    tglNavLink = (
+    ) : (
       <>
         <li>
           <NavLink exact to='/'>
@@ -86,7 +83,7 @@ export const HeaderNav = withRouter(({history}) => {
 
   return (
     <nav className='headerNav'>
-      <ul className='headerNavList'>{tglNavLink}</ul>
+      <ul className='headerNavList'>{navLink()}</ul>
     </nav>
   )
 })

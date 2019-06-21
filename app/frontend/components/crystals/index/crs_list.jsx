@@ -2,9 +2,9 @@ import React, {useState, useEffect, useContext} from 'react'
 import {CancelContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
+import {dateFormat} from 'components/layouts/date_format'
 
 export const CrsList = () => {
-  let crsList = null // return
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [crystals, setCrystals] = useState([])
@@ -26,21 +26,22 @@ export const CrsList = () => {
   }, [])
 
   /* crystals 一覧 */
-  if (crystals) {
-    crsList = (
+  const crsList = (crsArray) => {
+    if (crsArray === []) return null
+    return (
       <ul>
-        {crystals.map((crystal) => (
+        {crsArray.map((crystal) => (
           <li key={crystal.id}>
-            <p>showcase_id : {crystal.showcase_id}</p>
-            <p>user_id : {crystal.user_id}</p>
-            <p>created_at : {crystal.created_at}</p>
-            <p>updated_at : {crystal.updated_at}</p>
             <p>name : {crystal.name}</p>
+            <p>user_id : {crystal.user_id}</p>
+            <p>showcase_id : {crystal.showcase_id}</p>
+            <p>created_at : {dateFormat(crystal.created_at)}</p>
+            <p>updated_at : {dateFormat(crystal.updated_at)}</p>
           </li>
         ))}
       </ul>
     )
   }
 
-  return crsList
+  return crsList(crystals)
 }

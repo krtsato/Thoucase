@@ -2,9 +2,9 @@ import React, {useState, useEffect, useContext} from 'react'
 import {CancelContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
+import {dateFormat} from 'components/layouts/date_format'
 
 export const ShwList = () => {
-  let shwList = null // return
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [showcases, setShowcases] = useState([])
@@ -26,20 +26,21 @@ export const ShwList = () => {
   }, [])
 
   /* showcases 一覧 */
-  if (showcases) {
-    shwList = (
+  const shwList = (shwArray) => {
+    if (shwArray === []) return null
+    return (
       <ul>
-        {showcases.map((showcase) => (
+        {shwArray.map((showcase) => (
           <li key={showcase.id}>
-            <p>user_id : {showcase.user_id}</p>
-            <p>created_at : {showcase.created_at}</p>
-            <p>updated_at : {showcase.updated_at}</p>
             <p>name : {showcase.name}</p>
+            <p>user_id : {showcase.user_id}</p>
+            <p>created_at : {dateFormat(showcase.created_at)}</p>
+            <p>updated_at : {dateFormat(showcase.updated_at)}</p>
           </li>
         ))}
       </ul>
     )
   }
 
-  return shwList
+  return shwList(showcases)
 }

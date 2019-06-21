@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
 export const CrsFrg = ({fragments}) => {
-  let frgList = null // return
-
   /* 単位フラグメント */
   const setFragment = (frg) => (
     <Link
@@ -18,17 +16,13 @@ export const CrsFrg = ({fragments}) => {
   )
 
   /* fragments 一覧 */
-  if (fragments !== []) {
-    frgList = (
-      <ul>
-        {fragments.map((fragment) => (
-          <li key={fragment.id}>{setFragment(fragment)}</li>
-        ))}
-      </ul>
-    )
-  }
-
-  return frgList
+  return (
+    <ul>
+      {fragments.map((fragment) => (
+        <li key={fragment.id}>{setFragment(fragment)}</li>
+      ))}
+    </ul>
+  )
 }
 
 CrsFrg.propTypes = {

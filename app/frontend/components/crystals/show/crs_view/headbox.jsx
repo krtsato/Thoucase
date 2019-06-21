@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {dateFormat} from 'components/layouts/date_format'
 
 export const Headbox = ({usrName, shwName, creAt, updAt}) => {
   /* showcase に登録していれば 表示 */
@@ -11,8 +12,8 @@ export const Headbox = ({usrName, shwName, creAt, updAt}) => {
   return (
     <aside className='crsHead'>
       <span>作成者 : {usrName}</span>
-      <time>作成日 : {creAt}</time>
-      <time>更新日 : {updAt}</time>
+      <time>作成日 : {dateFormat(creAt)}</time>
+      <time>更新日 : {dateFormat(updAt)}</time>
       {shwcaseLink(shwName)}
     </aside>
   )

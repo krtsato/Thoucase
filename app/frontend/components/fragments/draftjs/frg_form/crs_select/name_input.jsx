@@ -6,7 +6,6 @@ import {validCheck} from 'components/layouts/axios/validate'
 import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 
 export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
-  let nameInput = null // return
   const {setFlashMsg} = useContext(FlashContext)
   const {setInvldMsg} = useContext(InvldContext)
   const [crsName, setCrsName] = useState('')
@@ -64,8 +63,9 @@ export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
   }
 
   /* name input 生成 */
-  if (inputShow) {
-    nameInput = (
+  const nameInput = (showBool) => {
+    if (!showBool) return null
+    return (
       <>
         <input
           type='text'
@@ -82,7 +82,7 @@ export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
     )
   }
 
-  return nameInput
+  return nameInput(inputShow)
 }
 
 NameInput.propTypes = {
