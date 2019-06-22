@@ -7,7 +7,7 @@ export const FrgShow = ({location, match}) => {
   /* FrgView : frgVals 初期化 */
   const initState = (state, id) => {
     if (state) {
-      // Link, Redirect から遷移して来る場合
+      // from Link, Redirect except delete action
       const {
         id: frgId,
         name: frgName,
@@ -21,9 +21,10 @@ export const FrgShow = ({location, match}) => {
       const editorState = EditorState.createWithContent(contentState)
       return {frgId, frgName, editorState, usrId, crsId, creAt, updAt}
     }
-    // URL から遷移して来る場合
+
+    // from URL query or Redirect by delete action
     return {
-      frgId: id,
+      frgId: parseInt(id, 10),
       frgName: '',
       editorState: EditorState.createEmpty(),
       usrId: null,

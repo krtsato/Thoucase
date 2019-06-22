@@ -5,21 +5,22 @@ import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
 import {NameInput} from 'components/fragments/draftjs/frg_form/crs_select/name_input'
 
-export const CrsSelect = ({bufSelectBlur, editorFocus}) => {
+export const CrsSelect = ({setFrgVals, editorFocus}) => {
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [crsOpts, setCrsOpts] = useState(null)
   const [selectVal, setSelectVal] = useState('')
 
   const onSelectBlur = () => {
-    bufSelectBlur(parseInt(selectVal, 10)) // select による型変換を相殺
+    const crsId = parseInt(selectVal, 10) // select による型変換を相殺
+    setFrgVals((unChanged) => ({...unChanged, crsId}))
   }
 
   /* focus Enter 切替 */
   const onEnterDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      editorFocus() // -> onCrsIdBlur
+      editorFocus() // -> onSelectBlur
     }
   }
 
@@ -40,9 +41,9 @@ export const CrsSelect = ({bufSelectBlur, editorFocus}) => {
   )
 
   /* CrsSelect ~ NameInput : axios then 共通処理 */
-  const genSelectSeq = (res, id) => {
-    bufSelectBlur(id) // FrgForm ~ CrsSelect : crsId 初期値を設定
-    setSelectVal(id) // select value 初期値
+  const genSelectSeq = (res, crsId) => {
+    setFrgVals((unChanged) => ({...unChanged, crsId})) // FrgForm ~ CrsSelect : crsId 初期値を設定
+    setSelectVal(crsId) // select value 初期値
     setCrsOpts(optionList(res)) // select 生成・更新
   }
 
@@ -84,6 +85,6 @@ export const CrsSelect = ({bufSelectBlur, editorFocus}) => {
 }
 
 CrsSelect.propTypes = {
-  bufSelectBlur: PropTypes.func,
+  setFrgVals: PropTypes.func,
   editorFocus: PropTypes.func
 }

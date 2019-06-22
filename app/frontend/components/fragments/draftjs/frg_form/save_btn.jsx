@@ -7,13 +7,13 @@ import {axiosRails} from 'components/layouts/axios/instances'
 import {validCheck} from 'components/layouts/axios/validate'
 import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const SaveBtn = ({reqMethod, frgId, frgName, crsId, editorState}) => {
-  /* fragment 作成, 更新 */
+export const SaveBtn = ({reqMethod, frgVals}) => {
+  const {frgId, frgName, crsId, editorState} = frgVals
   const {setRedrPath} = useContext(RedrContext)
   const {setFlashMsg} = useContext(FlashContext)
   const {setInvldMsg} = useContext(InvldContext)
 
-  // start save process
+  /* fragment 作成, 更新 */
   const onSaveClick = () => {
     const rawFrg = convertToRaw(editorState.getCurrentContent())
     const check = validCheck({frgName, rawFrg, crsId})
@@ -61,8 +61,5 @@ export const SaveBtn = ({reqMethod, frgId, frgName, crsId, editorState}) => {
 
 SaveBtn.propTypes = {
   reqMethod: PropTypes.string,
-  frgId: PropTypes.number,
-  frgName: PropTypes.string,
-  crsId: PropTypes.number,
-  editorState: PropTypes.object
+  frgVals: PropTypes.object
 }

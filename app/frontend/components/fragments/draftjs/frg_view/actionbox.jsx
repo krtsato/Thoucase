@@ -1,22 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {EditBtn} from 'components/fragments/draftjs/frg_view/footbox/edit_btn'
-import {DeleteBtn} from 'components/fragments/draftjs/frg_view/footbox/delete_btn'
+import {EditBtn} from 'components/fragments/draftjs/frg_view/actionbox/edit_btn'
+import {DeleteBtn} from 'components/fragments/draftjs/frg_view/actionbox/delete_btn'
 
 export const Actionbox = ({isSelf, frgVals}) => {
   /* fragment 所有者は編集可能 */
-  const buttons = (selfBool, frg) => {
-    if (!selfBool) return null
+  const buttons = () => {
+    if (!isSelf) return null
     return (
       <div className='frgAction'>
-        <EditBtn frgVals={frg} />
-        <DeleteBtn frgId={frg.frgId} crsId={frg.crsId} />
+        <EditBtn frgVals={frgVals} />
+        <DeleteBtn frgId={frgVals.frgId} crsId={frgVals.crsId} />
         {/* いいね機能 */}
       </div>
     )
   }
 
-  return buttons(isSelf, frgVals)
+  return buttons()
 }
 
 Actionbox.propTypes = {

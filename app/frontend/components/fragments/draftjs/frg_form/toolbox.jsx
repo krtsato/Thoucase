@@ -21,10 +21,7 @@ export const Toolbox = (props) => {
 
   /* Toolbox ~ UrlInput : メディア URL 更新 */
   const bufUrlChange = (mediaUrl) => {
-    setUrlParams((unChanged) => ({
-      ...unChanged,
-      urlVal: mediaUrl
-    }))
+    setUrlParams((unChanged) => ({...unChanged, urlVal: mediaUrl}))
   }
 
   /* Toolbox ~ UrlInput : メディア 追加 */

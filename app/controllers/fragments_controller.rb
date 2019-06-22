@@ -20,7 +20,7 @@ class FragmentsController < ApplicationController
 
     if usr_id.blank? || crs_id.blank?
       # from direct URL
-      set_fragment()
+      set_fragment
       set_usr_crs_name(@fragment.user_id, @fragment.crystal_id)
       render json: {fragment: @fragment, crs_name: @crs_name, usr_name: @usr_name, is_self: is_self}, status: :ok
     else
@@ -77,6 +77,7 @@ class FragmentsController < ApplicationController
     def set_fragment
       @fragment = Fragment.find(params[:id])
     end
+
     # For show action
     def set_usr_crs_name(usr_id, crs_id)
       @usr_name = User.find(usr_id).name

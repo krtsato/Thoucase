@@ -14,21 +14,22 @@ class CrystalsController < ApplicationController
 
   # GET /crystals/1
   def show
+    @crystal = nil # initialize for request from UsrCrs
+    crs_id = params[:id]
+    fragments = Fragment.where(crystal_id: crs_id).order(created_at: :desc)
     usr_id = params[:user_id]
     shw_id = params[:showcase_id]
     is_self = @current_user ? @current_user.id == usr_id.to_i : false
-    fragments = Fragment.where(crystal_id: params[:id]).order(created_at: :desc)
 
-    if usr_id.blank?
-      # from direct URL
-      set_crystal()
-      set_usr_shw_name(@crystal.user_id, @crystal.showcase_id)
-      render json: {crystal: @crystal, fragments: fragments, shw_name: @shw_name, usr_name: @usr_name, is_self: is_self}, status: :ok
-    else
-      # from Link or Redirect
-      set_usr_shw_name(usr_id, shw_id)
-      render json: {fragments: fragments, shw_name: @shw_name, usr_name: @usr_name, is_self: is_self}, status: :ok
+    if usr_id.nil? && shw_id.nil?
+      # do this if comes from URL query or Redirect by delete action
+      # do nothing if comes from Link, Redirect except delete action with nil or present showcase_id
+      set_crystal
+      usr_id = @crystal.user_id
+      shw_id = @crystal.showcase_id
     end
+    set_usr_shw_name(usr_id, shw_id)
+    render json: {crystal: @crystal, fragments: fragments, shw_name: @shw_name, usr_name: @usr_name, is_self: is_self}, status: :ok
   end
 
   # POST /crystals
@@ -47,6 +48,7 @@ class CrystalsController < ApplicationController
 
   # PATCH/PUT /crystals/1
   def update
+    p(params).inspect
     if @crystal.update(crystal_params)
       response.headers['flash'] = 'ok-udcrs'
       render json: @crystal
@@ -76,9 +78,8 @@ class CrystalsController < ApplicationController
 
     # For show action
     def set_usr_shw_name(usr_id, shw_id)
-      @usr_name = User.find(usr_id).name
+      @usr_name = usr_id.present? ? User.find(usr_id).name : nil
       @shw_name = shw_id.present? ? Showcase.find(shw_id).name : nil
-
     end
 
     # Only allow a trusted parameter "white list" through.

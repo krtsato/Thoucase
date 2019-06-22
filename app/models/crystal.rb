@@ -7,4 +7,5 @@ class Crystal < ApplicationRecord
 
   validates :name, presence: true
   validates :user_id, presence: true
+  validates :showcase_id, numericality: true, allow_nil: true
 end
