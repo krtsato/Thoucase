@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ShowcasesController < ApplicationController
-  before_action :set_showcase, only: [:show, :update, :destroy]
+  include Auth
+  before_action :set_showcase, only: [:update, :destroy]
 
   # GET /showcases
   def index

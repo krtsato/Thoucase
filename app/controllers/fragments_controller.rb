@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class FragmentsController < ApplicationController
-  before_action :authenticate_user, only: [:new, :create, :show, :update, :destroy]
-  before_action :ensure_valid_user, only: [:update, :destroy]
+  include Auth
+  before_action :authenticate_user, only: [:new, :create, :update, :destroy]
   before_action :set_fragment, only: [:update, :destroy]
+  before_action -> {ensure_owner(@fragment)}, only: [:update, :destroy]
 
   # GET /fragments
   def index

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  include Auth
   before_action :authenticate_user, only: [:update, :destroy]
   before_action :forbid_signin_user, only: [:create, :signin]
-  before_action :ensure_valid_user, only: [:update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
+  before_action -> {ensure_owner(@user)}, only: [:update, :destroy]
   before_action :set_snin_params, only: [:signin]
 
   # POST /signin

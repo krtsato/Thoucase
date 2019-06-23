@@ -11,4 +11,16 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true
   validates :password, presence: true
+
+  def showcases
+    Showcase.where(user_id: self.id)
+  end
+
+  def crystals
+    Crystal.where(user_id: self.id)
+  end
+
+  def fragments
+    Fragment.where(user_id: self.id)
+  end
 end

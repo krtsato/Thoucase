@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class CrystalsController < ApplicationController
-  before_action :authenticate_user, only: [:create, :show, :update, :destroy]
-  before_action :ensure_valid_user, only: [:update, :destroy]
+  include Auth
+  before_action :authenticate_user, only: [:create, :update, :destroy]
   before_action :set_crystal, only: [:update, :destroy]
+  before_action -> {ensure_owner(@crystal)}, only: [:update, :destroy]
 
   # GET /crystals
   def index
@@ -48,10 +49,9 @@ class CrystalsController < ApplicationController
 
   # PATCH/PUT /crystals/1
   def update
-    p(params).inspect
     if @crystal.update(crystal_params)
       response.headers['flash'] = 'ok-udcrs'
-      render json: @crystal
+      render json: @crystal, status: :ok
     else
       response.headers['flash'] = 'er-udcrs'
       render json: @crystal.errors, status: :unprocessable_entity
