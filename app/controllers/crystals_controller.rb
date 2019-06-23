@@ -2,7 +2,7 @@
 
 class CrystalsController < ApplicationController
   include Auth
-  before_action :authenticate_user, only: [:create, :update, :destroy]
+  before_action :authenticate_user, only: [:create, :show, :update, :destroy]
   before_action :set_crystal, only: [:update, :destroy]
   before_action -> {ensure_owner(@crystal)}, only: [:update, :destroy]
 
