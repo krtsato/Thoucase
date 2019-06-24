@@ -6,18 +6,19 @@ class UsersController < ApplicationController
   before_action :forbid_signin_user, only: [:create, :signin]
   before_action :set_user, only: [:show, :update, :destroy]
   before_action -> {ensure_owner(@user)}, only: [:update, :destroy]
-  before_action :set_snin_params, only: [:signin]
 
   # POST /signin
   def signin
-    snin_user = User.find_by(email: @email)
-    if snin_user &.authenticate(@password)
+    email = user_params[:email]
+    password = user_params[:password]
+    snin_user = User.find_by(email: email)
+    if snin_user &.authenticate(password)
       response.headers['authorization'] = snin_user.token
       response.headers['flash'] = 'ok-snin'
       render status: :no_content
     else
       response.headers['flash'] = 'er-snin'
-      render json: {email: @email, password: @password}, status: :unauthorized
+      render json: {email: email, password: password}, status: :unauthorized
     end
   end
 
@@ -29,25 +30,25 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all.order(created_at: :asc)
-    render json: @users
+    users = User.earlier(10)
+    render json: users
   end
 
   # GET /users/1
   def show
-    crystals = Crystal.where(user_id: @user.id).order(created_at: :desc)
-    fragments = Fragment.where(user_id: @user.id).order(created_at: :desc)
+    crystals = @user.crystals
+    fragments = @user.fragments
     render json: {user: @user, crystals: crystals, fragments: fragments}, status: :ok
   end
 
   # POST /users
   def create
-    @user = User.new(user_params)
+    user = User.new(user_params)
 
-    if @user.save
-      render json: @user, status: :created, location: @user
+    if user.save
+      render json: user, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors, status: :unprocessable_entity
     end
   end
 
@@ -74,11 +75,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :email, :password_digest)
-    end
-
-    def set_snin_params
-      @email = params.require(:user)[:email]
-      @password = params.require(:user)[:password]
+      params.require(:user).permit(:name, :email, :password)
     end
 end

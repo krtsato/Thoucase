@@ -10,6 +10,7 @@ class Showcase < ApplicationRecord
   # Each instance method has argument
   # because model data may exist in frontend by Link or Redirect.
   # So, only ids are sended to get extra data. e.g. user's name.
+=begin
   def user(usr_id)
     User.find(usr_id)
   end
@@ -17,4 +18,5 @@ class Showcase < ApplicationRecord
   def crystal(crs_id)
     Crystal.find(crs_id)
   end
+=end
 end

@@ -12,6 +12,10 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :password, presence: true
 
+  scope :later, -> {order(created_at: :desc)}
+  scope :earlier, -> (num) {order(created_at: :asc).limit(num)}
+
+
   def showcases
     Showcase.where(user_id: self.id)
   end
