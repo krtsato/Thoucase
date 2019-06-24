@@ -2,13 +2,14 @@
 
 class ShowcasesController < ApplicationController
   include Auth
-  before_action :set_showcase, only: [:update, :destroy]
+  before_action :authenticate_user, only: [:create, :update, :destroy]
+  before_action :set_showcase, only: [:show, :update, :destroy]
+  before_action -> {ensure_owner(@showcase)}, only: [:update, :destroy]
 
   # GET /showcases
   def index
-    @showcases = Showcase.all.order(created_at: :desc)
-
-    render json: @showcases
+    showcases = Showcase.later(20)
+    render json: showcases, status: :ok
   end
 
   # GET /showcases/1
@@ -21,7 +22,7 @@ class ShowcasesController < ApplicationController
     @showcase = Showcase.new(showcase_params)
 
     if @showcase.save
-      render json: @showcase, status: :created, location: @showcase
+      render json: @showcase, status: :created
     else
       render json: @showcase.errors, status: :unprocessable_entity
     end
@@ -30,7 +31,7 @@ class ShowcasesController < ApplicationController
   # PATCH/PUT /showcases/1
   def update
     if @showcase.update(showcase_params)
-      render json: @showcase
+      render json: @showcase, status: :ok
     else
       render json: @showcase.errors, status: :unprocessable_entity
     end

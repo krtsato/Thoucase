@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    users = User.earlier(10)
+    users = User.earlier(20)
     render json: users
   end
 
