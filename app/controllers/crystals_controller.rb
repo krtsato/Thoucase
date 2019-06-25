@@ -2,35 +2,34 @@
 
 class CrystalsController < ApplicationController
   include Auth
-  before_action :authenticate_user, only: [:create, :update, :destroy]
+  include Name
+  before_action :authenticate_user, only: [:create, :show, :update, :destroy]
   before_action :set_crystal, only: [:update, :destroy]
   before_action -> {ensure_owner(@crystal)}, only: [:update, :destroy]
 
   # GET /crystals
   def index
-    @crystals = Crystal.all.order(created_at: :desc)
-
-    render json: @crystals
+    crystals = Crystal.latest(20)
+    render json: crystals
   end
 
   # GET /crystals/1
   def show
-    @crystal = nil # initialize for request from UsrCrs
-    crs_id = params[:id]
-    fragments = Fragment.where(crystal_id: crs_id).order(created_at: :desc)
     usr_id = params[:user_id]
     shw_id = params[:showcase_id]
-    is_self = @current_user ? @current_user.id == usr_id.to_i : false
-
-    if usr_id.nil? && shw_id.nil?
-      # do this if comes from URL query or Redirect by delete action
-      # do nothing if comes from Link, Redirect except delete action with nil or present showcase_id
+    if usr_id.nil?
+      # do this, if comes from URL query or Redirect by delete action
+      # do nothing and @crystal = nil, if comes from Link, Redirect except delete action
+      # which have already kept crystal data
       set_crystal
       usr_id = @crystal.user_id
-      shw_id = @crystal.showcase_id
+      shw_id = @crystal.showcase_id    
     end
-    set_usr_shw_name(usr_id, shw_id)
-    render json: {crystal: @crystal, fragments: fragments, shw_name: @shw_name, usr_name: @usr_name, is_self: is_self}, status: :ok
+    usr_name = User.find_name(usr_id)
+    is_self = self_bool(usr_id)
+    shw_name = showcase_name_kept_nil(shw_id)
+    fragments = Fragment.by_crystal_id_latest(params[:id], 20)
+    render json: {crystal: @crystal, fragments: fragments, shw_name: shw_name, usr_name: usr_name, is_self: is_self}, status: :ok
   end
 
   # POST /crystals
@@ -39,7 +38,7 @@ class CrystalsController < ApplicationController
 
     if crystal.save
       response.headers['flash'] = 'ok-crcrs'
-      crystals = Crystal.where(user_id: @current_user.id).select('id, name')
+      crystals = Crystal.by_user_id_select_id_name_latest(@current_user.id, 50)
       render json: crystals, status: :created
     else
       response.headers['flash'] = 'er-crcrs'
@@ -74,12 +73,6 @@ class CrystalsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_crystal
       @crystal = Crystal.find(params[:id])
-    end
-
-    # For show action
-    def set_usr_shw_name(usr_id, shw_id)
-      @usr_name = usr_id.present? ? User.find(usr_id).name : nil
-      @shw_name = shw_id.present? ? Showcase.find(shw_id).name : nil
     end
 
     # Only allow a trusted parameter "white list" through.

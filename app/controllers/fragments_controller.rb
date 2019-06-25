@@ -33,7 +33,7 @@ class FragmentsController < ApplicationController
 
   # GET /fragments/new
   def new
-    crystals = Crystal.where(user_id: @current_user.id).select('id, name')
+    crystals = Crystal.by_user_id_select_id_name_latest(@current_user.id, 50)
     render json: crystals, status: :ok
   end
 

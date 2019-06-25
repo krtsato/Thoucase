@@ -7,10 +7,14 @@ class Showcase < ApplicationRecord
   validates :name, presence: true
   validates :user_id, presence: true
 
-  scope :later, -> (num) {order(created_at: :desc).limit(num)}
-  scope :earlier, -> (num) {order(created_at: :asc).limit(num)}
+  scope :latest, -> (count) {order(created_at: :desc).limit(count)}
+  scope :earliest, -> (count) {order(created_at: :asc).limit(count)}
+  scope :by_crystal_id, -> (id) {where(crystal_id: id)}
 
-  def crystals
-    Crystal.where(showcase_id: self.id)
+  class << self
+    # For controller/concern/name
+    def find_name(shw_id)
+      find(shw_id)[:name]
+    end
   end
 end

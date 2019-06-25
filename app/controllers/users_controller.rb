@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     password = user_params[:password]
     snin_user = User.find_by(email: email)
     if snin_user &.authenticate(password)
-      response.headers['authorization'] = snin_user.token
+      response.headers['authorization'] = snin_user[:token]
       response.headers['flash'] = 'ok-snin'
       render status: :no_content
     else
@@ -30,14 +30,14 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    users = User.earlier(20)
+    users = User.earliest(20)
     render json: users
   end
 
   # GET /users/1
   def show
-    crystals = @user.crystals
-    fragments = @user.fragments
+    crystals = @user.crystals.latest(20)
+    fragments = @user.fragments.latest(20)
     render json: {user: @user, crystals: crystals, fragments: fragments}, status: :ok
   end
 

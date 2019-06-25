@@ -12,18 +12,13 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :password, presence: true
 
-  scope :later, -> (num) {order(created_at: :desc).limit(num)}
-  scope :earlier, -> (num) {order(created_at: :asc).limit(num)}
+  scope :latest, -> (count) {order(created_at: :desc).limit(count)}
+  scope :earliest, -> (count) {order(created_at: :asc).limit(count)}
 
-  def showcases
-    Showcase.where(user_id: self.id)
-  end
-
-  def crystals
-    Crystal.where(user_id: self.id)
-  end
-
-  def fragments
-    Fragment.where(user_id: self.id)
+  class << self
+    # For crystal#show
+    def find_name(usr_id)
+      find(usr_id)[:name]
+    end
   end
 end

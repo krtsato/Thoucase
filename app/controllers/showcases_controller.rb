@@ -8,7 +8,7 @@ class ShowcasesController < ApplicationController
 
   # GET /showcases
   def index
-    showcases = Showcase.later(20)
+    showcases = Showcase.latest(20)
     render json: showcases, status: :ok
   end
 

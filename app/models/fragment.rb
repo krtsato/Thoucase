@@ -9,16 +9,14 @@ class Fragment < ApplicationRecord
   validates :user_id, presence: true
   validates :crystal_id, presence: true
 
-  # Each instance method has argument
-  # because model data may exist in frontend by Link or Redirect.
-  # So, only ids are sended to get extra data. e.g. user's name.
-=begin
-  def user(usr_id)
-    User.find(usr_id)
-  end
+  scope :latest, -> (count) {order(created_at: :desc).limit(count)}
+  scope :earliest, -> (count) {order(created_at: :asc).limit(count)}
+  scope :by_crystal_id, -> (id) {where(crystal_id: id)}
 
-  def crystal(crs_id)
-    Showcase.find(crs_id)
+  class << self
+    # For crystal#show
+    def by_crystal_id_latest(crs_id, count)
+      by_crystal_id(crs_id).latest(count)
+    end
   end
-=end
 end

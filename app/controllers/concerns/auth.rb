@@ -28,4 +28,8 @@ module Auth
     response.headers['flash'] = 'er-auth'
     render status: :unauthorized
   end
+
+  def self_bool(usr_id)
+    @current_user.present? ? @current_user.id == usr_id.to_i : false
+  end
 end
