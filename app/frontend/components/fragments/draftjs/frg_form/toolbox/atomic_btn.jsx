@@ -1,20 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const AtomicBtn = ({mediaType, bufAtomicClick}) => {
+export const AtomicBtn = ({btnName, mediaType, setUrlParams}) => {
   /* URL input 生成 */
   const onAtomicClick = () => {
-    bufAtomicClick(mediaType)
+    setUrlParams((unChanged) => ({...unChanged, showUrlInput: true, urlType: mediaType}))
   }
 
   return (
     <button type='button' onClick={onAtomicClick}>
-      {mediaType}
+      {btnName}
     </button>
   )
 }
 
 AtomicBtn.propTypes = {
+  btnName: PropTypes.string,
   mediaType: PropTypes.string,
-  bufAtomicClick: PropTypes.func
+  setUrlParams: PropTypes.func
 }

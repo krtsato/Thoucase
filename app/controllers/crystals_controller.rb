@@ -2,7 +2,7 @@
 
 class CrystalsController < ApplicationController
   include Auth
-  include Name
+  include ShowcaseOrNil
   before_action :authenticate_user, only: [:create, :show, :update, :destroy]
   before_action :set_crystal, only: [:update, :destroy]
   before_action -> {ensure_owner(@crystal)}, only: [:update, :destroy]
@@ -28,7 +28,7 @@ class CrystalsController < ApplicationController
     end
     is_self = self_bool(usr_id)
     usr_name = User.find_name(usr_id)
-    shw_name = showcase_name_kept_nil(shw_id)
+    shw_name = showcase_name_or_nil(shw_id)
     fragments = Fragment.by_crystal_id_latest(params[:id], 20)
 
     render json: {crystal: @crystal, fragments: fragments, shw_name: shw_name, usr_name: usr_name, is_self: is_self}, status: :ok

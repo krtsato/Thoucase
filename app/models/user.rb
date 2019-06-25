@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include FindName
+
   has_secure_password
   has_secure_token
 
@@ -14,11 +16,4 @@ class User < ApplicationRecord
 
   scope :latest, -> (count) {order(created_at: :desc).limit(count)}
   scope :earliest, -> (count) {order(created_at: :asc).limit(count)}
-
-  class << self
-    # For crystals#show, fragments#show
-    def find_name(usr_id)
-      find(usr_id)[:name]
-    end
-  end
 end
