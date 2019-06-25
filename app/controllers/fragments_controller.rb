@@ -2,14 +2,14 @@
 
 class FragmentsController < ApplicationController
   include Auth
-  before_action :authenticate_user, only: [:new, :create, :update, :destroy]
+  before_action :authenticate_user, only: [:new, :create, :show, :update, :destroy]
   before_action :set_fragment, only: [:update, :destroy]
   before_action -> {ensure_owner(@fragment)}, only: [:update, :destroy]
 
   # GET /fragments
   def index
-    fragments = Fragment.all.order(created_at: :desc)
-    users = fragments.includes(:user).map(&:user)
+    fragments = Fragment.latest(20)
+    users = fragments.includes_map_user
     render json: {fragments: fragments, users: users}, status: :ok
   end
 
@@ -17,18 +17,20 @@ class FragmentsController < ApplicationController
   def show
     usr_id = params[:user_id]
     crs_id = params[:crystal_id]
-    is_self = @current_user ? @current_user.id == usr_id.to_i : false
 
     if usr_id.blank? || crs_id.blank?
-      # from direct URL
+      # do this, if comes from URL query
+      # do nothing and @fragment = nil, if comes from Link or Redirect
+      # which have already kept fragment data
       set_fragment
-      set_usr_crs_name(@fragment.user_id, @fragment.crystal_id)
-      render json: {fragment: @fragment, crs_name: @crs_name, usr_name: @usr_name, is_self: is_self}, status: :ok
-    else
-      # from Link or Redirect
-      set_usr_crs_name(usr_id, crs_id)
-      render json: {crs_name: @crs_name, usr_name: @usr_name, is_self: is_self}, status: :ok
+      usr_id = @fragment[:user_id]
+      crs_id = @fragment[:crystal_id]
     end
+    is_self = self_bool(usr_id)
+    usr_name = User.find_name(usr_id)
+    crs_name = Crystal.find_name(crs_id)
+
+    render json: {fragment: @fragment, crs_name: crs_name, usr_name: usr_name, is_self: is_self}, status: :ok
   end
 
   # GET /fragments/new
@@ -77,12 +79,6 @@ class FragmentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_fragment
       @fragment = Fragment.find(params[:id])
-    end
-
-    # For show action
-    def set_usr_crs_name(usr_id, crs_id)
-      @usr_name = User.find(usr_id).name
-      @crs_name = Crystal.find(crs_id).name
     end
 
     # Only allow a trusted parameter "white list" through.

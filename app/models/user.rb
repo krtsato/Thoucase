@@ -16,7 +16,7 @@ class User < ApplicationRecord
   scope :earliest, -> (count) {order(created_at: :asc).limit(count)}
 
   class << self
-    # For crystal#show
+    # For crystals#show, fragments#show
     def find_name(usr_id)
       find(usr_id)[:name]
     end

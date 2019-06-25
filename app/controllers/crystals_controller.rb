@@ -17,18 +17,20 @@ class CrystalsController < ApplicationController
   def show
     usr_id = params[:user_id]
     shw_id = params[:showcase_id]
+
     if usr_id.nil?
       # do this, if comes from URL query or Redirect by delete action
       # do nothing and @crystal = nil, if comes from Link, Redirect except delete action
       # which have already kept crystal data
       set_crystal
-      usr_id = @crystal.user_id
-      shw_id = @crystal.showcase_id    
+      usr_id = @crystal[:user_id]
+      shw_id = @crystal[:showcase_id]
     end
-    usr_name = User.find_name(usr_id)
     is_self = self_bool(usr_id)
+    usr_name = User.find_name(usr_id)
     shw_name = showcase_name_kept_nil(shw_id)
     fragments = Fragment.by_crystal_id_latest(params[:id], 20)
+
     render json: {crystal: @crystal, fragments: fragments, shw_name: shw_name, usr_name: usr_name, is_self: is_self}, status: :ok
   end
 

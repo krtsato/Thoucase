@@ -14,6 +14,11 @@ class Crystal < ApplicationRecord
   scope :by_user_id, -> (id) {where(user_id: id)}
 
   class << self
+    # For fragments#show
+    def find_name(crs_id)
+      find(crs_id)[:name]
+    end
+
     # For fragments#new, crystals#create
     def by_user_id_select_id_name_latest(usr_id, count)
       by_user_id(usr_id).select('id, name').latest(count)
