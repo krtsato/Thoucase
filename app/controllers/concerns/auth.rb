@@ -8,7 +8,7 @@ module Auth
       @current_user = User.find_by(token: token)
       return if @current_user.present?
 
-      response.headers['flash'] = 'er-auth'
+      response.headers['flash'] = 'er-sign'
       render status: :unauthorized
     end
   end
