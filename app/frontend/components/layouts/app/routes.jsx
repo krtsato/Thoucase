@@ -48,7 +48,7 @@ const AuthRoute = ({path, authComp: AuthComp}) => {
 
   const authRoute = () => {
     if (isSignin) return <Route exact path={path} render={AuthComp} />
-    setFlashMsg(transFlash('er-auth'))
+    setFlashMsg(transFlash('er-sign'))
     return <Redirect exact to='/signin' />
   }
 

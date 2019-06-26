@@ -21,7 +21,7 @@ export const UrlInput = ({showUrlInput, urlVal, setUrlParams, addMediaToEditor})
     addMediaToEditor()
   }
 
-  /* メディア ボタン押下 追加 */
+  /* メディア ボタン押下 キャンセル */
   const onCclClick = () => {
     setUrlParams({showUrlInput: false, urlType: '', urlVal: ''})
   }
