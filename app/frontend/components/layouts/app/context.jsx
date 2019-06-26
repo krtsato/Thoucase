@@ -2,33 +2,39 @@ import React, {useState, createContext} from 'react'
 import PropTypes from 'prop-types'
 
 /* Context 定義 */
+const RedrContext = createContext(null)
+const RedrProvider = RedrContext.Provider
+
 const SigninContext = createContext(null)
 const SigninProvider = SigninContext.Provider
 
-const CancelContext = createContext(null)
-const CancelProvider = CancelContext.Provider
-
 const FlashContext = createContext(null)
 const FlashProvider = FlashContext.Provider
+
+const CancelContext = createContext(null)
+const CancelProvider = CancelContext.Provider
 
 const InvldContext = createContext(null)
 const InvldProvider = InvldContext.Provider
 
 /* Context 付与 */
 const GenProvider = ({children}) => {
+  const [redrPath, setRedrPath] = useState(null)
   const [isSignin, setIsSignin] = useState(!!localStorage.getItem('authToken'))
   const [cclMsg, setCclMsg] = useState(null)
   const [flashMsg, setFlashMsg] = useState(null)
-  const [invldMsg, setInvldMsg] = useState([])
+  const [invldMsg, setInvldMsg] = useState(null)
 
   return (
-    <SigninProvider value={{isSignin, setIsSignin}}>
-      <CancelProvider value={{cclMsg, setCclMsg}}>
+    <RedrProvider value={{redrPath, setRedrPath}}>
+      <SigninProvider value={{isSignin, setIsSignin}}>
         <FlashProvider value={{flashMsg, setFlashMsg}}>
-          <InvldProvider value={{invldMsg, setInvldMsg}}>{children}</InvldProvider>
+          <CancelProvider value={{cclMsg, setCclMsg}}>
+            <InvldProvider value={{invldMsg, setInvldMsg}}>{children}</InvldProvider>
+          </CancelProvider>
         </FlashProvider>
-      </CancelProvider>
-    </SigninProvider>
+      </SigninProvider>
+    </RedrProvider>
   )
 }
 
@@ -36,4 +42,4 @@ GenProvider.propTypes = {
   children: PropTypes.node
 }
 
-export {GenProvider, SigninContext, CancelContext, FlashContext, InvldContext}
+export {GenProvider, RedrContext, SigninContext, CancelContext, FlashContext, InvldContext}

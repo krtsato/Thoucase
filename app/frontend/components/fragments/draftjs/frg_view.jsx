@@ -4,8 +4,7 @@ import {Editor, EditorState, convertFromRaw} from 'draft-js'
 import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
-import {Namebox} from 'components/fragments/draftjs/frg_view/namebox'
-import {Headbox} from 'components/fragments/draftjs/frg_view/headbox'
+import {HeadInfo} from 'components/fragments/draftjs/frg_view/head_info'
 import {Actionbox} from 'components/fragments/draftjs/frg_view/actionbox'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 
@@ -16,9 +15,9 @@ export const FrgView = ({initState}) => {
   const [isSelf, setIsSelf] = useState(false)
 
   /*
-    from Link, Redirect : fragment 既存
-    from URL            : fragment 取得
-    common              : usrName, crsName, isSelf 取得 
+    from Link, Redirect except delete action    : fragment 既存
+    from URL query or Redirect by delete action : fragment 取得
+    common : usrName, crsName, isSelf 取得
   */
   const resDivider = (resData) => {
     if (resData.fragment) {
@@ -38,8 +37,8 @@ export const FrgView = ({initState}) => {
     }
     const usrName = resData.usr_name
     const crsName = resData.crs_name
-    setAddNames({usrName, crsName})
-    setIsSelf(resData.is_self) // FrgView ~ Footbox : isSelf 更新
+    setAddNames({usrName, crsName}) // FrgView ~ HeadInfo : addNames 更新
+    setIsSelf(resData.is_self) // FrgView ~ Actionbox : isSelf 更新
   }
 
   /* didMount, willUnMount */
@@ -75,8 +74,8 @@ export const FrgView = ({initState}) => {
 
   return (
     <>
-      <Namebox frgName={frgVals.frgName} />
-      <Headbox
+      <h1 className='frgName'>{frgVals.frgName}</h1>
+      <HeadInfo
         usrName={addNames.usrName}
         crsName={addNames.crsName}
         creAt={frgVals.creAt}

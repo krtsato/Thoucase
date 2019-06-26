@@ -1,13 +1,13 @@
-import React, {useState} from 'react'
+import React, {useContext} from 'react'
 import {Redirect} from 'react-router-dom'
+import {RedrContext} from 'components/layouts/app/context'
 import PropTypes from 'prop-types'
 
 export const EditBtn = ({frgVals}) => {
-  const [redrPath, setRedrPath] = useState(null)
+  const {setRedrPath} = useContext(RedrContext)
 
   /* fragment 編集 */
-  const onEditClick = (e) => {
-    e.preventDefault()
+  const onEditClick = () => {
     setRedrPath(
       <Redirect
         to={{
@@ -19,12 +19,9 @@ export const EditBtn = ({frgVals}) => {
   }
 
   return (
-    <>
-      {redrPath}
-      <button type='button' onClick={onEditClick}>
-        編集
-      </button>
-    </>
+    <button type='button' onClick={onEditClick}>
+      編集
+    </button>
   )
 }
 

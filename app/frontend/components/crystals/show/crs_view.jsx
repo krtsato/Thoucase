@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
-import {Namebox} from 'components/crystals/show/crs_view/namebox'
-import {Headbox} from 'components/crystals/show/crs_view/headbox'
+import {HeadInfo} from 'components/crystals/show/crs_view/head_info'
 import {Actionbox} from 'components/crystals/show/crs_view/actionbox'
 import {CrsFrg} from 'components/crystals/show/crs_view/crs_frg'
 
@@ -16,13 +15,12 @@ export const CrsView = ({initState}) => {
   const [isSelf, setIsSelf] = useState(false)
 
   /*
-    from Link, Redirect : crystal 既存
-    from URL            : crystal 取得
-    common              : usrName, crsName, fragments, isSelf 取得 
+    from Link, Redirect except delete action    : crystal 既存
+    from URL query or Redirect by delete action : crystal 取得
+    common : usrName, shwName, fragments, isSelf 取得
   */
   const resDivider = (resData) => {
     if (resData.crystal) {
-      // FrgView : editorState 復元, frgVals 更新
       const {
         id: crsId,
         name: crsName,
@@ -35,7 +33,7 @@ export const CrsView = ({initState}) => {
     }
     const usrName = resData.usr_name
     const shwName = resData.shw_name
-    setAddNames({usrName, shwName}) // CrsView ~ Headbox : fragments 更新
+    setAddNames({usrName, shwName}) // CrsView ~ HeadInfo : addNames 更新
     setFragments(resData.fragments) // CrsView ~ CrsFrg : fragments 更新
     setIsSelf(resData.is_self) // CrsView ~ Actionbox : isSelf 更新
   }
@@ -59,8 +57,8 @@ export const CrsView = ({initState}) => {
 
   return (
     <>
-      <Namebox crsName={crsVals.crsName} />
-      <Headbox
+      <h1 className='crsName'>{crsVals.crsName}</h1>
+      <HeadInfo
         usrName={addNames.usrName}
         shwName={addNames.shwName}
         creAt={crsVals.creAt}

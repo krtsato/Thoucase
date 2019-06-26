@@ -1,25 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const UrlInput = ({showUrlInput, urlVal, bufUrlChange, bufAddMedia}) => {
+export const UrlInput = ({showUrlInput, urlVal, setUrlParams, addMediaToEditor}) => {
   /* URL 更新 */
   const onUrlChange = (e) => {
-    e.preventDefault()
-    bufUrlChange(e.target.value)
+    const url = e.target.value
+    setUrlParams((unChanged) => ({...unChanged, urlVal: url}))
   }
 
   /* メディア Enter 追加 */
   const onEnterDown = (e) => {
-    if (e.which === 13) {
+    if (e.key === 'Enter') {
       e.preventDefault()
-      bufAddMedia()
+      addMediaToEditor()
     }
   }
 
   /* メディア ボタン押下 追加 */
-  const onAddClick = (e) => {
-    e.preventDefault()
-    bufAddMedia()
+  const onAddClick = () => {
+    addMediaToEditor()
   }
 
   /* URL input 生成 */
@@ -41,6 +40,6 @@ export const UrlInput = ({showUrlInput, urlVal, bufUrlChange, bufAddMedia}) => {
 UrlInput.propTypes = {
   showUrlInput: PropTypes.bool,
   urlVal: PropTypes.string,
-  bufUrlChange: PropTypes.func,
-  bufAddMedia: PropTypes.func
+  setUrlParams: PropTypes.func,
+  addMediaToEditor: PropTypes.func
 }

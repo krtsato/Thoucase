@@ -36,6 +36,8 @@ const transFlash = (rawFlash) => {
     }
   } else if (divStr[0] === 'er') {
     switch (divStr[1]) {
+      case 'sign':
+        return 'サインインするかアカウントを作成して下さい'
       case 'auth':
         return '権限がありません'
       case 'snin':

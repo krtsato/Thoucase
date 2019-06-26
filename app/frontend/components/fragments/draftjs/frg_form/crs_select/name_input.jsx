@@ -13,7 +13,7 @@ export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
 
   /* selectVal 検知 */
   useEffect(() => {
-    if (selectVal === 'new') tglInputShow(true)
+    if (selectVal === '0') tglInputShow(true)
     else tglInputShow(false)
   }, [selectVal])
 
@@ -42,7 +42,7 @@ export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
 
   /* crystal name Enter 追加 */
   const onEnterDown = (e) => {
-    if (e.which === 13) {
+    if (e.key === 'Enter') {
       e.preventDefault()
       postCrystal()
       editorFocus()
@@ -50,15 +50,13 @@ export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
   }
 
   /* crystal name ボタン押下 追加 */
-  const onCreateClick = (e) => {
-    e.preventDefault()
+  const onCreateClick = () => {
     postCrystal()
     editorFocus()
   }
 
   /* crystal name 変更 */
   const onNameChange = (e) => {
-    e.preventDefault()
     setCrsName(e.target.value)
   }
 

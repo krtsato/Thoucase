@@ -2,32 +2,19 @@ import React, {useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Editor, RichUtils, DefaultDraftBlockRenderMap} from 'draft-js'
 import {Map as ImmMap} from 'immutable'
-import {Namebox} from 'components/fragments/draftjs/frg_form/namebox'
+import {NameInput} from 'components/fragments/draftjs/frg_form/name_input'
 import {CrsSelect} from 'components/fragments/draftjs/frg_form/crs_select'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
-import {Footbox} from 'components/fragments/draftjs/frg_form/footbox'
+import {SaveBtn} from 'components/fragments/draftjs/frg_form/save_btn'
 
 export const FrgForm = ({reqMethod, initState}) => {
-  const {frgId} = initState
-  const [frgName, setFrgName] = useState(initState.frgName)
-  const [crsId, setCrsId] = useState(initState.crsId)
-  const [editorState, setEditorState] = useState(initState.editorState)
+  const [frgVals, setFrgVals] = useState(initState)
 
-  /* Editor ~ Namebox : focus */
+  /* Editor ~ NameInput : focus */
   const editorRef = useRef(null)
   const editorFocus = () => {
     editorRef.current.focus()
-  }
-
-  /* Editor ~ Namebox : frgName 更新 */
-  const bufNameChange = (nextState) => {
-    setFrgName(nextState)
-  }
-
-  /* Editor ~ CrsSelect : crsId 更新 */
-  const bufSelectBlur = (nextState) => {
-    setCrsId(nextState)
   }
 
   /*
@@ -35,7 +22,7 @@ export const FrgForm = ({reqMethod, initState}) => {
     Editor ~ Toolbox : メディア 追加
   */
   const onEditorChange = (nextState) => {
-    setEditorState(nextState)
+    setFrgVals((unChanged) => ({...unChanged, editorState: nextState}))
   }
 
   /* 
@@ -100,7 +87,7 @@ export const FrgForm = ({reqMethod, initState}) => {
     Editor ~ Toolbox ~ inlineStyleBtn : inline style 適用
   */
   const handleKeyCommand = (command) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command)
+    const newState = RichUtils.handleKeyCommand(frgVals.editorState, command)
     if (!newState) return false
     onEditorChange(newState)
     return true
@@ -109,11 +96,11 @@ export const FrgForm = ({reqMethod, initState}) => {
   /* form */
   return (
     <>
-      <Namebox frgName={frgName} bufNameChange={bufNameChange} editorFocus={editorFocus} />
-      <CrsSelect bufSelectBlur={bufSelectBlur} editorFocus={editorFocus} />
-      <Toolbox editorState={editorState} onEditorChange={onEditorChange} />
+      <NameInput frgName={frgVals.frgName} setFrgVals={setFrgVals} editorFocus={editorFocus} />
+      <CrsSelect setFrgVals={setFrgVals} editorFocus={editorFocus} />
+      <Toolbox editorState={frgVals.editorState} onEditorChange={onEditorChange} />
       <Editor
-        editorState={editorState}
+        editorState={frgVals.editorState}
         onChange={onEditorChange}
         blockRendererFn={blockRendererFn}
         blockStyleFn={blockStyleFn}
@@ -121,13 +108,7 @@ export const FrgForm = ({reqMethod, initState}) => {
         handleKeyCommand={handleKeyCommand}
         ref={editorRef}
       />
-      <Footbox
-        reqMethod={reqMethod}
-        frgId={frgId}
-        frgName={frgName}
-        crsId={crsId}
-        editorState={editorState}
-      />
+      <SaveBtn reqMethod={reqMethod} frgVals={frgVals} />
     </>
   )
 }

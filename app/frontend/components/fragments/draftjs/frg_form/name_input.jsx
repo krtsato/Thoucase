@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const Namebox = ({frgName, bufNameChange, editorFocus}) => {
+export const NameInput = ({frgName, setFrgVals, editorFocus}) => {
   /* frgName 更新 */
   const onNameChange = (e) => {
-    e.preventDefault()
-    bufNameChange(e.target.value)
+    const val = e.target.value
+    setFrgVals((unChanged) => ({...unChanged, frgName: val}))
   }
 
   /* focus Enter 切替 */
   const onKeyDown = (e) => {
-    if (e.which === 13) {
+    if (e.key === 'Enter') {
       e.preventDefault()
       editorFocus()
     }
@@ -34,8 +34,8 @@ export const Namebox = ({frgName, bufNameChange, editorFocus}) => {
   )
 }
 
-Namebox.propTypes = {
+NameInput.propTypes = {
   frgName: PropTypes.string,
-  bufNameChange: PropTypes.func,
+  setFrgVals: PropTypes.func,
   editorFocus: PropTypes.func
 }
