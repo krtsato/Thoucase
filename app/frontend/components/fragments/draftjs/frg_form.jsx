@@ -44,31 +44,22 @@ export const FrgForm = ({reqMethod, initState}) => {
     Editor ~ Toolbox ~ BlockStyleBtn : block style 適用
   */
   const blockStyleFn = (contentBlock) => {
+    const classTypeArr = [
+      // ['Name in Draft.js', 'className']
+      ['paragraph', 'paragraph'],
+      ['inSection', 'inSection'],
+      ['header-one', 'header1'],
+      ['header-two', 'header2'],
+      ['header-three', 'header3'],
+      ['blockquote', 'blockQuote'],
+      ['code-block', 'preCode'],
+      ['atomic', 'atomicFigure'],
+      ['ordered-list-item', 'orderedList'],
+      ['unordered-list-item', 'unOrderedList']
+    ]
+    const classTypeDic = new Map(classTypeArr)
     const type = contentBlock.getType()
-    switch (type) {
-      case 'paragraph':
-        return 'paragraph'
-      case 'inSection':
-        return 'inSection'
-      case 'header-one':
-        return 'header1'
-      case 'header-two':
-        return 'header2'
-      case 'header-three':
-        return 'header3'
-      case 'blockquote':
-        return 'blockQuote'
-      case 'code-block':
-        return 'preCode'
-      case 'atomic':
-        return 'atomicFigure'
-      case 'ordered-list-item':
-        return 'orderedList'
-      case 'unordered-list-item':
-        return 'unOrderedList'
-      default:
-        return null
-    }
+    return classTypeDic.get(type)
   }
 
   /*
