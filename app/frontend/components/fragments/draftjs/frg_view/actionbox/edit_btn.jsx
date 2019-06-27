@@ -1,21 +1,12 @@
-import React, {useContext} from 'react'
-import {Redirect} from 'react-router-dom'
-import {RedrContext} from 'components/layouts/app/context'
+import React from 'react'
+import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-export const EditBtn = ({frgVals}) => {
-  const {setRedrPath} = useContext(RedrContext)
-
+export const EditBtn = withRouter(({history, frgVals}) => {
   /* fragment 編集 */
   const onEditClick = () => {
-    setRedrPath(
-      <Redirect
-        to={{
-          pathname: `/fragments/${frgVals.frgId}/edit`,
-          state: frgVals
-        }}
-      />
-    ) // リダイレクト
+    const location = {pathname: `/fragments/${frgVals.frgId}/edit`, state: frgVals}
+    history.push(location) // 編集途中で遷移すると, 次回以降リダイレクトされない不具合を回避
   }
 
   return (
@@ -23,8 +14,9 @@ export const EditBtn = ({frgVals}) => {
       編集
     </button>
   )
-}
+})
 
 EditBtn.propTypes = {
+  history: PropTypes.object,
   frgVals: PropTypes.object
 }
