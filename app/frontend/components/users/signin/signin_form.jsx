@@ -40,7 +40,7 @@ export const SigninForm = () => {
         })
         .catch((error) => {
           setFlashMsg(transFlash(error.response.headers.flash))
-          setFormVals({email: error.response.data.email, password: error.response.data.password})
+          setFormVals({email: error.response.data.email, passwd: error.response.data.password})
         })
     }
   }
