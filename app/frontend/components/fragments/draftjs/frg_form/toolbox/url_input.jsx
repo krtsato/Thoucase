@@ -21,6 +21,11 @@ export const UrlInput = ({showUrlInput, urlVal, setUrlParams, addMediaToEditor})
     addMediaToEditor()
   }
 
+  /* メディア ボタン押下 キャンセル */
+  const onCclClick = () => {
+    setUrlParams({showUrlInput: false, urlType: '', urlVal: ''})
+  }
+
   /* URL input 生成 */
   const urlInput = (showBool) => {
     if (!showBool) return null
@@ -29,6 +34,9 @@ export const UrlInput = ({showUrlInput, urlVal, setUrlParams, addMediaToEditor})
         <input type='url' required autoFocus value={urlVal} onChange={onUrlChange} onKeyDown={onEnterDown} />
         <button type='button' onClick={onAddClick}>
           追加
+        </button>
+        <button type='button' onClick={onCclClick}>
+          キャンセル
         </button>
       </>
     )

@@ -18,7 +18,7 @@ class CrystalsController < ApplicationController
     usr_id = params[:user_id]
     shw_id = params[:showcase_id]
 
-    if usr_id.nil?
+    if usr_id.blank?
       # do this, if comes from URL query or Redirect by delete action
       # do nothing and @crystal = nil, if comes from Link, Redirect except delete action
       # which have already kept crystal data
