@@ -8,12 +8,14 @@ export const CrsList = () => {
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [crystals, setCrystals] = useState([])
+  const [users, setUsers] = useState([])
 
   /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
       .get('/crystals')
       .then((response) => {
+        setUsers(response.data.users)
         setCrystals(response.data)
       })
       .catch((error) => {
@@ -24,6 +26,14 @@ export const CrsList = () => {
       canceller.cancel
     }
   }, [])
+
+  /* 単位ユーザ */
+  const setUsrPart = (index) => (
+    <p>
+      <span>ICON</span>
+      <span>{users[index].name}</span>
+    </p>
+  )
 
   /* crystals 一覧 */
   const crsList = (crsArray) => {

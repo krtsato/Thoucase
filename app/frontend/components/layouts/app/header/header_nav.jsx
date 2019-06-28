@@ -25,8 +25,8 @@ export const HeaderNav = () => {
   }
 
   /* signin していたら表示変更 */
-  const navLink = () => {
-    return isSignin ? (
+  const navLink = () =>
+    isSignin ? (
       <>
         <li>
           <NavLink exact to='/fragments'>
@@ -47,6 +47,16 @@ export const HeaderNav = () => {
         <li>
           <NavLink to='' onClick={onSnoutClick}>
             サインアウト
+          </NavLink>
+        </li>
+        <li>
+          <NavLink exact to='/showcases'>
+            テスト : Showcase#index
+          </NavLink>
+        </li>
+        <li>
+          <NavLink exact to='/crystals'>
+            テスト : Crystal#index
           </NavLink>
         </li>
       </>
@@ -79,7 +89,6 @@ export const HeaderNav = () => {
         </li>
       </>
     )
-  }
 
   return (
     <nav className='headerNav'>

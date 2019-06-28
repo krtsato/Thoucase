@@ -9,7 +9,8 @@ class ShowcasesController < ApplicationController
   # GET /showcases
   def index
     showcases = Showcase.latest(20)
-    render json: showcases, status: :ok
+    users = showcases.includes_map_user
+    render json: {showcases: showcases, users: users}, status: :ok
   end
 
   # GET /showcases/1

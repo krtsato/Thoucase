@@ -9,6 +9,9 @@ import {Signin} from 'packs/users/signin'
 import {UsrIndex} from 'packs/users/index'
 import {UsrShow} from 'packs/users/show'
 import {ShwIndex} from 'packs/showcases/index'
+import {ShwNew} from 'packs/showcases/new'
+import {ShwShow} from 'packs/showcases/show'
+import {ShwEdit} from 'packs/showcases/edit'
 import {CrsIndex} from 'packs/crystals/index'
 import {CrsShow} from 'packs/crystals/show'
 import {CrsEdit} from 'packs/crystals/edit'
@@ -30,11 +33,14 @@ export const Routes = () => {
         <Route exact strict path='/fragments' render={FrgIndex} />
         <Route exact strict path='/showcases' render={ShwIndex} />
         <Route exact strict path='/crystals' render={CrsIndex} />
+        <AuthRoute path='/showcases/new' component={ShwNew} />
+        <AuthRoute path='/showcases/:id/edit' component={ShwEdit} />
         <AuthRoute path='/crystals/:id/edit' authComp={CrsEdit} />
         <AuthRoute path='/fragments/new' authComp={FrgNew} />
         <AuthRoute path='/fragments/:id/edit' authComp={FrgEdit} />
         {/* :id 回避 */}
         <Route exact path='/users/:id' render={UsrShow} />
+        <Route exact path='/showcases/:id' component={ShwShow} />
         <Route exact path='/crystals/:id' render={CrsShow} />
         <Route exact path='/fragments/:id' render={FrgShow} />
       </Switch>
@@ -59,8 +65,4 @@ AuthRoute.propTypes = {
 /* 追記予定
   <Route exact path='/users/new' component={UsrNew} />
   <Route exact path='/users/:id/edit' component={UsrEdit} />
-  <Route exact path='/showcases/new' component={ShwNew} />
-  <Route exact path='/showcases/:id/edit' component={ShwEdit} />
-  <Route exact path='/showcases/:id' component={ShwShow} />
-  <Route exact path='/crystals/new' component={CrsNew} />
 */

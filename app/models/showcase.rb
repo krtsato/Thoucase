@@ -12,4 +12,5 @@ class Showcase < ApplicationRecord
   scope :latest, -> (count) {order(created_at: :desc).limit(count)}
   scope :earliest, -> (count) {order(created_at: :asc).limit(count)}
   scope :by_crystal_id, -> (id) {where(crystal_id: id)}
+  scope :includes_map_user, -> {includes(:user).map(&:user)}
 end
