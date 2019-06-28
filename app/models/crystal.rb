@@ -2,6 +2,8 @@
 
 class Crystal < ApplicationRecord
   include FindName
+  include DescAscScope
+  include UserScope
 
   belongs_to :user, inverse_of: :crystals
   belongs_to :showcase, optional: true, inverse_of: :crystals
@@ -10,11 +12,6 @@ class Crystal < ApplicationRecord
   validates :name, presence: true
   validates :user_id, presence: true
   validates :showcase_id, numericality: true, allow_nil: true
-
-  scope :latest, -> (count) {order(created_at: :desc).limit(count)}
-  scope :earliests, -> (count) {order(created_at: :asc).limit(count)}
-  scope :by_user_id, -> (id) {where(user_id: id)}
-  scope :includes_map_user, -> {includes(:user).map(&:user)}
 
   class << self
     # For fragments#new, crystals#create
