@@ -54,11 +54,6 @@ export const HeaderNav = () => {
             テスト : Showcase#index
           </NavLink>
         </li>
-        <li>
-          <NavLink exact to='/crystals'>
-            テスト : Crystal#index
-          </NavLink>
-        </li>
       </>
     ) : (
       <>

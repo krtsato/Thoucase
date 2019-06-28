@@ -10,7 +10,8 @@ class CrystalsController < ApplicationController
   # GET /crystals
   def index
     crystals = Crystal.latest(20)
-    render json: crystals
+    users = crystals.includes_map_user
+    render json: {crystals: crystals, users: users}, status: :ok
   end
 
   # GET /crystals/1

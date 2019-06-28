@@ -14,6 +14,7 @@ class Crystal < ApplicationRecord
   scope :latest, -> (count) {order(created_at: :desc).limit(count)}
   scope :earliests, -> (count) {order(created_at: :asc).limit(count)}
   scope :by_user_id, -> (id) {where(user_id: id)}
+  scope :includes_map_user, -> {includes(:user).map(&:user)}
 
   class << self
     # For fragments#new, crystals#create
