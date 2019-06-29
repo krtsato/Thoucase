@@ -2,10 +2,10 @@ import React from 'react'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-export const EditBtn = withRouter(({history, frgVals}) => {
+export const EditBtn = withRouter(({history, fragment}) => {
   /* fragment 編集 */
   const onEditClick = () => {
-    const location = {pathname: `/fragments/${frgVals.frgId}/edit`, state: frgVals}
+    const location = {pathname: `/fragments/${fragment.frgId}/edit`, state: fragment}
     history.push(location) // 編集途中で遷移すると, 次回以降リダイレクトされない不具合を回避
   }
 
@@ -18,5 +18,5 @@ export const EditBtn = withRouter(({history, frgVals}) => {
 
 EditBtn.propTypes = {
   history: PropTypes.object,
-  frgVals: PropTypes.object
+  fragment: PropTypes.object
 }

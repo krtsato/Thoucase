@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import {EditBtn} from 'components/crystals/show/crs_view/action_btns/edit_btn'
 import {DeleteBtn} from 'components/crystals/show/crs_view/action_btns/delete_btn'
 
-export const ActionBtns = ({isSelf, crsVals}) => {
+export const ActionBtns = ({isSelf, crystal}) => {
   /* crystal 所有者は編集・削除可能 */
   const actionBtns = () => {
     if (!isSelf) return null
     return (
       <div className='crsAction'>
-        <EditBtn crsVals={crsVals} />
-        <DeleteBtn crsId={crsVals.crsId} usrId={crsVals.usrId} />
+        <EditBtn crystal={crystal} />
+        <DeleteBtn crsId={crystal.crsId} usrId={crystal.usrId} />
         {/* いいね機能 */}
       </div>
     )
@@ -21,5 +21,5 @@ export const ActionBtns = ({isSelf, crsVals}) => {
 
 ActionBtns.propTypes = {
   isSelf: PropTypes.bool,
-  crsVals: PropTypes.object
+  crystal: PropTypes.object
 }

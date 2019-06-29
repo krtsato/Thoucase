@@ -10,7 +10,7 @@ import {Media} from 'components/fragments/draftjs/frg_form/media'
 
 export const FrgView = ({initState}) => {
   const {setCclMsg} = useContext(CancelContext)
-  const [frgVals, setFrgVals] = useState(initState)
+  const [fragment, setFragment] = useState(initState)
   const [addNames, setAddNames] = useState({usrName: '', crsName: ''})
   const [isSelf, setIsSelf] = useState(false)
 
@@ -21,7 +21,7 @@ export const FrgView = ({initState}) => {
   */
   const resDivider = (resData) => {
     if (resData.fragment) {
-      // FrgView : editorState 復元, frgVals 更新
+      // FrgView : editorState 復元, fragment 更新
       const {
         id: frgId,
         name: frgName,
@@ -33,7 +33,7 @@ export const FrgView = ({initState}) => {
       } = resData.fragment
       const contentState = convertFromRaw(rawContent)
       const editorState = EditorState.createWithContent(contentState)
-      setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
+      setFragment({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
     }
     const usrName = resData.usr_name
     const crsName = resData.crs_name
@@ -44,8 +44,8 @@ export const FrgView = ({initState}) => {
   /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
-      .get(`/fragments/${frgVals.frgId}`, {
-        params: {user_id: frgVals.usrId, crystal_id: frgVals.crsId}
+      .get(`/fragments/${fragment.frgId}`, {
+        params: {user_id: fragment.usrId, crystal_id: fragment.crsId}
       })
       .then((response) => {
         resDivider(response.data)
@@ -74,15 +74,15 @@ export const FrgView = ({initState}) => {
 
   return (
     <>
-      <h1 className='frgName'>{frgVals.frgName}</h1>
+      <h1 className='frgName'>{fragment.frgName}</h1>
       <HeadInfo
         usrName={addNames.usrName}
         crsName={addNames.crsName}
-        creAt={frgVals.creAt}
-        updAt={frgVals.updAt}
+        creAt={fragment.creAt}
+        updAt={fragment.updAt}
       />
-      <Editor readOnly={true} editorState={frgVals.editorState} blockRendererFn={blockRendererFn} />
-      <ActionBtns isSelf={isSelf} frgVals={frgVals} />
+      <Editor readOnly={true} editorState={fragment.editorState} blockRendererFn={blockRendererFn} />
+      <ActionBtns isSelf={isSelf} fragment={fragment} />
     </>
   )
 }
