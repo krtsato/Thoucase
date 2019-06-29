@@ -13,10 +13,16 @@ class Crystal < ApplicationRecord
   validates :user_id, presence: true
   validates :showcase_id, numericality: true, allow_nil: true
 
+  scope :by_showcase_id, -> (id) {where(showcase_id: id)}
+
   class << self
     # For fragments#new, crystals#create
     def by_user_id_select_id_name_latest(usr_id, count)
       by_user_id(usr_id).select('id, name').latest(count)
+    end
+
+    def by_showcase_id_latest(shw_id, count)
+      by_user_id(shw_id).latest(count)
     end
   end
 end

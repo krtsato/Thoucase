@@ -13,6 +13,7 @@ export const ShwCrs = ({crystals}) => {
       {/* ここで立体描画 */}
       <p>name : {crs.name}</p>
       <p>created_at : {crs.created_at}</p>
+      {/* ここで原著者表示 */}
     </Link>
   )
 

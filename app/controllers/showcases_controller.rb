@@ -2,7 +2,7 @@
 
 class ShowcasesController < ApplicationController
   include Auth
-  before_action :authenticate_current_user, only: [:create, :update, :destroy]
+  before_action :authenticate_current_user, only: [:create, :show, :update, :destroy]
   before_action :set_showcase, only: [:show, :update, :destroy]
   before_action -> {ensure_owner(@showcase)}, only: [:update, :destroy]
 
@@ -15,32 +15,53 @@ class ShowcasesController < ApplicationController
 
   # GET /showcases/1
   def show
-    render json: @showcase
+    usr_id = params[:user_id]
+
+    if usr_id.blank?
+      # do this, if comes from URL query or Redirect by delete action
+      # do nothing and @crystal = nil, if comes from Link, Redirect except delete action
+      # which have already kept showcase data
+      set_showcase
+      usr_id = @showcase[:user_id]
+    end
+    is_self = self_bool(usr_id)
+    usr_name = User.find_name(usr_id)
+    crystals = Crystal.by_showcase_id_latest(params[:id], 20)
+
+    render json: {showcase: @showcase, crystals: crystals, usr_name: usr_name, is_self: is_self}, status: :ok
   end
 
   # POST /showcases
   def create
-    @showcase = Showcase.new(showcase_params)
+    showcase = Showcase.new(showcase_params)
 
-    if @showcase.save
-      render json: @showcase, status: :created
+    if showcase.save
+      render json: showcase, status: :created
     else
-      render json: @showcase.errors, status: :unprocessable_entity
+      render json: showcase.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /showcases/1
   def update
     if @showcase.update(showcase_params)
+      response.headers['flash'] = 'ok-udshw'
       render json: @showcase, status: :ok
     else
+      response.headers['flash'] = 'er-udshw'
       render json: @showcase.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /showcases/1
   def destroy
-    @showcase.destroy
+    if @showcase.destroy
+      response.headers['flash'] = 'ok-dlshw'
+      render status: :no_content
+    else
+      response.headers['flash'] = 'er-dlshw'
+      render status: :internal_server_error
+    end
   end
 
   private
@@ -52,6 +73,6 @@ class ShowcasesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def showcase_params
-      params.require(:showcase).permit(:name, :user_id)
+      params.require(:showcase).permit(:name).merge!(user_id: @current_user.id)
     end
 end

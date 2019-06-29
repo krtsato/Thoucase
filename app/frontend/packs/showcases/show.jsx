@@ -17,7 +17,7 @@ export const ShwShow = ({location, match}) => {
 
   return (
     <>
-      <h2>crystals#show</h2>
+      <h2>showcases#show</h2>
       <ShwView initState={initState(location.state, match.params.id)} />
     </>
   )

@@ -12,7 +12,7 @@ export const DeleteBtn = ({shwId, usrId}) => {
   /* showcase 削除 */
   const onDeleteClick = () => {
     axiosRails
-      .delete(`/showcase/${shwId}`)
+      .delete(`/showcases/${shwId}`)
       .then((response) => {
         setFlashMsg(transFlash(response.headers.flash))
         setRedrPath(<Redirect to={`/users/${usrId}`} />) // リダイレクト
