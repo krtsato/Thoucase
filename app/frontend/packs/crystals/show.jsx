@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {CrsView} from 'components/crystals/show/crs_view'
 
 export const CrsShow = ({location, match}) => {
-  /* CrsView : crsVals 初期化 */
+  /* CrsView : crystal state 初期化 */
   const initState = (state, id) => {
     // from Link, Redirect except delete action
     if (state) {

@@ -5,18 +5,18 @@ import {DeleteBtn} from 'components/showcases/show/shw_view/action_btns/delete_b
 
 export const ActionBtns = ({isSelf, showcase}) => {
   /* showcase 所有者は編集・削除可能 */
-  const actionBtns = () => {
-    if (!isSelf) return null
+  const actionBtns = (selfBool, shw) => {
+    if (!selfBool) return null
     return (
       <div className='shwAction'>
-        <EditBtn showcase={showcase} />
-        <DeleteBtn shwId={showcase.shwId} usrId={showcase.usrId} />
+        <EditBtn showcase={shw} />
+        <DeleteBtn shwId={shw.shwId} usrId={shw.usrId} />
         {/* いいね機能 */}
       </div>
     )
   }
 
-  return actionBtns()
+  return actionBtns(isSelf, showcase)
 }
 
 ActionBtns.propTypes = {

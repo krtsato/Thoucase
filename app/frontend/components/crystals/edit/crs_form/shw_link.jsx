@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const ShwLink = ({shwId, setCrsVals}) => {
+export const ShwLink = ({shwId, setCrystal}) => {
   const shwIdChange = (e) => {
     const id = e.target.value
-    setCrsVals((unChanged) => ({...unChanged, shwId: id}))
+    setCrystal((unChanged) => ({...unChanged, shwId: id}))
   }
 
   return <p>登録中のショーケース : {shwId}</p>
@@ -12,5 +12,5 @@ export const ShwLink = ({shwId, setCrsVals}) => {
 
 ShwLink.propTypes = {
   shwId: PropTypes.number,
-  setCrsVals: PropTypes.func
+  setCrystal: PropTypes.func
 }

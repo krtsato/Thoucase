@@ -5,18 +5,18 @@ import {DeleteBtn} from 'components/fragments/draftjs/frg_view/action_btns/delet
 
 export const ActionBtns = ({isSelf, fragment}) => {
   /* fragment 所有者は編集可能 */
-  const buttons = () => {
-    if (!isSelf) return null
+  const buttons = (selfBool, frg) => {
+    if (!selfBool) return null
     return (
       <div className='frgAction'>
-        <EditBtn fragment={fragment} />
-        <DeleteBtn frgId={fragment.frgId} crsId={fragment.crsId} />
+        <EditBtn fragment={frg} />
+        <DeleteBtn frgId={frg.frgId} crsId={frg.crsId} />
         {/* いいね機能 */}
       </div>
     )
   }
 
-  return buttons()
+  return buttons(isSelf, fragment)
 }
 
 ActionBtns.propTypes = {

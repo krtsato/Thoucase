@@ -5,14 +5,14 @@ import {ShwLink} from 'components/crystals/edit/crs_form/shw_link'
 import {SaveBtn} from 'components/crystals/edit/crs_form/save_btn'
 
 export const CrsForm = ({initState}) => {
-  const [crsVals, setCrsVals] = useState(initState)
+  const [crystal, setCrystal] = useState(initState)
 
   return (
     <>
-      <NameInput crsName={crsVals.crsName} setCrsVals={setCrsVals} />
+      <NameInput crsName={crystal.crsName} setCrystal={setCrystal} />
       {/* 説明欄 */}
-      <ShwLink shwId={crsVals.shwId} setCrsVals={setCrsVals} />
-      <SaveBtn crsVals={crsVals} />
+      <ShwLink shwId={crystal.shwId} setCrystal={setCrystal} />
+      <SaveBtn crystal={crystal} />
     </>
   )
 }

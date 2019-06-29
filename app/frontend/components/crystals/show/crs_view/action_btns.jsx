@@ -5,18 +5,18 @@ import {DeleteBtn} from 'components/crystals/show/crs_view/action_btns/delete_bt
 
 export const ActionBtns = ({isSelf, crystal}) => {
   /* crystal 所有者は編集・削除可能 */
-  const actionBtns = () => {
-    if (!isSelf) return null
+  const actionBtns = (selfBool, crs) => {
+    if (!selfBool) return null
     return (
       <div className='crsAction'>
-        <EditBtn crystal={crystal} />
-        <DeleteBtn crsId={crystal.crsId} usrId={crystal.usrId} />
+        <EditBtn crystal={crs} />
+        <DeleteBtn crsId={crs.crsId} usrId={crs.usrId} />
         {/* いいね機能 */}
       </div>
     )
   }
 
-  return actionBtns()
+  return actionBtns(isSelf, crystal)
 }
 
 ActionBtns.propTypes = {

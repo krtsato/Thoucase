@@ -6,8 +6,8 @@ import {axiosRails} from 'components/layouts/axios/instances'
 import {validCheck} from 'components/layouts/axios/validate'
 import {transFlash} from 'components/layouts/axios/then_catch_funcs'
 
-export const SaveBtn = ({crsVals}) => {
-  const {crsId, crsName, shwId} = crsVals
+export const SaveBtn = ({crystal}) => {
+  const {crsId, crsName, shwId} = crystal
   const {setRedrPath} = useContext(RedrContext)
   const {setFlashMsg} = useContext(FlashContext)
   const {setInvldMsg} = useContext(InvldContext)
@@ -48,5 +48,5 @@ export const SaveBtn = ({crsVals}) => {
 }
 
 SaveBtn.propTypes = {
-  crsVals: PropTypes.object
+  crystal: PropTypes.object
 }
