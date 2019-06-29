@@ -32,7 +32,7 @@ export const ShwView = ({initState}) => {
     }
     setUsrName(resData.usr_name) // ShwView ~ HeadInfo : usrName 更新
     setCrystals(resData.crystals) // ShwView ~ ShwCrs : crystals 更新
-    setIsSelf(resData.is_self) // ShwView ~ Actionbox : isSelf 更新
+    setIsSelf(resData.is_self) // ShwView ~ ActionBtns : isSelf 更新
   }
 
   /* didMount, willUnMount */

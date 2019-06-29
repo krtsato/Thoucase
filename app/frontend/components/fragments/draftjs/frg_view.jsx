@@ -5,7 +5,7 @@ import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
 import {HeadInfo} from 'components/fragments/draftjs/frg_view/head_info'
-import {Actionbox} from 'components/fragments/draftjs/frg_view/actionbox'
+import {ActionBtns} from 'components/fragments/draftjs/frg_view/action_btns'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 
 export const FrgView = ({initState}) => {
@@ -38,7 +38,7 @@ export const FrgView = ({initState}) => {
     const usrName = resData.usr_name
     const crsName = resData.crs_name
     setAddNames({usrName, crsName}) // FrgView ~ HeadInfo : addNames 更新
-    setIsSelf(resData.is_self) // FrgView ~ Actionbox : isSelf 更新
+    setIsSelf(resData.is_self) // FrgView ~ ActionBtns : isSelf 更新
   }
 
   /* didMount, willUnMount */
@@ -82,7 +82,7 @@ export const FrgView = ({initState}) => {
         updAt={frgVals.updAt}
       />
       <Editor readOnly={true} editorState={frgVals.editorState} blockRendererFn={blockRendererFn} />
-      <Actionbox isSelf={isSelf} frgVals={frgVals} />
+      <ActionBtns isSelf={isSelf} frgVals={frgVals} />
     </>
   )
 }

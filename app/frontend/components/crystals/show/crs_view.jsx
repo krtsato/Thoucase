@@ -4,7 +4,7 @@ import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
 import {HeadInfo} from 'components/crystals/show/crs_view/head_info'
-import {Actionbox} from 'components/crystals/show/crs_view/actionbox'
+import {ActionBtns} from 'components/crystals/show/crs_view/action_btns'
 import {CrsFrg} from 'components/crystals/show/crs_view/crs_frg'
 
 export const CrsView = ({initState}) => {
@@ -35,7 +35,7 @@ export const CrsView = ({initState}) => {
     const shwName = resData.shw_name
     setAddNames({usrName, shwName}) // CrsView ~ HeadInfo : addNames 更新
     setFragments(resData.fragments) // CrsView ~ CrsFrg : fragments 更新
-    setIsSelf(resData.is_self) // CrsView ~ Actionbox : isSelf 更新
+    setIsSelf(resData.is_self) // CrsView ~ ActionBtns : isSelf 更新
   }
 
   /* didMount, willUnMount */
@@ -64,7 +64,7 @@ export const CrsView = ({initState}) => {
         creAt={crsVals.creAt}
         updAt={crsVals.updAt}
       />
-      <Actionbox isSelf={isSelf} crsVals={crsVals} />
+      <ActionBtns isSelf={isSelf} crsVals={crsVals} />
       <CrsFrg fragments={fragments} />
     </>
   )
