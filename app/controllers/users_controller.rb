@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   include Auth
-  before_action :authenticate_user, only: [:update, :destroy]
+  before_action :authenticate_current_user, only: [:update, :destroy]
   before_action :forbid_signin_user, only: [:create, :signin]
   before_action :set_user, only: [:show, :update, :destroy]
   before_action -> {ensure_owner(@user)}, only: [:update, :destroy]

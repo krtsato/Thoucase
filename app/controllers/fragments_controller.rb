@@ -2,7 +2,7 @@
 
 class FragmentsController < ApplicationController
   include Auth
-  before_action :authenticate_user, only: [:new, :create, :show, :update, :destroy]
+  before_action :authenticate_current_user, only: [:new, :create, :show, :update, :destroy]
   before_action :set_fragment, only: [:update, :destroy]
   before_action -> {ensure_owner(@fragment)}, only: [:update, :destroy]
 

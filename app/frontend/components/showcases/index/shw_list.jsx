@@ -40,7 +40,7 @@ export const ShwList = () => {
   const setShwPart = (shw) => (
     <Link
       to={{
-        pathname: `/fragments/${shw.id}`,
+        pathname: `/showcases/${shw.id}`,
         state: shw
       }}>
       <p>name : {shw.name}</p>
