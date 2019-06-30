@@ -29,10 +29,10 @@ export const CrsList = () => {
   }, [])
 
   /* 単位ユーザ */
-  const setUsrPart = (index) => (
+  const setUsrPart = (usrs, index) => (
     <p>
-      <span>ICON</span>
-      <span>{users[index].name}</span>
+      <span>ここにユーザアイコンを表示する | </span>
+      <span>{usrs[index].name}</span>
     </p>
   )
 
@@ -48,13 +48,13 @@ export const CrsList = () => {
     </Link>
   )
   /* crystals 一覧 */
-  const crsList = (crsArray) => {
+  const crsList = (usrArray, crsArray) => {
     if (crsArray === []) return null
     return (
       <ul>
         {crsArray.map((crystal, index) => (
           <li key={crystal.id}>
-            {setUsrPart(index)}
+            {setUsrPart(usrArray, index)}
             {setCrsPart(crystal)}
           </li>
         ))}
@@ -62,5 +62,5 @@ export const CrsList = () => {
     )
   }
 
-  return crsList(crystals)
+  return crsList(users, crystals)
 }

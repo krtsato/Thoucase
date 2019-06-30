@@ -2,7 +2,6 @@
 
 module FindName
   extend ActiveSupport::Concern
-
   class_methods do
     # User     : for crystals#show, fragments#show
     # Showcase : for controller/concern/name

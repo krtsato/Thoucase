@@ -29,10 +29,10 @@ export const FrgList = () => {
   }, [])
 
   /* 単位ユーザ */
-  const setUsrPart = (index) => (
+  const setUsrPart = (usrs, index) => (
     <p>
-      <span>ICON</span>
-      <span>{users[index].name}</span>
+      <span>ここにユーザアイコンを表示する | </span>
+      <span>{usrs[index].name}</span>
     </p>
   )
 
@@ -49,13 +49,13 @@ export const FrgList = () => {
   )
 
   /* fragments + users 一覧 */
-  const frgList = (frgArray) => {
-    if (fragments === []) return null
+  const frgList = (usrArray, frgArray) => {
+    if (frgArray === []) return null
     return (
       <ul>
         {frgArray.map((fragment, index) => (
           <li key={fragment.id}>
-            {setUsrPart(index)}
+            {setUsrPart(usrArray, index)}
             {setFrgPart(fragment)}
           </li>
         ))}
@@ -63,5 +63,5 @@ export const FrgList = () => {
     )
   }
 
-  return frgList(fragments)
+  return frgList(users, fragments)
 }

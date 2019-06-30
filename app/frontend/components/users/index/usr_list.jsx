@@ -34,7 +34,10 @@ export const UsrList = () => {
         {usrArray.map((user) => (
           <li key={user.id}>
             <Link to={`/users/${user.id}`}>
-              <p>name : {user.name}</p>
+              <p>
+                <span>ここにユーザアイコンを表示する | </span>
+                <span>name : {user.name}</span>
+              </p>
               <p>created_at : {dateFormat(user.created_at)}</p>
               <p>updated_at : {dateFormat(user.updated_at)}</p>
             </Link>

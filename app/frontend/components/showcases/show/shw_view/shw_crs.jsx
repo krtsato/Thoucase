@@ -10,14 +10,14 @@ export const ShwCrs = ({crystals}) => {
         pathname: `/crystals/${crs.id}`,
         state: crs
       }}>
-      {/* ここで立体描画 */}
+      <p>ここで立体描画をする</p>
       <p>name : {crs.name}</p>
       <p>created_at : {crs.created_at}</p>
-      {/* ここで原著者表示 */}
+      <p>ここで原著者を表示する</p>
     </Link>
   )
 
-  /* fragments 一覧 */
+  /* 展示中のクリスタル 一覧 */
   return (
     <ul>
       {crystals.map((crystal) => (

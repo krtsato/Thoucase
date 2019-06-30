@@ -14,6 +14,7 @@ class Crystal < ApplicationRecord
   validates :showcase_id, numericality: true, allow_nil: true
 
   scope :by_showcase_id, -> (id) {where(showcase_id: id)}
+  scope :includes_map_showcase, -> {includes(:showcase).map(&:showcase)}
 
   class << self
     # For fragments#new, crystals#create

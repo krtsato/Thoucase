@@ -38,7 +38,8 @@ class UsersController < ApplicationController
   def show
     crystals = @user.crystals.latest(20)
     fragments = @user.fragments.latest(20)
-    render json: {user: @user, crystals: crystals, fragments: fragments}, status: :ok
+    showcases = crystals.includes_map_showcase
+    render json: {user: @user, crystals: crystals, fragments: fragments, showcases: showcases}, status: :ok
   end
 
   # POST /users

@@ -29,10 +29,10 @@ export const ShwList = () => {
   }, [])
 
   /* 単位ユーザ */
-  const setUsrPart = (index) => (
+  const setUsrPart = (usrs, index) => (
     <p>
-      <span>ICON</span>
-      <span>{users[index].name}</span>
+      <span>ここにユーザアイコンを表示する | </span>
+      <span>{usrs[index].name}</span>
     </p>
   )
 
@@ -49,13 +49,13 @@ export const ShwList = () => {
   )
 
   /* showcases 一覧 */
-  const shwList = (shwArray) => {
+  const shwList = (usrArray, shwArray) => {
     if (shwArray === []) return null
     return (
       <ul>
         {shwArray.map((showcase, index) => (
           <li key={showcase.id}>
-            {setUsrPart(index)}
+            {setUsrPart(usrArray, index)}
             {setShwPart(showcase)}
           </li>
         ))}
@@ -63,5 +63,5 @@ export const ShwList = () => {
     )
   }
 
-  return shwList(showcases)
+  return shwList(users, showcases)
 }
