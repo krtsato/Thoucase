@@ -3,7 +3,7 @@
 class ShowcasesController < ApplicationController
   include Auth
   before_action :authenticate_current_user, only: [:create, :show, :update, :destroy]
-  before_action :set_showcase, only: [:show, :update, :destroy]
+  before_action :set_showcase, only: [:update, :destroy]
   before_action -> {ensure_owner(@showcase)}, only: [:update, :destroy]
 
   # GET /showcases
