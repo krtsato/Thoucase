@@ -6,6 +6,19 @@
 const validCheck = (chkObj) => {
   const chkPairs = Object.entries(chkObj) // [[k, v], [k, v] ...]
 
+  // validation エラーメッセージ
+  const invldArr = [
+    ['email', {key: 'email', msg: 'Eメールを入力して下さい'}],
+    ['passwd', {key: 'passwd', msg: 'パスワードを入力して下さい'}],
+    ['frgName', {key: 'frgName', msg: 'フラグメントの名前を入力して下さい'}],
+    ['rawFrg', {key: 'rawFrg', msg: 'フラグメントの内容を入力して下さい'}],
+    ['crsId', {key: 'crsId', msg: 'クリスタルを選択して下さい'}],
+    ['crsName', {key: 'crsName', msg: 'クリスタルの名前を入力して下さい'}],
+    ['shwId', {key: 'shwId', msg: 'ショーケースを選択して下さい'}],
+    ['shwName', {key: 'shwName', msg: 'ショーケースの名前を入力して下さい'}]
+  ]
+  const invldDic = new Map(invldArr)
+
   // rawFrg : text が一文字でもあれば true
   const hasText = (val) => {
     return val.blocks.some((block) => block.text)
@@ -36,7 +49,7 @@ const validCheck = (chkObj) => {
   })
 
   // invalid な [[k, v], [k, v] ...] を抽出
-  const invldArr = chkPairs
+  const invldPair = chkPairs
     .filter((pair) => {
       switch (pair[0]) {
         case 'email':
@@ -60,30 +73,9 @@ const validCheck = (chkObj) => {
       }
     })
     // invalid な [k, v] を {k, m} に写像
-    .map((pair) => {
-      switch (pair[0]) {
-        case 'email':
-          return {key: pair[0], msg: 'Eメールを入力して下さい'}
-        case 'passwd':
-          return {key: pair[0], msg: 'パスワードを入力して下さい'}
-        case 'frgName':
-          return {key: pair[0], msg: 'フラグメントの名前を入力して下さい'}
-        case 'rawFrg':
-          return {key: pair[0], msg: 'フラグメントの内容を入力して下さい'}
-        case 'crsId':
-          return {key: pair[0], msg: 'クリスタルを選択して下さい'}
-        case 'crsName':
-          return {key: pair[0], msg: 'クリスタルの名前を入力して下さい'}
-        case 'shwId':
-          return {key: pair[0], msg: 'ショーケースを選択して下さい'}
-        case 'shwName':
-          return {key: pair[0], msg: 'ショーケースの名前を入力して下さい'}
-        default:
-          return -1
-      }
-    })
+    .map((pair) => invldDic.get(pair[0]))
 
-  return [isInvld, invldArr]
+  return [isInvld, invldPair]
 }
 
 export {validCheck}

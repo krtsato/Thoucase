@@ -9,7 +9,7 @@ export const CrsSelect = ({crsId, setFragment, editorFocus}) => {
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [crsOpts, setCrsOpts] = useState(null)
-  const [selectVal, setSelectVal] = useState('')
+  const [selectVal, setSelectVal] = useState('0')
 
   const onSelectBlur = () => {
     const intVal = parseInt(selectVal, 10) // select による型変換を相殺
@@ -42,9 +42,9 @@ export const CrsSelect = ({crsId, setFragment, editorFocus}) => {
 
   /* CrsSelect ~ NameInput : axios then 共通処理 */
   const genSelectSeq = (resData, val) => {
-    if (!val) val = 0
+    if (!val) val = 0 // マウント時の null に対して, NameInputを表示させる
     setFragment((unChanged) => ({...unChanged, crsId: val})) // FrgForm ~ CrsSelect : crsId 初期値を設定
-    setSelectVal(val) // select value 初期値
+    setSelectVal(val.toString(10)) // select value 初期値で InputShow = true にするため文字列変換
     setCrsOpts(optionList(resData)) // select 生成・更新
   }
 
