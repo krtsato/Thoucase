@@ -32,7 +32,7 @@ export const Routes = () => {
         <Route exact strict path='/fragments' render={FrgIndex} />
         <Route exact strict path='/showcases' render={ShwIndex} />
         <Route exact strict path='/crystals' render={CrsIndex} />
-        <AuthRoute path='/showcases/:id/edit' component={ShwEdit} />
+        <AuthRoute path='/showcases/:id/edit' authComp={ShwEdit} />
         <AuthRoute path='/crystals/:id/edit' authComp={CrsEdit} />
         <AuthRoute path='/fragments/new' authComp={FrgNew} />
         <AuthRoute path='/fragments/:id/edit' authComp={FrgEdit} />
