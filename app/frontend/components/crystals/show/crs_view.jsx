@@ -18,7 +18,7 @@ export const CrsView = ({initState}) => {
   /*
     from Link, Redirect except delete action    : crystal 既存
     from URL query or Redirect by delete action : crystal 取得
-    common : usrName, shwName, fragments, isSelf 取得
+    common : user, showcase, fragments, isSelf 取得
   */
   const resDivider = (resData) => {
     if (resData.crystal) {

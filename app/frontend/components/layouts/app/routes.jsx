@@ -10,7 +10,6 @@ import {Signin} from 'packs/users/signin'
 import {UsrIndex} from 'packs/users/index'
 import {UsrShow} from 'packs/users/show'
 import {ShwIndex} from 'packs/showcases/index'
-import {ShwNew} from 'packs/showcases/new'
 import {ShwShow} from 'packs/showcases/show'
 import {ShwEdit} from 'packs/showcases/edit'
 import {CrsIndex} from 'packs/crystals/index'
@@ -33,7 +32,6 @@ export const Routes = () => {
         <Route exact strict path='/fragments' render={FrgIndex} />
         <Route exact strict path='/showcases' render={ShwIndex} />
         <Route exact strict path='/crystals' render={CrsIndex} />
-        <AuthRoute path='/showcases/new' component={ShwNew} />
         <AuthRoute path='/showcases/:id/edit' component={ShwEdit} />
         <AuthRoute path='/crystals/:id/edit' authComp={CrsEdit} />
         <AuthRoute path='/fragments/new' authComp={FrgNew} />
