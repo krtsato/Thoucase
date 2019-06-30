@@ -24,8 +24,8 @@ export const UsrCrs = ({crystals, showcases}) => {
               pathname: `/crystals/${crystal.id}`,
               state: crystal
             }}>
-            <p>ここで立体描画をする</p>
             <p>name : {crystal.name}</p>
+            <p>ここで立体描画をする</p>
             <p>created_at : {dateFormat(crystal.created_at)}</p>
             <p>updated_at : {dateFormat(crystal.updated_at)}</p>
             <p>ここで原著者を表示する</p>

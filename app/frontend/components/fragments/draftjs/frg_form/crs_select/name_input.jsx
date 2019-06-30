@@ -31,7 +31,7 @@ export const NameInput = ({selectVal, genSelectSeq, editorFocus}) => {
           setFlashMsg(transFlash(response.headers.flash))
           tglInputShow(false) // NameInput 非表示
           setCrsName('') // name input 初期化
-          genSelectSeq(response.data)
+          genSelectSeq(response.data, response.data[0].id)
         })
         .catch((error) => {
           setFlashMsg(transFlash(error.response.headers.flash))

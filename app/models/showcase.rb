@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Showcase < ApplicationRecord
-  include FindName
   include DescAscScope
   include UserScope
 

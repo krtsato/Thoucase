@@ -5,15 +5,15 @@ import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
 import {NameInput} from 'components/fragments/draftjs/frg_form/crs_select/name_input'
 
-export const CrsSelect = ({setFragment, editorFocus}) => {
+export const CrsSelect = ({crsId, setFragment, editorFocus}) => {
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
   const [crsOpts, setCrsOpts] = useState(null)
   const [selectVal, setSelectVal] = useState('')
 
   const onSelectBlur = () => {
-    const crsId = parseInt(selectVal, 10) // select による型変換を相殺
-    setFragment((unChanged) => ({...unChanged, crsId}))
+    const intVal = parseInt(selectVal, 10) // select による型変換を相殺
+    setFragment((unChanged) => ({...unChanged, crsId: intVal}))
   }
 
   /* focus Enter 切替 */
@@ -41,10 +41,10 @@ export const CrsSelect = ({setFragment, editorFocus}) => {
   )
 
   /* CrsSelect ~ NameInput : axios then 共通処理 */
-  const genSelectSeq = (resData) => {
-    const crsId = resData[0].id
-    setFragment((unChanged) => ({...unChanged, crsId})) // FrgForm ~ CrsSelect : crsId 初期値を設定
-    setSelectVal(crsId) // select value 初期値
+  const genSelectSeq = (resData, val) => {
+    if (!val) val = 0
+    setFragment((unChanged) => ({...unChanged, crsId: val})) // FrgForm ~ CrsSelect : crsId 初期値を設定
+    setSelectVal(val) // select value 初期値
     setCrsOpts(optionList(resData)) // select 生成・更新
   }
 
@@ -53,7 +53,7 @@ export const CrsSelect = ({setFragment, editorFocus}) => {
     axiosRails
       .get('/fragments/new')
       .then((response) => {
-        genSelectSeq(response.data)
+        genSelectSeq(response.data, crsId)
       })
       .catch((error) => {
         setCclMsg(cancelLine(error))
@@ -85,6 +85,7 @@ export const CrsSelect = ({setFragment, editorFocus}) => {
 }
 
 CrsSelect.propTypes = {
+  crsId: PropTypes.number,
   setFragment: PropTypes.func,
   editorFocus: PropTypes.func
 }

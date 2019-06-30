@@ -28,11 +28,11 @@ class CrystalsController < ApplicationController
       shw_id = @crystal[:showcase_id]
     end
     is_self = self_bool(usr_id)
-    usr_name = User.find_name(usr_id)
-    shw_name = showcase_name_or_nil(shw_id)
+    user = User.find(usr_id)
+    showcase = showcase_or_nil(shw_id)
     fragments = Fragment.by_crystal_id_latest(params[:id], 20)
 
-    render json: {crystal: @crystal, fragments: fragments, shw_name: shw_name, usr_name: usr_name, is_self: is_self}, status: :ok
+    render json: {crystal: @crystal, fragments: fragments, showcase: showcase, user: user, is_self: is_self}, status: :ok
   end
 
   # POST /crystals

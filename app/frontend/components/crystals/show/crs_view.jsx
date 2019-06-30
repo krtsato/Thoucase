@@ -10,8 +10,9 @@ import {CrsFrg} from 'components/crystals/show/crs_view/crs_frg'
 export const CrsView = ({initState}) => {
   const {setCclMsg} = useContext(CancelContext)
   const [crystal, setCrystal] = useState(initState)
-  const [addNames, setAddNames] = useState({usrName: '', shwName: ''})
   const [fragments, setFragments] = useState([])
+  const [user, setUser] = useState({})
+  const [showcase, setShowcase] = useState({})
   const [isSelf, setIsSelf] = useState(false)
 
   /*
@@ -31,9 +32,8 @@ export const CrsView = ({initState}) => {
       } = resData.crystal
       setCrystal({crsId, crsName, usrId, shwId, creAt, updAt})
     }
-    const usrName = resData.usr_name
-    const shwName = resData.shw_name
-    setAddNames({usrName, shwName}) // CrsView ~ HeadInfo : addNames 更新
+    setUser(resData.user) // CrsView ~ HeadInfo : user 更新
+    setShowcase(resData.showcase) // CrsView ~ HeadInfo : showcase 更新
     setFragments(resData.fragments) // CrsView ~ CrsFrg : fragments 更新
     setIsSelf(resData.is_self) // CrsView ~ ActionBtns : isSelf 更新
   }
@@ -58,12 +58,7 @@ export const CrsView = ({initState}) => {
   return (
     <>
       <h1 className='crsName'>{crystal.crsName}</h1>
-      <HeadInfo
-        usrName={addNames.usrName}
-        shwName={addNames.shwName}
-        creAt={crystal.creAt}
-        updAt={crystal.updAt}
-      />
+      <HeadInfo user={user} showcase={showcase} creAt={crystal.creAt} updAt={crystal.updAt} />
       <ActionBtns isSelf={isSelf} crystal={crystal} />
       <CrsFrg fragments={fragments} />
     </>

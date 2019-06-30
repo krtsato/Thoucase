@@ -10,8 +10,8 @@ export const ShwCrs = ({crystals}) => {
         pathname: `/crystals/${crs.id}`,
         state: crs
       }}>
-      <p>ここで立体描画をする</p>
       <p>name : {crs.name}</p>
+      <p>ここで立体描画をする</p>
       <p>created_at : {crs.created_at}</p>
       <p>ここで原著者を表示する</p>
     </Link>

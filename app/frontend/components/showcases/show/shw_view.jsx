@@ -10,7 +10,7 @@ import {ShwCrs} from 'components/showcases/show/shw_view/shw_crs'
 export const ShwView = ({initState}) => {
   const {setCclMsg} = useContext(CancelContext)
   const [showcase, setShowcase] = useState(initState)
-  const [usrName, setUsrName] = useState('')
+  const [user, setUser] = useState({})
   const [crystals, setCrystals] = useState([])
   const [isSelf, setIsSelf] = useState(false)
 
@@ -30,7 +30,7 @@ export const ShwView = ({initState}) => {
       } = resData.showcase
       setShowcase({shwId, shwName, usrId, creAt, updAt})
     }
-    setUsrName(resData.usr_name) // ShwView ~ HeadInfo : usrName 更新
+    setUser(resData.user) // ShwView ~ HeadInfo : usrName 更新
     setCrystals(resData.crystals) // ShwView ~ ShwCrs : crystals 更新
     setIsSelf(resData.is_self) // ShwView ~ ActionBtns : isSelf 更新
   }
@@ -55,7 +55,7 @@ export const ShwView = ({initState}) => {
   return (
     <>
       <h1 className='shwName'>{showcase.shwName}</h1>
-      <HeadInfo usrName={usrName} creAt={showcase.creAt} updAt={showcase.updAt} />
+      <HeadInfo user={user} creAt={showcase.creAt} updAt={showcase.updAt} />
       <ActionBtns isSelf={isSelf} showcase={showcase} />
       <ShwCrs crystals={crystals} />
     </>

@@ -25,10 +25,10 @@ class ShowcasesController < ApplicationController
       usr_id = @showcase[:user_id]
     end
     is_self = self_bool(usr_id)
-    usr_name = User.find_name(usr_id)
+    user = User.find(usr_id)
     crystals = Crystal.by_showcase_id_latest(params[:id], 20)
 
-    render json: {showcase: @showcase, crystals: crystals, usr_name: usr_name, is_self: is_self}, status: :ok
+    render json: {showcase: @showcase, crystals: crystals, user: user, is_self: is_self}, status: :ok
   end
 
   # POST /showcases

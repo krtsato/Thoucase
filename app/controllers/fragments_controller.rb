@@ -27,10 +27,10 @@ class FragmentsController < ApplicationController
       crs_id = @fragment[:crystal_id]
     end
     is_self = self_bool(usr_id)
-    usr_name = User.find_name(usr_id)
-    crs_name = Crystal.find_name(crs_id)
+    user = User.find(usr_id)
+    crystal = Crystal.find(crs_id)
 
-    render json: {fragment: @fragment, crs_name: crs_name, usr_name: usr_name, is_self: is_self}, status: :ok
+    render json: {fragment: @fragment, crystal: crystal, user: user, is_self: is_self}, status: :ok
   end
 
   # GET /fragments/new

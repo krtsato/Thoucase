@@ -88,7 +88,7 @@ export const FrgForm = ({reqMethod, initState}) => {
   return (
     <>
       <NameInput frgName={fragment.frgName} setFragment={setFragment} editorFocus={editorFocus} />
-      <CrsSelect setFragment={setFragment} editorFocus={editorFocus} />
+      <CrsSelect crsId={fragment.crsId} setFragment={setFragment} editorFocus={editorFocus} />
       <Toolbox editorState={fragment.editorState} onEditorChange={onEditorChange} />
       <Editor
         editorState={fragment.editorState}

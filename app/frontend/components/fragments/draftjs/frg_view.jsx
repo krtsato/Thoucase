@@ -11,7 +11,8 @@ import {Media} from 'components/fragments/draftjs/frg_form/media'
 export const FrgView = ({initState}) => {
   const {setCclMsg} = useContext(CancelContext)
   const [fragment, setFragment] = useState(initState)
-  const [addNames, setAddNames] = useState({usrName: '', crsName: ''})
+  const [user, setUser] = useState({})
+  const [crystal, setCrystal] = useState({})
   const [isSelf, setIsSelf] = useState(false)
 
   /*
@@ -35,9 +36,8 @@ export const FrgView = ({initState}) => {
       const editorState = EditorState.createWithContent(contentState)
       setFragment({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
     }
-    const usrName = resData.usr_name
-    const crsName = resData.crs_name
-    setAddNames({usrName, crsName}) // FrgView ~ HeadInfo : addNames 更新
+    setUser(resData.user) // FrgView ~ HeadInfo : user 更新
+    setCrystal(resData.crystal) // FrgView ~ HeadInfo : crystal 更新
     setIsSelf(resData.is_self) // FrgView ~ ActionBtns : isSelf 更新
   }
 
@@ -75,12 +75,7 @@ export const FrgView = ({initState}) => {
   return (
     <>
       <h1 className='frgName'>{fragment.frgName}</h1>
-      <HeadInfo
-        usrName={addNames.usrName}
-        crsName={addNames.crsName}
-        creAt={fragment.creAt}
-        updAt={fragment.updAt}
-      />
+      <HeadInfo user={user} crystal={crystal} creAt={fragment.creAt} updAt={fragment.updAt} />
       <Editor readOnly={true} editorState={fragment.editorState} blockRendererFn={blockRendererFn} />
       <ActionBtns isSelf={isSelf} fragment={fragment} />
     </>
