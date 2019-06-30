@@ -12,7 +12,7 @@ class Showcase < ApplicationRecord
   validates :user_id, presence: true
 
   class << self
-    # For hoge#fuga
+    # For crystals#edit
     def by_user_id_select_id_name_latest(usr_id, count)
       by_user_id(usr_id).select('id, name').latest(count)
     end

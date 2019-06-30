@@ -3,7 +3,7 @@
 class CrystalsController < ApplicationController
   include Auth
   include ShowcaseOrNil
-  before_action :authenticate_current_user, only: [:create, :show, :update, :destroy]
+  before_action :authenticate_current_user, only: [:create, :show, :edit, :update, :destroy]
   before_action :set_crystal, only: [:update, :destroy]
   before_action -> {ensure_owner(@crystal)}, only: [:update, :destroy]
 
@@ -47,6 +47,12 @@ class CrystalsController < ApplicationController
       response.headers['flash'] = 'er-crcrs'
       render json: crystal.errors, status: :unprocessable_entity
     end
+  end
+
+  # GET /fragments/new
+  def edit
+    showcases = Showcase.by_user_id_select_id_name_latest(@current_user.id, 50)
+    render json: showcases, status: :ok
   end
 
   # PATCH/PUT /crystals/1

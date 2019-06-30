@@ -13,7 +13,7 @@ export const SaveBtn = ({crystal}) => {
   const {setInvldMsg} = useContext(InvldContext)
 
   const onSaveClick = () => {
-    const check = validCheck({crsName})
+    const check = validCheck({crsName, shwId})
 
     // validation, axios
     if (check[0]) {

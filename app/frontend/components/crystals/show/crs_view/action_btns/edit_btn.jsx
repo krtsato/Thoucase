@@ -1,12 +1,14 @@
-import React from 'react'
-import {withRouter} from 'react-router-dom'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
+import {Redirect} from 'react-router-dom'
+import {RedrContext} from 'components/layouts/app/context'
 
-export const EditBtn = withRouter(({history, crystal}) => {
+export const EditBtn = ({crystal}) => {
+  const {setRedrPath} = useContext(RedrContext)
+
   /* crystal 編集 */
   const onEditClick = () => {
-    const location = {pathname: `/crystals/${crystal.crsId}/edit`, state: crystal}
-    history.push(location) // 編集途中で遷移すると, 次回以降リダイレクトされない不具合を回避
+    setRedrPath(<Redirect to={{pathname: `/crystals/${crystal.crsId}/edit`, state: crystal}} />)
   }
 
   return (
@@ -14,9 +16,8 @@ export const EditBtn = withRouter(({history, crystal}) => {
       編集
     </button>
   )
-})
+}
 
 EditBtn.propTypes = {
-  history: PropTypes.object,
   crystal: PropTypes.object
 }

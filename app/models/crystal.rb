@@ -21,8 +21,9 @@ class Crystal < ApplicationRecord
       by_user_id(usr_id).select('id, name').latest(count)
     end
 
+    # For showcases#show
     def by_showcase_id_latest(shw_id, count)
-      by_user_id(shw_id).latest(count)
+      by_showcase_id(shw_id).latest(count)
     end
   end
 end

@@ -5,8 +5,8 @@ import {dateFormat} from 'components/layouts/date_format'
 export const HeadInfo = ({usrName, shwName, creAt, updAt}) => {
   /* showcase に登録していれば 表示 */
   const shwcaseLink = (name) => {
-    if (name) return <span>ショーケース : {name}</span>
-    return null
+    if (!name) return null
+    return <p>ショーケース : {name}</p>
   }
 
   return (

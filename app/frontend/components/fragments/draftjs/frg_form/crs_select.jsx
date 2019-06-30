@@ -41,10 +41,11 @@ export const CrsSelect = ({setFragment, editorFocus}) => {
   )
 
   /* CrsSelect ~ NameInput : axios then 共通処理 */
-  const genSelectSeq = (res, crsId) => {
+  const genSelectSeq = (resData) => {
+    const crsId = resData[0].id
     setFragment((unChanged) => ({...unChanged, crsId})) // FrgForm ~ CrsSelect : crsId 初期値を設定
     setSelectVal(crsId) // select value 初期値
-    setCrsOpts(optionList(res)) // select 生成・更新
+    setCrsOpts(optionList(resData)) // select 生成・更新
   }
 
   /* didMount willUnMount */
@@ -52,8 +53,7 @@ export const CrsSelect = ({setFragment, editorFocus}) => {
     axiosRails
       .get('/fragments/new')
       .then((response) => {
-        const resData = response.data
-        genSelectSeq(resData, resData[0].id)
+        genSelectSeq(response.data)
       })
       .catch((error) => {
         setCclMsg(cancelLine(error))

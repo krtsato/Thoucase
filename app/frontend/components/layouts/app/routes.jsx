@@ -1,8 +1,9 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import {Route, Switch, Redirect} from 'react-router-dom'
-import {RedrContext, SigninContext, FlashContext} from 'components/layouts/app/context'
+import {SigninContext, FlashContext} from 'components/layouts/app/context'
 import {transFlash} from 'components/layouts/axios/then_catch_funcs'
+import {RedrPath} from 'components/layouts/app/routes/redr_path'
 import {Top} from 'packs/home/top'
 import {About} from 'packs/home/about'
 import {Signin} from 'packs/users/signin'
@@ -21,10 +22,9 @@ import {FrgShow} from 'packs/fragments/show'
 import {FrgEdit} from 'packs/fragments/edit'
 
 export const Routes = () => {
-  const {redrPath} = useContext(RedrContext)
   return (
     <main id='mainWrap'>
-      {redrPath}
+      <RedrPath />
       <Switch>
         <Route exact strict path={['/', '/top']} render={Top} />
         <Route exact strict path='/about' render={About} />

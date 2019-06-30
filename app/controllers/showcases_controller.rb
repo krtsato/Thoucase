@@ -36,8 +36,11 @@ class ShowcasesController < ApplicationController
     showcase = Showcase.new(showcase_params)
 
     if showcase.save
-      render json: showcase, status: :created
+      response.headers['flash'] = 'ok-crshw'
+      showcases = Showcase.by_user_id_select_id_name_latest(@current_user.id, 50)
+      render json: showcases, status: :created
     else
+      response.headers['flash'] = 'er-crshw'
       render json: showcase.errors, status: :unprocessable_entity
     end
   end
