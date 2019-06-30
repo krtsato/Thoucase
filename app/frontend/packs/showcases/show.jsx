@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {ShwView} from 'components/showcases/show/shw_view'
 
 export const ShwShow = ({location, match}) => {
-  /* CrsView : showcase state 初期化 */
+  /* ShwView : showcase state 初期化 */
   const initState = (state, id) => {
     // from Link, Redirect except delete action
     if (state) {

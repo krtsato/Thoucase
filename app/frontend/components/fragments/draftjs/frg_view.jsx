@@ -18,7 +18,7 @@ export const FrgView = ({initState}) => {
   /*
     from Link, Redirect except delete action    : fragment 既存
     from URL query or Redirect by delete action : fragment 取得
-    common : usrName, crsName, isSelf 取得
+    common : user, crystal, isSelf 取得
   */
   const resDivider = (resData) => {
     if (resData.fragment) {

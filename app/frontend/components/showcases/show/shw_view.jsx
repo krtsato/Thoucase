@@ -17,7 +17,7 @@ export const ShwView = ({initState}) => {
   /*
     from Link, Redirect except delete action    : showcase 既存
     from URL query or Redirect by delete action : showcase 取得
-    common : usrName, crystals, isSelf 取得
+    common : user, crystals, isSelf 取得
   */
   const resDivider = (resData) => {
     if (resData.showcase) {
@@ -30,7 +30,7 @@ export const ShwView = ({initState}) => {
       } = resData.showcase
       setShowcase({shwId, shwName, usrId, creAt, updAt})
     }
-    setUser(resData.user) // ShwView ~ HeadInfo : usrName 更新
+    setUser(resData.user) // ShwView ~ HeadInfo : users 更新
     setCrystals(resData.crystals) // ShwView ~ ShwCrs : crystals 更新
     setIsSelf(resData.is_self) // ShwView ~ ActionBtns : isSelf 更新
   }
