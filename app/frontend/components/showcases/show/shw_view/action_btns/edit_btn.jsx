@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 export const EditBtn = ({showcase}) => {
   const {setRedrPath} = useContext(RedrContext)
+
   /* crystal 編集 */
   const onEditClick = () => {
     setRedrPath(<Redirect to={{pathname: `/showcases/${showcase.shwId}/edit`, state: showcase}} />)
