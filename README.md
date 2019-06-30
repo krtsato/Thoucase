@@ -8,8 +8,7 @@ crystal は showcase に展示されます。
 
 fragment : 投稿記事  
 crystal : 可視化されたカテゴリ  
-showcase : 完成した crystal を展示する場所
-           crystal をプレゼントする機能がある(開発中)  
+showcase : 完成した crystal を展示する場所, crystal をプレゼントする機能がある(開発中)  
 
 ## 機能
 トークン認証・認可  
