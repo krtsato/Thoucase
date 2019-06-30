@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const NameInput = ({frgName, setFrgVals, editorFocus}) => {
+export const NameInput = ({frgName, setFragment, editorFocus}) => {
   /* frgName 更新 */
   const onNameChange = (e) => {
     const val = e.target.value
-    setFrgVals((unChanged) => ({...unChanged, frgName: val}))
+    setFragment((unChanged) => ({...unChanged, frgName: val}))
   }
 
   /* focus Enter 切替 */
@@ -36,6 +36,6 @@ export const NameInput = ({frgName, setFrgVals, editorFocus}) => {
 
 NameInput.propTypes = {
   frgName: PropTypes.string,
-  setFrgVals: PropTypes.func,
+  setFragment: PropTypes.func,
   editorFocus: PropTypes.func
 }

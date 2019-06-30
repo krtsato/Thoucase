@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include FindName
+  include DescAscScope
 
   has_secure_password
   has_secure_token
@@ -13,7 +13,4 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true
   validates :password, presence: true
-
-  scope :latest, -> (count) {order(created_at: :desc).limit(count)}
-  scope :earliest, -> (count) {order(created_at: :asc).limit(count)}
 end

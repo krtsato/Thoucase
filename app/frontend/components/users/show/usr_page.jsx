@@ -13,6 +13,7 @@ export const UsrPage = ({usrId}) => {
   const [user, setUser] = useState({})
   const [crystals, setCrystals] = useState([])
   const [fragments, setFragments] = useState([])
+  const [showcases, setShowcases] = useState([])
   const [activeFlag, setActiveFlag] = useState('crs')
 
   /* didMount, willUnMount */
@@ -24,6 +25,7 @@ export const UsrPage = ({usrId}) => {
         setUser(resData.user)
         setCrystals(resData.crystals)
         setFragments(resData.fragments)
+        setShowcases(resData.showcases)
       })
       .catch((error) => {
         setCclMsg(cancelLine(error))
@@ -39,7 +41,7 @@ export const UsrPage = ({usrId}) => {
     }
     switch (active) {
       case 'crs':
-        return <UsrCrs crystals={crystals} />
+        return <UsrCrs crystals={crystals} showcases={showcases} />
       case 'frg':
         return <UsrFrg fragments={fragments} />
       default:

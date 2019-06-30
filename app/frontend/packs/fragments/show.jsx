@@ -4,7 +4,7 @@ import {EditorState, convertFromRaw} from 'draft-js'
 import {FrgView} from 'components/fragments/draftjs/frg_view'
 
 export const FrgShow = ({location, match}) => {
-  /* FrgView : frgVals 初期化 */
+  /* FrgView : fragment state 初期化 */
   const initState = (state, id) => {
     if (state) {
       // from Link, Redirect except delete action

@@ -26,6 +26,10 @@ const validCheck = (chkObj) => {
         return !pair[1]
       case 'crsName':
         return !pair[1]
+      case 'shwId':
+        return pair[1] !== null && !pair[1] === true
+      case 'shwName':
+        return !pair[1]
       default:
         return true
     }
@@ -47,6 +51,10 @@ const validCheck = (chkObj) => {
           return !pair[1]
         case 'crsName':
           return !pair[1]
+        case 'shwId':
+          return pair[1] !== null && !pair[1] === true
+        case 'shwName':
+          return !pair[1]
         default:
           return -1
       }
@@ -66,6 +74,10 @@ const validCheck = (chkObj) => {
           return {key: pair[0], msg: 'クリスタルを選択して下さい'}
         case 'crsName':
           return {key: pair[0], msg: 'クリスタルの名前を入力して下さい'}
+        case 'shwId':
+          return {key: pair[0], msg: 'ショーケースを選択して下さい'}
+        case 'shwName':
+          return {key: pair[0], msg: 'ショーケースの名前を入力して下さい'}
         default:
           return -1
       }

@@ -3,24 +3,28 @@ import PropTypes from 'prop-types'
 import {CancelContext, FlashContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine, transFlash} from 'components/layouts/axios/then_catch_funcs'
-import {NameInput} from 'components/fragments/draftjs/frg_form/crs_select/name_input'
+import {NameInput} from 'components/crystals/edit/crs_form/shw_select/name_input'
 
-export const CrsSelect = ({crsId, setFragment, editorFocus}) => {
+export const ShwSelect = ({shwId, setCrystal}) => {
   const {setCclMsg} = useContext(CancelContext)
   const {setFlashMsg} = useContext(FlashContext)
-  const [crsOpts, setCrsOpts] = useState(null)
+  const [shwOpts, setShwOpts] = useState(null)
   const [selectVal, setSelectVal] = useState('')
 
   const onSelectBlur = () => {
-    const intVal = parseInt(selectVal, 10) // select による型変換を相殺
-    setFragment((unChanged) => ({...unChanged, crsId: intVal}))
+    // -1 : 展示しない場合, shwId の null は許容される
+    // 0~ : select による型変換を相殺
+    // 0  : 新規作成の途中で保存したとき, バリデーションエラー
+    const intVal = parseInt(selectVal, 10)
+    const id = intVal === -1 ? null : intVal
+    setCrystal((unChanged) => ({...unChanged, shwId: id}))
   }
 
   /* focus Enter 切替 */
   const onEnterDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      editorFocus() // -> onSelectBlur
+      // 説明欄を作ってフォーカス -> onSelectBlur
     }
   }
 
@@ -29,31 +33,30 @@ export const CrsSelect = ({crsId, setFragment, editorFocus}) => {
     setSelectVal(e.target.value)
   }
 
-  /* CrsSelect ~ NameInput : option 生成 */
-  const optionList = (crystals) => (
+  /* ShwSelect ~ NameInput : option 生成 */
+  const optionList = (showcases) => (
     <>
-      {crystals.map((crystal) => (
-        <option key={crystal.id} value={crystal.id}>
-          {crystal.name}
+      {showcases.map((showcase) => (
+        <option key={showcase.id} value={showcase.id}>
+          {showcase.name}
         </option>
       ))}
     </>
   )
 
-  /* CrsSelect ~ NameInput : axios then 共通処理 */
+  /* ShwSelect ~ NameInput : axios then 共通処理 */
   const genSelectSeq = (resData, val) => {
-    if (!val) val = 0
-    setFragment((unChanged) => ({...unChanged, crsId: val})) // FrgForm ~ CrsSelect : crsId 初期値を設定
+    if (!val) val = -1
     setSelectVal(val) // select value 初期値
-    setCrsOpts(optionList(resData)) // select 生成・更新
+    setShwOpts(optionList(resData)) // select 生成・更新
   }
 
   /* didMount willUnMount */
   useEffect(() => {
     axiosRails
-      .get('/fragments/new')
+      .get('/crystals/edit')
       .then((response) => {
-        genSelectSeq(response.data, crsId)
+        genSelectSeq(response.data, shwId)
       })
       .catch((error) => {
         setCclMsg(cancelLine(error))
@@ -65,27 +68,28 @@ export const CrsSelect = ({crsId, setFragment, editorFocus}) => {
   }, [])
 
   return (
-    <div className='crsSelect'>
-      <label htmlFor='crsSelect'>
-        作成先クリスタル
+    <div className='shwSelect'>
+      <label htmlFor='shwSelect'>
+        展示先ショーケース
         <select
-          id='crsSelect'
+          id='shwSelect'
           required
           value={selectVal}
           onChange={onSelectChange}
           onKeyDown={onEnterDown}
           onBlur={onSelectBlur}>
-          {crsOpts}
+          <option value='-1'>展示しない</option>
+          {shwOpts}
           <option value='0'>新規作成</option>
         </select>
       </label>
-      <NameInput selectVal={selectVal} genSelectSeq={genSelectSeq} editorFocus={editorFocus} />
+      <NameInput selectVal={selectVal} setCrystal={setCrystal} genSelectSeq={genSelectSeq} />
+      {/* NameInputの入力ができたら説明欄にフォーカス */}
     </div>
   )
 }
 
-CrsSelect.propTypes = {
-  crsId: PropTypes.number,
-  setFragment: PropTypes.func,
-  editorFocus: PropTypes.func
+ShwSelect.propTypes = {
+  shwId: PropTypes.number,
+  setCrystal: PropTypes.func
 }

@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const NameInput = ({crsName, setCrsVals}) => {
+export const NameInput = ({crsName, setCrystal}) => {
   const onNameChange = (e) => {
     const name = e.target.value
-    setCrsVals((unChanged) => ({...unChanged, crsName: name}))
+    setCrystal((unChanged) => ({...unChanged, crsName: name}))
   }
 
   return (
@@ -19,5 +19,5 @@ export const NameInput = ({crsName, setCrsVals}) => {
 
 NameInput.propTypes = {
   crsName: PropTypes.string,
-  setCrsVals: PropTypes.func
+  setCrystal: PropTypes.func
 }

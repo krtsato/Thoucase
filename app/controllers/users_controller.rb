@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   include Auth
-  before_action :authenticate_user, only: [:update, :destroy]
+  before_action :authenticate_current_user, only: [:update, :destroy]
   before_action :forbid_signin_user, only: [:create, :signin]
   before_action :set_user, only: [:show, :update, :destroy]
   before_action -> {ensure_owner(@user)}, only: [:update, :destroy]
@@ -38,7 +38,8 @@ class UsersController < ApplicationController
   def show
     crystals = @user.crystals.latest(20)
     fragments = @user.fragments.latest(20)
-    render json: {user: @user, crystals: crystals, fragments: fragments}, status: :ok
+    showcases = crystals.includes_map_showcase
+    render json: {user: @user, crystals: crystals, fragments: fragments, showcases: showcases}, status: :ok
   end
 
   # POST /users

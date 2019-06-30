@@ -4,14 +4,15 @@ import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
 import {HeadInfo} from 'components/crystals/show/crs_view/head_info'
-import {Actionbox} from 'components/crystals/show/crs_view/actionbox'
+import {ActionBtns} from 'components/crystals/show/crs_view/action_btns'
 import {CrsFrg} from 'components/crystals/show/crs_view/crs_frg'
 
 export const CrsView = ({initState}) => {
   const {setCclMsg} = useContext(CancelContext)
-  const [crsVals, setCrsVals] = useState(initState)
-  const [addNames, setAddNames] = useState({usrName: '', shwName: ''})
+  const [crystal, setCrystal] = useState(initState)
   const [fragments, setFragments] = useState([])
+  const [user, setUser] = useState({})
+  const [showcase, setShowcase] = useState({})
   const [isSelf, setIsSelf] = useState(false)
 
   /*
@@ -29,20 +30,19 @@ export const CrsView = ({initState}) => {
         created_at: creAt,
         updated_at: updAt
       } = resData.crystal
-      setCrsVals({crsId, crsName, usrId, shwId, creAt, updAt})
+      setCrystal({crsId, crsName, usrId, shwId, creAt, updAt})
     }
-    const usrName = resData.usr_name
-    const shwName = resData.shw_name
-    setAddNames({usrName, shwName}) // CrsView ~ HeadInfo : addNames 更新
+    setUser(resData.user) // CrsView ~ HeadInfo : user 更新
+    setShowcase(resData.showcase) // CrsView ~ HeadInfo : showcase 更新
     setFragments(resData.fragments) // CrsView ~ CrsFrg : fragments 更新
-    setIsSelf(resData.is_self) // CrsView ~ Actionbox : isSelf 更新
+    setIsSelf(resData.is_self) // CrsView ~ ActionBtns : isSelf 更新
   }
 
   /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
-      .get(`/crystals/${crsVals.crsId}`, {
-        params: {user_id: crsVals.usrId, showcase_id: crsVals.shwId}
+      .get(`/crystals/${crystal.crsId}`, {
+        params: {user_id: crystal.usrId, showcase_id: crystal.shwId}
       })
       .then((response) => {
         resDivider(response.data)
@@ -57,14 +57,9 @@ export const CrsView = ({initState}) => {
 
   return (
     <>
-      <h1 className='crsName'>{crsVals.crsName}</h1>
-      <HeadInfo
-        usrName={addNames.usrName}
-        shwName={addNames.shwName}
-        creAt={crsVals.creAt}
-        updAt={crsVals.updAt}
-      />
-      <Actionbox isSelf={isSelf} crsVals={crsVals} />
+      <h1 className='crsName'>{crystal.crsName}</h1>
+      <HeadInfo user={user} showcase={showcase} creAt={crystal.creAt} updAt={crystal.updAt} />
+      <ActionBtns isSelf={isSelf} crystal={crystal} />
       <CrsFrg fragments={fragments} />
     </>
   )

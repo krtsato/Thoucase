@@ -9,7 +9,7 @@ import {Toolbox} from 'components/fragments/draftjs/frg_form/toolbox'
 import {SaveBtn} from 'components/fragments/draftjs/frg_form/save_btn'
 
 export const FrgForm = ({reqMethod, initState}) => {
-  const [frgVals, setFrgVals] = useState(initState)
+  const [fragment, setFragment] = useState(initState)
 
   /* Editor ~ NameInput : focus */
   const editorRef = useRef(null)
@@ -22,7 +22,7 @@ export const FrgForm = ({reqMethod, initState}) => {
     Editor ~ Toolbox : メディア 追加
   */
   const onEditorChange = (nextState) => {
-    setFrgVals((unChanged) => ({...unChanged, editorState: nextState}))
+    setFragment((unChanged) => ({...unChanged, editorState: nextState}))
   }
 
   /* 
@@ -78,7 +78,7 @@ export const FrgForm = ({reqMethod, initState}) => {
     Editor ~ Toolbox ~ inlineStyleBtn : inline style 適用
   */
   const handleKeyCommand = (command) => {
-    const newState = RichUtils.handleKeyCommand(frgVals.editorState, command)
+    const newState = RichUtils.handleKeyCommand(fragment.editorState, command)
     if (!newState) return false
     onEditorChange(newState)
     return true
@@ -87,11 +87,11 @@ export const FrgForm = ({reqMethod, initState}) => {
   /* form */
   return (
     <>
-      <NameInput frgName={frgVals.frgName} setFrgVals={setFrgVals} editorFocus={editorFocus} />
-      <CrsSelect setFrgVals={setFrgVals} editorFocus={editorFocus} />
-      <Toolbox editorState={frgVals.editorState} onEditorChange={onEditorChange} />
+      <NameInput frgName={fragment.frgName} setFragment={setFragment} editorFocus={editorFocus} />
+      <CrsSelect crsId={fragment.crsId} setFragment={setFragment} editorFocus={editorFocus} />
+      <Toolbox editorState={fragment.editorState} onEditorChange={onEditorChange} />
       <Editor
-        editorState={frgVals.editorState}
+        editorState={fragment.editorState}
         onChange={onEditorChange}
         blockRendererFn={blockRendererFn}
         blockStyleFn={blockStyleFn}
@@ -99,7 +99,7 @@ export const FrgForm = ({reqMethod, initState}) => {
         handleKeyCommand={handleKeyCommand}
         ref={editorRef}
       />
-      <SaveBtn reqMethod={reqMethod} frgVals={frgVals} />
+      <SaveBtn reqMethod={reqMethod} fragment={fragment} />
     </>
   )
 }

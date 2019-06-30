@@ -5,13 +5,14 @@ import {CancelContext} from 'components/layouts/app/context'
 import {axiosRails, canceller} from 'components/layouts/axios/instances'
 import {cancelLine} from 'components/layouts/axios/then_catch_funcs'
 import {HeadInfo} from 'components/fragments/draftjs/frg_view/head_info'
-import {Actionbox} from 'components/fragments/draftjs/frg_view/actionbox'
+import {ActionBtns} from 'components/fragments/draftjs/frg_view/action_btns'
 import {Media} from 'components/fragments/draftjs/frg_form/media'
 
 export const FrgView = ({initState}) => {
   const {setCclMsg} = useContext(CancelContext)
-  const [frgVals, setFrgVals] = useState(initState)
-  const [addNames, setAddNames] = useState({usrName: '', crsName: ''})
+  const [fragment, setFragment] = useState(initState)
+  const [user, setUser] = useState({})
+  const [crystal, setCrystal] = useState({})
   const [isSelf, setIsSelf] = useState(false)
 
   /*
@@ -21,7 +22,7 @@ export const FrgView = ({initState}) => {
   */
   const resDivider = (resData) => {
     if (resData.fragment) {
-      // FrgView : editorState 復元, frgVals 更新
+      // FrgView : editorState 復元, fragment 更新
       const {
         id: frgId,
         name: frgName,
@@ -33,19 +34,18 @@ export const FrgView = ({initState}) => {
       } = resData.fragment
       const contentState = convertFromRaw(rawContent)
       const editorState = EditorState.createWithContent(contentState)
-      setFrgVals({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
+      setFragment({frgId, frgName, editorState, usrId, crsId, creAt, updAt})
     }
-    const usrName = resData.usr_name
-    const crsName = resData.crs_name
-    setAddNames({usrName, crsName}) // FrgView ~ HeadInfo : addNames 更新
-    setIsSelf(resData.is_self) // FrgView ~ Actionbox : isSelf 更新
+    setUser(resData.user) // FrgView ~ HeadInfo : user 更新
+    setCrystal(resData.crystal) // FrgView ~ HeadInfo : crystal 更新
+    setIsSelf(resData.is_self) // FrgView ~ ActionBtns : isSelf 更新
   }
 
   /* didMount, willUnMount */
   useEffect(() => {
     axiosRails
-      .get(`/fragments/${frgVals.frgId}`, {
-        params: {user_id: frgVals.usrId, crystal_id: frgVals.crsId}
+      .get(`/fragments/${fragment.frgId}`, {
+        params: {user_id: fragment.usrId, crystal_id: fragment.crsId}
       })
       .then((response) => {
         resDivider(response.data)
@@ -74,15 +74,10 @@ export const FrgView = ({initState}) => {
 
   return (
     <>
-      <h1 className='frgName'>{frgVals.frgName}</h1>
-      <HeadInfo
-        usrName={addNames.usrName}
-        crsName={addNames.crsName}
-        creAt={frgVals.creAt}
-        updAt={frgVals.updAt}
-      />
-      <Editor readOnly={true} editorState={frgVals.editorState} blockRendererFn={blockRendererFn} />
-      <Actionbox isSelf={isSelf} frgVals={frgVals} />
+      <h1 className='frgName'>{fragment.frgName}</h1>
+      <HeadInfo user={user} crystal={crystal} creAt={fragment.creAt} updAt={fragment.updAt} />
+      <Editor readOnly={true} editorState={fragment.editorState} blockRendererFn={blockRendererFn} />
+      <ActionBtns isSelf={isSelf} fragment={fragment} />
     </>
   )
 }

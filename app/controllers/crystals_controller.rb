@@ -3,14 +3,15 @@
 class CrystalsController < ApplicationController
   include Auth
   include ShowcaseOrNil
-  before_action :authenticate_user, only: [:create, :show, :update, :destroy]
+  before_action :authenticate_current_user, only: [:create, :show, :edit, :update, :destroy]
   before_action :set_crystal, only: [:update, :destroy]
   before_action -> {ensure_owner(@crystal)}, only: [:update, :destroy]
 
   # GET /crystals
   def index
     crystals = Crystal.latest(20)
-    render json: crystals
+    users = crystals.includes_map_user
+    render json: {crystals: crystals, users: users}, status: :ok
   end
 
   # GET /crystals/1
@@ -27,11 +28,11 @@ class CrystalsController < ApplicationController
       shw_id = @crystal[:showcase_id]
     end
     is_self = self_bool(usr_id)
-    usr_name = User.find_name(usr_id)
-    shw_name = showcase_name_or_nil(shw_id)
+    user = User.find(usr_id)
+    showcase = showcase_or_nil(shw_id)
     fragments = Fragment.by_crystal_id_latest(params[:id], 20)
 
-    render json: {crystal: @crystal, fragments: fragments, shw_name: shw_name, usr_name: usr_name, is_self: is_self}, status: :ok
+    render json: {crystal: @crystal, fragments: fragments, showcase: showcase, user: user, is_self: is_self}, status: :ok
   end
 
   # POST /crystals
@@ -46,6 +47,12 @@ class CrystalsController < ApplicationController
       response.headers['flash'] = 'er-crcrs'
       render json: crystal.errors, status: :unprocessable_entity
     end
+  end
+
+  # GET /fragments/new
+  def edit
+    showcases = Showcase.by_user_id_select_id_name_latest(@current_user.id, 50)
+    render json: showcases, status: :ok
   end
 
   # PATCH/PUT /crystals/1

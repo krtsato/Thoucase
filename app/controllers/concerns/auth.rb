@@ -3,7 +3,7 @@
 module Auth
   extend ActiveSupport::Concern
 
-  def authenticate_user
+  def authenticate_current_user
     authenticate_with_http_token do |token|
       @current_user = User.find_by(token: token)
       return if @current_user.present?

@@ -17,11 +17,14 @@ export const CrsFrg = ({fragments}) => {
 
   /* fragments 一覧 */
   return (
-    <ul>
-      {fragments.map((fragment) => (
-        <li key={fragment.id}>{setFragment(fragment)}</li>
-      ))}
-    </ul>
+    <>
+      <p>ここで立体描画をする</p>
+      <ul>
+        {fragments.map((fragment) => (
+          <li key={fragment.id}>{setFragment(fragment)}</li>
+        ))}
+      </ul>
+    </>
   )
 }
 
